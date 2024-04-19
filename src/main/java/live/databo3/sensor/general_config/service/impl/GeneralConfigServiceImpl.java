@@ -2,6 +2,7 @@ package live.databo3.sensor.general_config.service.impl;
 
 import live.databo3.sensor.general_config.dto.RegisterGeneralConfigRequest;
 import live.databo3.sensor.general_config.dto.RegisterTemperatureConfigRequest;
+import live.databo3.sensor.general_config.dto.TemperatureConfigDto;
 import live.databo3.sensor.general_config.entity.GeneralConfig;
 import live.databo3.sensor.general_config.entity.TemperatureConfig;
 import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
@@ -16,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.management.RuntimeMBeanException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -50,4 +52,10 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         }
         temperatureConfigRepository.save(temperatureConfig);
     }
+
+    public List<TemperatureConfigDto> findTemperatureConfigByOrganizationName(String name) {
+        return temperatureConfigRepository.findAllByGeneralConfig_Sensor_Organization_OrganizationName(name);
+    }
+
+
 }

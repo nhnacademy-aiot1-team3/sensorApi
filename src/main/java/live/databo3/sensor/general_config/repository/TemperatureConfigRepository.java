@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface TemperatureConfigRepository extends JpaRepository<TemperatureConfig, Long> {
+    List<TemperatureConfigDto> findAllByGeneralConfig_Sensor_Organization_OrganizationName(String name);
 }
