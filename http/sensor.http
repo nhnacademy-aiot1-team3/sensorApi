@@ -1,0 +1,10 @@
+POST http://localhost:8080/api/sensor/sensor/register
+Content-Type: application/json
+
+{
+  "sensorSn": "temp03",
+  "organizationId": 1,
+  "sensorTypeId": 1,
+  "sensorName": "온도3",
+  "sensorPlace": "강의실B"
+}
