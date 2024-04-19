@@ -1,5 +1,7 @@
 package live.databo3.sensor.general_config.entity;
 
+import live.databo3.sensor.sensor.entity.Sensor;
+import live.databo3.sensor.settingFunctionType.entity.SettingFunctionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,11 +22,13 @@ public class GeneralConfig {
     @Column(name = "config_id")
     private Long configId;
 
-    @Column(name = "sensor_sn")
-    private String sensorSn;
+    @OneToOne
+    @JoinColumn(name = "sensor_sn")
+    private Sensor sensor;
 
-    @Column(name = "function_id")
-    private Long functionId;
+    @ManyToOne
+    @JoinColumn(name = "function_id")
+    private SettingFunctionType settingFunctionType;
 
     @Column(name = "last_update_date")
     private Date lastUpdateDate;

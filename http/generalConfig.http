@@ -1,0 +1,18 @@
+POST http://localhost:8080/api/sensor/generalConfig/register
+Content-Type: application/json
+
+{
+  "sensorSn": "temp03",
+  "functionId": 1
+}
+
+
+###
+POST http://localhost:8080/api/sensor/temperatureConfig/register
+Content-Type: application/json
+
+{
+  "configId": 2,
+  "targetValue": 21,
+  "deviationValue": 3
+}
