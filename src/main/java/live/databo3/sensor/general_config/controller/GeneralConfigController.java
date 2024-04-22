@@ -23,7 +23,7 @@ public class GeneralConfigController {
         return ResponseEntity.status(HttpStatus.CREATED).body(generalConfigService.registerGeneralConfig(request));
     }
 
-    @PostMapping("/generalConfig/register")
+    @PostMapping("/generalConfig/modify")
     public ResponseEntity<Void> modifyGeneralConfig(@RequestBody ModifyGeneralConfigRequest request) {
         generalConfigService.modifyGeneralConfig(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
