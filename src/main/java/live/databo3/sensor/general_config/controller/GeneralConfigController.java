@@ -1,9 +1,6 @@
 package live.databo3.sensor.general_config.controller;
 
-import live.databo3.sensor.general_config.dto.RegisterGeneralConfigRequest;
-import live.databo3.sensor.general_config.dto.RegisterGeneralConfigResponse;
-import live.databo3.sensor.general_config.dto.RegisterHumidityConfigRequest;
-import live.databo3.sensor.general_config.dto.RegisterTemperatureConfigRequest;
+import live.databo3.sensor.general_config.dto.*;
 import live.databo3.sensor.general_config.entity.TemperatureConfig;
 import live.databo3.sensor.general_config.service.GeneralConfigService;
 
@@ -26,16 +23,46 @@ public class GeneralConfigController {
         return ResponseEntity.status(HttpStatus.CREATED).body(generalConfigService.registerGeneralConfig(request));
     }
 
+    @PostMapping("/generalConfig/register")
+    public ResponseEntity<Void> modifyGeneralConfig(@RequestBody ModifyGeneralConfigRequest request) {
+        generalConfigService.modifyGeneralConfig(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    }
+
     @PostMapping("/temperatureConfig/register")
     public ResponseEntity<Void> createTemperatureConfig(@RequestBody RegisterTemperatureConfigRequest request) {
         generalConfigService.registerTemperatureConfig(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
+    @PostMapping("/temperatureConfig/modify")
+    public ResponseEntity<Void> modifyTemperatureConfig(@RequestBody RegisterTemperatureConfigRequest request) {
+        generalConfigService.modifyTemperatureConfig(request);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @DeleteMapping("/temperatureConfig/delete")
+    public ResponseEntity<Void> deleteTemperatureConfig(@RequestBody DeleteSensorConfigRequest request) {
+        generalConfigService.deleteTemperatureConfig(request);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
     @PostMapping("/humidityConfig/register")
     public ResponseEntity<Void> createHumidityConfig(@RequestBody RegisterHumidityConfigRequest request) {
         generalConfigService.registerHumidityConfig(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    }
+
+    @PostMapping("/humidityConfig/modify")
+    public ResponseEntity<Void> modifyHumidityConfig(@RequestBody RegisterHumidityConfigRequest request) {
+        generalConfigService.modifyHumidityConfig(request);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @DeleteMapping("/humidityConfig/delete")
+    public ResponseEntity<Void> deleteHumidityConfig(@RequestBody DeleteSensorConfigRequest request) {
+        generalConfigService.deleteHumidityConfig(request);
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     @GetMapping("/config/{organizationName}")
