@@ -1,5 +1,6 @@
 package live.databo3.sensor.general_config.entity;
 
+import live.databo3.sensor.general_config.dto.RegisterGeneralConfigResponse;
 import live.databo3.sensor.sensor.entity.Sensor;
 import live.databo3.sensor.settingFunctionType.entity.SettingFunctionType;
 import lombok.AllArgsConstructor;
@@ -33,6 +34,10 @@ public class GeneralConfig {
     @Column(name = "last_update_date")
     private Date lastUpdateDate;
 
-//    @OneToOne(mappedBy = "generalConfig")
-//    private TemperatureConfig temperatureConfig;
+    public RegisterGeneralConfigResponse toRegisterResponse() {
+        return RegisterGeneralConfigResponse.builder()
+                .configId(configId)
+                .sensorSn(sensor.getSensorSn())
+                .build();
+    }
 }

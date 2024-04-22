@@ -8,11 +8,32 @@ Content-Type: application/json
 
 
 ###
+POST http://localhost:8080/api/sensor/generalConfig/register
+Content-Type: application/json
+
+{
+"sensorSn": "hum01",
+"functionId": 2
+}
+
+
+###
 POST http://localhost:8080/api/sensor/temperatureConfig/register
 Content-Type: application/json
 
 {
-  "configId": 2,
+  "configId": 27,
+  "targetValue": 21,
+  "deviationValue": 3
+}
+
+
+###
+POST http://localhost:8080/api/sensor/humidityConfig/register
+Content-Type: application/json
+
+{
+  "configId": 30,
   "targetValue": 21,
   "deviationValue": 3
 }

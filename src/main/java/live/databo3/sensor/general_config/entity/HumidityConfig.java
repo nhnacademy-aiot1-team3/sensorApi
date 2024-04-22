@@ -12,8 +12,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "temperature_config")
-public class TemperatureConfig {
+@Table(name = "humidity_config")
+public class HumidityConfig {
     @Id
     @Column(name = "config_id")
     private Long configId;

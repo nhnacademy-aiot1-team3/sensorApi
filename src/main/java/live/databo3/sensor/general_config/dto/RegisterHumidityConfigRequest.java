@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class RegisterTemperatureConfigRequest implements SensorConfigRequest {
+public class RegisterHumidityConfigRequest implements SensorConfigRequest {
     Long configId;
     double targetValue;
     double deviationValue;
