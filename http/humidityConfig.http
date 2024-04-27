@@ -1,0 +1,33 @@
+### 습도 설정 등록
+POST http://localhost:8080/api/sensor/humidityConfig/register
+Content-Type: application/json
+
+{
+  "configId": 7,
+  "targetValue": 22,
+  "deviationValue": 4
+}
+
+
+### 습도 설정 수정
+POST http://localhost:8080/api/sensor/humidityConfig/modify
+Content-Type: application/json
+
+{
+  "configId": 4,
+  "targetValue": 22,
+  "deviationValue": 3
+}
+
+
+### 습도 설정 조회
+GET http://localhost:8080/api/sensor/humidityConfig/7
+
+
+### 특정 조직의 습도 설정 조회
+GET http://localhost:8080/api/sensor/humidityConfig?organizationName=nhnacademy1
+
+
+### 습도 설정 삭제
+DELETE http://localhost:8080/api/sensor/humidityConfig/7
+Content-Type: application/json

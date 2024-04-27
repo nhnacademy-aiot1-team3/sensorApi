@@ -1,5 +1,6 @@
 package live.databo3.sensor.general_config.entity;
 
+import live.databo3.sensor.general_config.dto.response.HumidityConfigResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "humidity_config")
+@Table(name = "humidity_configs")
 public class HumidityConfig {
     @Id
     @Column(name = "config_id")
@@ -28,4 +29,12 @@ public class HumidityConfig {
     @MapsId
     @JoinColumn(name = "config_id")
     private GeneralConfig generalConfig;
+
+    public HumidityConfigResponse toDto() {
+        return HumidityConfigResponse.builder()
+                .configId(configId)
+                .targetValue(targetValue)
+                .deviationValue(deviationValue)
+                .build();
+    }
 }

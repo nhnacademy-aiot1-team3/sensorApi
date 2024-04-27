@@ -1,0 +1,33 @@
+### 온도 설정 등록
+POST http://localhost:8080/api/sensor/temperatureConfig/register
+Content-Type: application/json
+
+{
+  "configId": 6,
+  "targetValue": 22,
+  "deviationValue": 4
+}
+
+
+### 온도 설정 수정
+POST http://localhost:8080/api/sensor/temperatureConfig/modify
+Content-Type: application/json
+
+{
+  "configId": 4,
+  "targetValue": 22,
+  "deviationValue": 3
+}
+
+
+### 온도 설정 조회
+GET http://localhost:8080/api/sensor/temperatureConfig/4
+
+
+### 특정 조직의 온도 설정 조회
+GET http://localhost:8080/api/sensor/temperatureConfig?organizationName=nhnacademy1
+
+
+### 온도 설정 삭제
+DELETE http://localhost:8080/api/sensor/temperatureConfig/6
+Content-Type: application/json
