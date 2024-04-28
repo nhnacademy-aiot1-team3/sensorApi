@@ -1,78 +1,35 @@
+### 일반 설정 등록
 POST http://localhost:8080/api/sensor/generalConfig/register
 Content-Type: application/json
 
 {
-  "sensorSn": "temp03",
+  "sensorSn": "hum01",
   "functionId": 1
 }
 
 
-###
-POST http://localhost:8080/api/sensor/generalConfig/register
+### 일반 설정 수정
+POST http://localhost:8080/api/sensor/generalConfig/modify
 Content-Type: application/json
 
 {
-"sensorSn": "hum01",
-"functionId": 2
+  "configId": 5,
+  "functionId": 2
 }
 
 
-###
-POST http://localhost:8080/api/sensor/temperatureConfig/register
+### 일반 설정 조회
+GET http://localhost:8080/api/sensor/generalConfig/4
 Content-Type: application/json
 
-{
-  "configId": 33,
-  "targetValue": 21,
-  "deviationValue": 3
-}
+
+### 특정 부서의 일반 설정 조회
+GET http://localhost:8080/api/sensor/generalConfig?organizationName=nhnacademy1
 
 
-###
-POST http://localhost:8080/api/sensor/temperatureConfig/modify
-Content-Type: application/json
-
-{
-  "configId": 33,
-  "targetValue": 22,
-  "deviationValue": 3
-}
+### 일반 설정 삭제
+DELETE http://localhost:8080/api/sensor/generalConfig/5
 
 
-###
-DELETE http://localhost:8080/api/sensor/temperatureConfig/delete
-Content-Type: application/json
-
-{
-  "configId": 27
-}
-
-###
-POST http://localhost:8080/api/sensor/humidityConfig/register
-Content-Type: application/json
-
-{
-  "configId": 34,
-  "targetValue": 21,
-  "deviationValue": 3
-}
 
 
-###
-POST http://localhost:8080/api/sensor/humidityConfig/modify
-Content-Type: application/json
-
-{
-"configId": 34,
-"targetValue": 24,
-"deviationValue": 3
-}
-
-
-###
-DELETE http://localhost:8080/api/sensor/humidityConfig/delete
-Content-Type: application/json
-
-{
-"configId": 34
-}

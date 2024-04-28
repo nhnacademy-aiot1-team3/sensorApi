@@ -1,8 +1,8 @@
 package live.databo3.sensor.sensor.entity;
 
 import live.databo3.sensor.organization.entity.Organization;
-import live.databo3.sensor.sensor.dto.RegisterSensorResponse;
-import live.databo3.sensor.sensorType.entity.SensorType;
+import live.databo3.sensor.sensor.dto.SensorResponse;
+import live.databo3.sensor.sensor_type.entity.SensorType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "sensor")
+@Table(name = "sensors")
 public class Sensor {
     @Id
     @Column(name = "sensor_sn")
@@ -28,15 +28,15 @@ public class Sensor {
     private String sensorPlace;
 
     @ManyToOne
-    @JoinColumn(name = "organizationId")
+    @JoinColumn(name = "organization_id")
     private Organization organization;
 
     @ManyToOne
-    @JoinColumn(name = "sensorTypeId")
+    @JoinColumn(name = "sensor_type_id")
     private SensorType sensorType;
 
-    public RegisterSensorResponse toDto() {
-        return RegisterSensorResponse.builder()
+    public SensorResponse toDto() {
+        return SensorResponse.builder()
                 .sensorSn(sensorSn)
                 .sensorName(sensorName)
                 .sensorPlace(sensorPlace)

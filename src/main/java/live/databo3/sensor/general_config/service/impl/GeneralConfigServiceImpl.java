@@ -1,13 +1,15 @@
 package live.databo3.sensor.general_config.service.impl;
 
 import live.databo3.sensor.annotations.RefreshRedis;
-import live.databo3.sensor.general_config.dto.*;
+import live.databo3.sensor.exception.already_exist_exception.GeneralConfigAlreadyExistException;
+import live.databo3.sensor.exception.not_exist_exception.GeneralConfigNotExistException;
+import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
+import live.databo3.sensor.exception.not_exist_exception.SettingFunctionTypeNotExistException;
+import live.databo3.sensor.general_config.dto.request.modify.ModifyGeneralConfigRequest;
+import live.databo3.sensor.general_config.dto.request.register.RegisterGeneralConfigRequest;
+import live.databo3.sensor.general_config.dto.response.GeneralConfigResponse;
 import live.databo3.sensor.general_config.entity.GeneralConfig;
-import live.databo3.sensor.general_config.entity.HumidityConfig;
-import live.databo3.sensor.general_config.entity.TemperatureConfig;
 import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
-import live.databo3.sensor.general_config.repository.HumidityConfigRepository;
-import live.databo3.sensor.general_config.repository.TemperatureConfigRepository;
 import live.databo3.sensor.general_config.service.GeneralConfigService;
 import live.databo3.sensor.sensor.entity.Sensor;
 import live.databo3.sensor.sensor.repository.SensorRepository;
@@ -17,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,103 +28,35 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
     private final GeneralConfigRepository generalConfigRepository;
     private final SensorRepository sensorRepository;
     private final SettingFunctionTypeRepository settingFunctionTypeRepository;
-    private final TemperatureConfigRepository temperatureConfigRepository;
-    private final HumidityConfigRepository humidityConfigRepository;
-
 
     @RefreshRedis
-    public RegisterGeneralConfigResponse registerGeneralConfig(RegisterGeneralConfigRequest request) {
-        Sensor sensor = sensorRepository.findById(request.getSensorSn()).orElseThrow(() -> new RuntimeException("no sensor"));
-        SettingFunctionType settingFunctionType = settingFunctionTypeRepository.findById(request.getFunctionId()).orElseThrow(() -> new RuntimeException("no functionId"));
+    public GeneralConfigResponse registerGeneralConfig(RegisterGeneralConfigRequest request) {
+        String sensorSn = request.getSensorSn();
+        if (generalConfigRepository.existsBySensorSn(sensorSn)) {
+            throw new GeneralConfigAlreadyExistException(sensorSn);
+        }
+        Sensor sensor = sensorRepository.findById(sensorSn).orElseThrow(() -> new SensorNotExistException(sensorSn));
 
-        GeneralConfig generalConfig = new GeneralConfig(null, sensor, settingFunctionType, null);
+        Long functionId = request.getFunctionId();
+        SettingFunctionType settingFunctionType = settingFunctionTypeRepository.findById(functionId).orElseThrow(() -> new SettingFunctionTypeNotExistException(functionId));
 
-        return (generalConfigRepository.save(generalConfig)).toRegisterResponse();
+        GeneralConfig generalConfig = new GeneralConfig(null, sensor, settingFunctionType, LocalDateTime.now());
+
+        return (generalConfigRepository.save(generalConfig)).toDto();
     }
 
     @RefreshRedis
     @Transactional
-    public void modifyGeneralConfig(ModifyGeneralConfigRequest request) {
-        if (!generalConfigRepository.existsById(request.getConfigId())) {
-            throw new RuntimeException("no config");
-        }
-        GeneralConfig generalConfig = generalConfigRepository.findById(request.getConfigId()).orElseThrow(()->new RuntimeException("general config not exist"));
-        SettingFunctionType settingFunctionType = settingFunctionTypeRepository.findById(request.getFunctionId()).orElseThrow(() -> new RuntimeException("no functionId"));
+    public GeneralConfigResponse modifyGeneralConfig(ModifyGeneralConfigRequest request) {
+        Long configId = request.getConfigId();
+        GeneralConfig generalConfig = generalConfigRepository.findById(configId).orElseThrow(() -> new GeneralConfigNotExistException(configId));
+
+        Long functionId = request.getFunctionId();
+        SettingFunctionType settingFunctionType = settingFunctionTypeRepository.findById(functionId).orElseThrow(() -> new SettingFunctionTypeNotExistException(functionId));
 
         generalConfig.setSettingFunctionType(settingFunctionType);
-    }
-
-    // todo dirty exception
-    @RefreshRedis
-    public void registerTemperatureConfig(RegisterTemperatureConfigRequest request) {
-        GeneralConfig generalConfig = generalConfigRepository.findById(request.getConfigId()).orElseThrow(() -> new RuntimeException("no config"));
-        if (temperatureConfigRepository.existsById(request.getConfigId())) {
-            throw new RuntimeException("temp config already exist");
-        }
-
-        TemperatureConfig temperatureConfig = new TemperatureConfig();
-        temperatureConfig.setTargetValue(request.getTargetValue());
-        temperatureConfig.setDeviationValue(request.getDeviationValue());
-        temperatureConfig.setGeneralConfig(generalConfig);
-
-        temperatureConfigRepository.save(temperatureConfig);
-    }
-
-    @RefreshRedis
-    @Transactional
-    public void modifyTemperatureConfig(RegisterTemperatureConfigRequest request) {
-        if (!temperatureConfigRepository.existsById(request.getConfigId())) {
-            throw new RuntimeException("temp config not exist");
-        }
-
-        TemperatureConfig temperatureConfig = temperatureConfigRepository.findById(request.getConfigId()).orElseThrow(() -> new RuntimeException("no config"));
-        temperatureConfig.setTargetValue(request.getTargetValue());
-        temperatureConfig.setDeviationValue(request.getDeviationValue());
-    }
-
-    @RefreshRedis
-    public void deleteTemperatureConfig(DeleteSensorConfigRequest request) {
-        if (!temperatureConfigRepository.existsById(request.getConfigId())) {
-            throw new RuntimeException("temp config not exist");
-        }
-        temperatureConfigRepository.deleteById(request.getConfigId());
-    }
-
-    // todo dirty exception
-    @RefreshRedis
-    public void registerHumidityConfig(RegisterHumidityConfigRequest request) {
-        GeneralConfig generalConfig = generalConfigRepository.findById(request.getConfigId()).orElseThrow(() -> new RuntimeException("no config"));
-
-        if (humidityConfigRepository.existsById(request.getConfigId())) {
-            throw new RuntimeException("hum config already exist");
-        }
-
-        HumidityConfig humidityConfig = new HumidityConfig();
-        humidityConfig.setTargetValue(request.getTargetValue());
-        humidityConfig.setDeviationValue(request.getDeviationValue());
-        humidityConfig.setGeneralConfig(generalConfig);
-
-        humidityConfigRepository.save(humidityConfig);
-    }
-
-    @RefreshRedis
-    @Transactional
-    public void modifyHumidityConfig(RegisterHumidityConfigRequest request) {
-        if (!humidityConfigRepository.existsById(request.getConfigId())) {
-            throw new RuntimeException("hum config not exist");
-        }
-
-        HumidityConfig humidityConfig = humidityConfigRepository.findById(request.getConfigId()).orElseThrow(() -> new RuntimeException("no config"));
-        humidityConfig.setTargetValue(request.getTargetValue());
-        humidityConfig.setDeviationValue(request.getDeviationValue());
-    }
-
-    @RefreshRedis
-    public void deleteHumidityConfig(DeleteSensorConfigRequest request) {
-        if (!humidityConfigRepository.existsById(request.getConfigId())) {
-            throw new RuntimeException("hum config not exist");
-        }
-        humidityConfigRepository.deleteById(request.getConfigId());
+        generalConfig.setLastUpdateDate(LocalDateTime.now());
+        return generalConfig.toDto();
     }
 
     public String getOrganizationNameByConfigId(Long configId) {
@@ -132,11 +67,14 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         return generalConfigRepository.findAllBySensor_Organization_OrganizationName(name);
     }
 
-    public List<TemperatureConfig> findTemperatureConfigByOrganizationName(String name) {
-        return temperatureConfigRepository.findAllByGeneralConfig_Sensor_Organization_OrganizationName(name);
+    public GeneralConfigResponse getGeneralConfig(Long configId) {
+        return generalConfigRepository.findById(configId).orElseThrow(() -> new GeneralConfigNotExistException(configId)).toDto();
     }
 
-    public List<HumidityConfig> findHumidityConfigByOrganizationName(String name) {
-        return humidityConfigRepository.findAllByGeneralConfig_Sensor_Organization_OrganizationName(name);
+    public void deleteGeneralConfig(Long configId) {
+        if (!generalConfigRepository.existsById(configId)) {
+            throw new GeneralConfigNotExistException(configId);
+        }
+        generalConfigRepository.deleteById(configId);
     }
 }

@@ -12,4 +12,7 @@ public interface GeneralConfigRepository extends JpaRepository<GeneralConfig, Lo
     String findOrganizationNameByConfigId(@Param("configId") Long configId);
 
     List<GeneralConfig> findAllBySensor_Organization_OrganizationName(String name);
+
+    @Query("select case when count(g)>0 then true else false end from GeneralConfig g where lower(g.sensor.sensorSn) like lower(:sensorSn)")
+    boolean existsBySensorSn(String sensorSn);
 }

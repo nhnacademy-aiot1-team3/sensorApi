@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "setting_function_type")
+@Table(name = "setting_function_types")
 public class SettingFunctionType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

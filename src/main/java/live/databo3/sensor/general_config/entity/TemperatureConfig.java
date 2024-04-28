@@ -1,5 +1,6 @@
 package live.databo3.sensor.general_config.entity;
 
+import live.databo3.sensor.general_config.dto.response.TemperatureConfigResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "temperature_config")
+@Table(name = "temperature_configs")
 public class TemperatureConfig {
     @Id
     @Column(name = "config_id")
@@ -28,4 +29,12 @@ public class TemperatureConfig {
     @MapsId
     @JoinColumn(name = "config_id")
     private GeneralConfig generalConfig;
+
+    public TemperatureConfigResponse toDto() {
+        return TemperatureConfigResponse.builder()
+                .configId(configId)
+                .targetValue(targetValue)
+                .deviationValue(deviationValue)
+                .build();
+    }
 }
