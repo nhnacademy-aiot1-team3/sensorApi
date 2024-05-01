@@ -1,17 +1,17 @@
-package live.databo3.sensor.general_config.service.impl;
+package live.databo3.sensor.sensor_config.service.impl;
 
 import live.databo3.sensor.annotations.RefreshRedis;
 import live.databo3.sensor.exception.already_exist_exception.HumidityConfigAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.GeneralConfigNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.HumidityConfigNotExistException;
-import live.databo3.sensor.general_config.dto.request.delete.DeleteSensorConfigRequest;
-import live.databo3.sensor.general_config.dto.request.register.RegisterHumidityConfigRequest;
-import live.databo3.sensor.general_config.dto.response.HumidityConfigResponse;
+import live.databo3.sensor.sensor_config.dto.request.modify.ModifyHumidityConfigRequest;
+import live.databo3.sensor.sensor_config.dto.request.register.RegisterHumidityConfigRequest;
+import live.databo3.sensor.sensor_config.dto.response.HumidityConfigResponse;
 import live.databo3.sensor.general_config.entity.GeneralConfig;
-import live.databo3.sensor.general_config.entity.HumidityConfig;
+import live.databo3.sensor.sensor_config.entity.HumidityConfig;
 import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
-import live.databo3.sensor.general_config.repository.HumidityConfigRepository;
-import live.databo3.sensor.general_config.service.HumidityConfigService;
+import live.databo3.sensor.sensor_config.repository.HumidityConfigRepository;
+import live.databo3.sensor.sensor_config.service.HumidityConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +41,7 @@ public class HumidityConfigServiceImpl implements HumidityConfigService {
 
     @RefreshRedis
     @Transactional
-    public HumidityConfigResponse modifyHumidityConfig(RegisterHumidityConfigRequest request) {
+    public HumidityConfigResponse modifyHumidityConfig(ModifyHumidityConfigRequest request) {
         Long configId = request.getConfigId();
         HumidityConfig humidityConfig = humidityConfigRepository.findById(configId).orElseThrow(() -> new HumidityConfigNotExistException(configId));
         humidityConfig.setTargetValue(request.getTargetValue());

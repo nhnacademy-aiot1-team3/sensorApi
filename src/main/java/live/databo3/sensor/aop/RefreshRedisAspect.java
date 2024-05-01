@@ -2,14 +2,14 @@ package live.databo3.sensor.aop;
 
 import live.databo3.sensor.general_config.dto.request.GeneralConfigUpdateRequest;
 import live.databo3.sensor.general_config.dto.request.register.RegisterGeneralConfigRequest;
-import live.databo3.sensor.general_config.dto.request.SensorConfigRequest;
+import live.databo3.sensor.sensor_config.dto.request.SensorConfigRequest;
 import live.databo3.sensor.general_config.dto.response.GeneralConfigResponse;
 import live.databo3.sensor.general_config.entity.GeneralConfig;
-import live.databo3.sensor.general_config.entity.HumidityConfig;
-import live.databo3.sensor.general_config.entity.TemperatureConfig;
+import live.databo3.sensor.sensor_config.entity.HumidityConfig;
+import live.databo3.sensor.sensor_config.entity.TemperatureConfig;
 import live.databo3.sensor.general_config.service.GeneralConfigService;
-import live.databo3.sensor.general_config.service.HumidityConfigService;
-import live.databo3.sensor.general_config.service.TemperatureConfigService;
+import live.databo3.sensor.sensor_config.service.HumidityConfigService;
+import live.databo3.sensor.sensor_config.service.TemperatureConfigService;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -33,6 +33,7 @@ public class RefreshRedisAspect {
     public void databaseChangeOperation() {}
 
     // todo jpa event listener 사용해서 고쳐보기
+    // todo 권한 체크
     @Around("databaseChangeOperation()")
     public Object refreshRedis(ProceedingJoinPoint pjp) throws Throwable {
         Object request = pjp.getArgs()[0];
@@ -50,6 +51,9 @@ public class RefreshRedisAspect {
             }
         } else if (request instanceof GeneralConfigUpdateRequest) {
             organizationName = generalConfigService.getOrganizationNameByConfigId(((GeneralConfigUpdateRequest)request).getConfigId());
+            retVal = pjp.proceed();
+        } else if (request instanceof Long) {
+            organizationName = generalConfigService.getOrganizationNameByConfigId((Long) request);
             retVal = pjp.proceed();
         } else {
             // todo dirty exception

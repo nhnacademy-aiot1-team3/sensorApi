@@ -1,17 +1,17 @@
-package live.databo3.sensor.general_config.service.impl;
+package live.databo3.sensor.sensor_config.service.impl;
 
 import live.databo3.sensor.annotations.RefreshRedis;
 import live.databo3.sensor.exception.already_exist_exception.TemperatureConfigAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.GeneralConfigNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.TemperatureConfigNotExistException;
-import live.databo3.sensor.general_config.dto.request.delete.DeleteSensorConfigRequest;
-import live.databo3.sensor.general_config.dto.request.register.RegisterTemperatureConfigRequest;
-import live.databo3.sensor.general_config.dto.response.TemperatureConfigResponse;
+import live.databo3.sensor.sensor_config.dto.request.modify.ModifyTemperatureConfigRequest;
+import live.databo3.sensor.sensor_config.dto.request.register.RegisterTemperatureConfigRequest;
+import live.databo3.sensor.sensor_config.dto.response.TemperatureConfigResponse;
 import live.databo3.sensor.general_config.entity.GeneralConfig;
-import live.databo3.sensor.general_config.entity.TemperatureConfig;
+import live.databo3.sensor.sensor_config.entity.TemperatureConfig;
 import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
-import live.databo3.sensor.general_config.repository.TemperatureConfigRepository;
-import live.databo3.sensor.general_config.service.TemperatureConfigService;
+import live.databo3.sensor.sensor_config.repository.TemperatureConfigRepository;
+import live.databo3.sensor.sensor_config.service.TemperatureConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +42,7 @@ public class TemperatureConfigServiceImpl implements TemperatureConfigService {
 
     @RefreshRedis
     @Transactional
-    public TemperatureConfigResponse modifyTemperatureConfig(RegisterTemperatureConfigRequest request) {
+    public TemperatureConfigResponse modifyTemperatureConfig(ModifyTemperatureConfigRequest request) {
         Long configId = request.getConfigId();
         TemperatureConfig temperatureConfig = temperatureConfigRepository.findById(configId).orElseThrow(() -> new TemperatureConfigNotExistException(configId));
         temperatureConfig.setTargetValue(request.getTargetValue());

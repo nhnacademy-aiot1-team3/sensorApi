@@ -1,6 +1,7 @@
-package live.databo3.sensor.general_config.entity;
+package live.databo3.sensor.sensor_config.entity;
 
-import live.databo3.sensor.general_config.dto.response.HumidityConfigResponse;
+import live.databo3.sensor.general_config.entity.GeneralConfig;
+import live.databo3.sensor.sensor_config.dto.response.TemperatureConfigResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "humidity_configs")
-public class HumidityConfig {
+@Table(name = "temperature_configs")
+public class TemperatureConfig {
     @Id
     @Column(name = "config_id")
     private Long configId;
@@ -30,8 +31,8 @@ public class HumidityConfig {
     @JoinColumn(name = "config_id")
     private GeneralConfig generalConfig;
 
-    public HumidityConfigResponse toDto() {
-        return HumidityConfigResponse.builder()
+    public TemperatureConfigResponse toDto() {
+        return TemperatureConfigResponse.builder()
                 .configId(configId)
                 .targetValue(targetValue)
                 .deviationValue(deviationValue)

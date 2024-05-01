@@ -1,6 +1,6 @@
-package live.databo3.sensor.general_config.dto.request.register;
+package live.databo3.sensor.sensor_config.dto.request.register;
 
-import live.databo3.sensor.general_config.dto.request.SensorConfigRequest;
+import live.databo3.sensor.sensor_config.dto.request.SensorConfigRequest;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

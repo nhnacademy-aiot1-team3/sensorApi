@@ -1,4 +1,4 @@
-package live.databo3.sensor.general_config.dto.response;
+package live.databo3.sensor.sensor_config.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

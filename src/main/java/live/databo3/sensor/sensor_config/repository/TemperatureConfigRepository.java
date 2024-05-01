@@ -1,6 +1,6 @@
-package live.databo3.sensor.general_config.repository;
+package live.databo3.sensor.sensor_config.repository;
 
-import live.databo3.sensor.general_config.entity.TemperatureConfig;
+import live.databo3.sensor.sensor_config.entity.TemperatureConfig;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

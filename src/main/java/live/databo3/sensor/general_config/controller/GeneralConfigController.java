@@ -38,7 +38,7 @@ public class GeneralConfigController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GeneralConfigResponse>> getGeneralConfigList(@RequestParam String organizationName) {
+    public ResponseEntity<List<GeneralConfigResponse>> getGeneralConfigByOrganizationName(@RequestParam String organizationName) {
         List<GeneralConfig> generalConfigList = generalConfigService.findGeneralConfigByOrganizationName(organizationName);
         List<GeneralConfigResponse> generalConfigResponseList = new ArrayList<>();
         for (GeneralConfig generalConfig : generalConfigList) {

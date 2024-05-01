@@ -1,9 +1,10 @@
-package live.databo3.sensor.general_config.controller;
+package live.databo3.sensor.sensor_config.controller;
 
-import live.databo3.sensor.general_config.dto.request.register.RegisterTemperatureConfigRequest;
-import live.databo3.sensor.general_config.dto.response.TemperatureConfigResponse;
-import live.databo3.sensor.general_config.entity.TemperatureConfig;
-import live.databo3.sensor.general_config.service.TemperatureConfigService;
+import live.databo3.sensor.sensor_config.dto.request.modify.ModifyTemperatureConfigRequest;
+import live.databo3.sensor.sensor_config.dto.request.register.RegisterTemperatureConfigRequest;
+import live.databo3.sensor.sensor_config.dto.response.TemperatureConfigResponse;
+import live.databo3.sensor.sensor_config.entity.TemperatureConfig;
+import live.databo3.sensor.sensor_config.service.TemperatureConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class TemperatureConfigController {
     }
 
     @PostMapping("/modify")
-    public ResponseEntity<TemperatureConfigResponse> modifyTemperatureConfig(@RequestBody RegisterTemperatureConfigRequest request) {
+    public ResponseEntity<TemperatureConfigResponse> modifyTemperatureConfig(@RequestBody ModifyTemperatureConfigRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(temperatureConfigService.modifyTemperatureConfig(request));
     }
 

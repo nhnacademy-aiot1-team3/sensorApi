@@ -1,9 +1,10 @@
-package live.databo3.sensor.general_config.controller;
+package live.databo3.sensor.sensor_config.controller;
 
-import live.databo3.sensor.general_config.dto.request.register.RegisterHumidityConfigRequest;
-import live.databo3.sensor.general_config.dto.response.HumidityConfigResponse;
-import live.databo3.sensor.general_config.entity.HumidityConfig;
-import live.databo3.sensor.general_config.service.HumidityConfigService;
+import live.databo3.sensor.sensor_config.dto.request.modify.ModifyHumidityConfigRequest;
+import live.databo3.sensor.sensor_config.dto.request.register.RegisterHumidityConfigRequest;
+import live.databo3.sensor.sensor_config.dto.response.HumidityConfigResponse;
+import live.databo3.sensor.sensor_config.entity.HumidityConfig;
+import live.databo3.sensor.sensor_config.service.HumidityConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class HumidityConfigController {
     }
 
     @PostMapping("/modify")
-    public ResponseEntity<HumidityConfigResponse> modifyHumidityConfig(@RequestBody RegisterHumidityConfigRequest request) {
+    public ResponseEntity<HumidityConfigResponse> modifyHumidityConfig(@RequestBody ModifyHumidityConfigRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(humidityConfigService.modifyHumidityConfig(request));
     }
 
