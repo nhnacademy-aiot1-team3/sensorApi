@@ -1,0 +1,18 @@
+package live.databo3.sensor.value_config.repository;
+
+import live.databo3.sensor.value_config.entity.ValueConfig;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface ValueConfigRepository extends JpaRepository<ValueConfig, Long> {
+
+    boolean existsByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(String sensorSn, Integer organizationId, Integer sensorType);
+
+    Optional<ValueConfig> findByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeIdAndValueConfigNumber(String sensorSn, Integer organizationId, Integer sensorType, Long valueConfigNumber);
+
+    void deleteByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeIdAndValueConfigNumber(String sensorSn, Integer organizationId, Integer sensorType, Long valueConfigNumber);
+
+    List<ValueConfig> findAllByGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationId(Integer organizationId);
+}

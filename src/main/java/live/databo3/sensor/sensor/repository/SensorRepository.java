@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SensorRepository extends JpaRepository<Sensor, String> {
-    Optional<SensorDto> findSensorBySensorSn(String sensorSn);
+    Optional<Sensor> findBySensorSnAndOrganization_OrganizationId(String sensorSn, Integer organizationId);
+    Optional<SensorDto> findOneBySensorSnAndOrganization_OrganizationId(String sensorSn, Integer organizationId);
     List<SensorDto> findAllByOrganization_OrganizationId(Integer organizationId);
+    boolean existsBySensorSnAndOrganization_OrganizationId(String sensorSn, Integer organizationId);
 }

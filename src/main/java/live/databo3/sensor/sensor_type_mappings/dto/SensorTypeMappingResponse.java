@@ -1,4 +1,4 @@
-package live.databo3.sensor.sensor.dto;
+package live.databo3.sensor.sensor_type_mappings.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SensorResponse {
+public class SensorTypeMappingResponse {
+    private Long recordNumber;
     private String sensorSn;
-    private String sensorName;
-    private String sensorPlace;
+    private Integer sensorTypeId;
 }
-

@@ -1,0 +1,31 @@
+### 센서 등록
+POST http://localhost:8080/api/sensor/org/1/sensor
+Content-Type: application/json
+
+{
+  "sensorSn": "hum02",
+  "sensorName": "온도1",
+  "sensorPlace": "강의실A"
+}
+
+
+### 센서 수정
+PUT http://localhost:8080/api/sensor/org/1/sensor/hum02
+Content-Type: application/json
+
+{
+  "sensorName": "습도2",
+  "sensorPlace": "강의실A"
+}
+
+
+### 센서 조회
+GET http://localhost:8080/api/sensor/org/1/sensor/hum02
+
+
+### 특정 조직의 센서 목록 조회
+GET http://localhost:8080/api/sensor/org/1/sensor/all
+
+
+### 센서 삭제
+DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02
