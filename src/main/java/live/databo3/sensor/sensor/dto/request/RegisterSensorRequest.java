@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterSensorRequest {
     private String sensorSn;
-    private Integer organizationId;
-    private Integer sensorTypeId;
     private String sensorName;
     private String sensorPlace;
 }

@@ -2,17 +2,16 @@ package live.databo3.sensor.general_config.repository;
 
 import live.databo3.sensor.general_config.entity.GeneralConfig;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface GeneralConfigRepository extends JpaRepository<GeneralConfig, Long> {
-    @Query("SELECT g.sensor.organization.organizationName FROM GeneralConfig g WHERE g.configId = :configId")
-    String findOrganizationNameByConfigId(@Param("configId") Long configId);
 
-    List<GeneralConfig> findAllBySensor_Organization_OrganizationName(String name);
+    List<GeneralConfig> findAllBySensorTypeMappings_Sensor_Organization_OrganizationId(Integer organizationId);
+    boolean existsBySensorTypeMappings_Sensor_SensorSnAndSensorTypeMappings_Sensor_Organization_OrganizationIdAndSensorTypeMappings_SensorType_SensorTypeId(String sensorSn, Integer organizationId, Integer sensorTypeId);
 
-    @Query("select case when count(g)>0 then true else false end from GeneralConfig g where lower(g.sensor.sensorSn) like lower(:sensorSn)")
-    boolean existsBySensorSn(String sensorSn);
+    Optional<GeneralConfig> findBySensorTypeMappings_Sensor_SensorSnAndSensorTypeMappings_Sensor_Organization_organizationIdAndSensorTypeMappings_SensorType_SensorTypeId(String sensorSn, Integer organizationId, Integer sensorTypeId);
+
+    void deleteBySensorTypeMappings_Sensor_SensorSnAndSensorTypeMappings_Sensor_Organization_organizationIdAndSensorTypeMappings_SensorType_SensorTypeId(String sensorSn, Integer organizationId, Integer sensorTypeId);
 }

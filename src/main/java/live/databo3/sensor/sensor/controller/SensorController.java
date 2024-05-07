@@ -13,35 +13,35 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sensor/sensor")
+@RequestMapping("/api/sensor/org/{organizationId}/sensor")
 @RequiredArgsConstructor
 public class SensorController {
 
     private final SensorService sensorService;
 
-    @PostMapping("/register")
-    public ResponseEntity<SensorResponse> createSensor(@RequestBody RegisterSensorRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(sensorService.registerSensor(request));
+    @PostMapping
+    public ResponseEntity<SensorResponse> createSensor(@PathVariable Integer organizationId, @RequestBody RegisterSensorRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(sensorService.registerSensor(organizationId, request));
     }
 
-    @GetMapping
-    public ResponseEntity<List<SensorDto>> getSensorList(@RequestParam Integer organizationId) {
+    @GetMapping("/all")
+    public ResponseEntity<List<SensorDto>> getSensorList(@PathVariable Integer organizationId) {
         return ResponseEntity.ok(sensorService.getSensors(organizationId));
     }
 
     @GetMapping("/{sensorSn}")
-    public ResponseEntity<SensorDto> getSensor(@PathVariable String sensorSn) {
-        return ResponseEntity.ok(sensorService.getSensor(sensorSn));
+    public ResponseEntity<SensorDto> getSensor(@PathVariable Integer organizationId, @PathVariable String sensorSn) {
+        return ResponseEntity.ok(sensorService.getSensor(organizationId, sensorSn));
     }
 
-    @PostMapping("/modify")
-    public ResponseEntity<SensorResponse> modifySensor(@RequestBody ModifySensorRequest request) {
-        return ResponseEntity.ok(sensorService.modifySensor(request));
+    @PutMapping({"/{sensorSn}"})
+    public ResponseEntity<SensorResponse> modifySensor(@PathVariable Integer organizationId, @PathVariable String sensorSn, @RequestBody ModifySensorRequest request) {
+        return ResponseEntity.ok(sensorService.modifySensor(organizationId, sensorSn, request));
     }
 
     @DeleteMapping("/{sensorSn}")
-    public ResponseEntity<Void> deleteSensor(@PathVariable String sensorSn) {
-        sensorService.deleteSensor(sensorSn);
+    public ResponseEntity<Void> deleteSensor(@PathVariable Integer organizationId, @PathVariable String sensorSn) {
+        sensorService.deleteSensor(organizationId, sensorSn);
         return ResponseEntity.ok(null);
     }
 }
