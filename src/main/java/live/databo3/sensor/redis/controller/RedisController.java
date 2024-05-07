@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/sensor/redis")
+@RequestMapping("/org")
 public class RedisController {
 
     private final RedisRefresher redisRefresher;
 
-    @GetMapping("/{organizationName}")
+    @GetMapping("/{organizationName}/config")
     public void refreshRedis(@PathVariable String organizationName) throws JsonProcessingException {
         redisRefresher.refreshRedisWithOrganizationName(organizationName);
     }

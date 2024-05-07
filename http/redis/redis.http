@@ -1,4 +1,4 @@
-GET http://localhost:8080/api/sensor/redis/nhnacademy1
+GET http://localhost:8080/org/nhnacademy1/config
 Accept: application/json
 
 ###
