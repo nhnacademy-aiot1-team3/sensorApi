@@ -1,0 +1,4 @@
+GET http://localhost:8080/api/sensor/redis/nhnacademy1
+Accept: application/json
+
+###

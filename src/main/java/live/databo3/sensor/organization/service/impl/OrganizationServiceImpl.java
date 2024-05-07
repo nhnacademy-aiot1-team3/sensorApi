@@ -1,6 +1,7 @@
 package live.databo3.sensor.organization.service.impl;
 
 import live.databo3.sensor.exception.OrganizationAlreadyExists;
+import live.databo3.sensor.exception.not_exist_exception.OrganizationNameNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
 import live.databo3.sensor.organization.dto.RegisterOrganizationRequest;
 import live.databo3.sensor.organization.dto.RegisterOrganizationResponse;
@@ -30,6 +31,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 
     public String findNameById(Integer organizationId) {
         return organizationRepository.findOrganizationNameByOrganizationId(organizationId).orElseThrow(() -> new OrganizationNotExistException(organizationId)).getOrganizationName();
+    }
+
+    public Integer findIdByName(String organizationName) {
+        return organizationRepository.findOrganizationIdByOrganizationName(organizationName).orElseThrow(() -> new OrganizationNameNotExistException(organizationName)).getOrganizationId();
     }
 
     public List<Integer> findIdList() {

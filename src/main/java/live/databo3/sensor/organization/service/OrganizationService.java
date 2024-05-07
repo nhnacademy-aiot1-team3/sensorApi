@@ -9,4 +9,5 @@ public interface OrganizationService {
     RegisterOrganizationResponse registerOrganization(RegisterOrganizationRequest request);
     String findNameById(Integer organizationId);
     List<Integer> findIdList();
+    Integer findIdByName(String organizationName);
 }
