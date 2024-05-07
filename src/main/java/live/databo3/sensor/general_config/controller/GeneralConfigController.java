@@ -1,9 +1,9 @@
 package live.databo3.sensor.general_config.controller;
 
+import live.databo3.sensor.general_config.dto.GeneralConfigDto;
 import live.databo3.sensor.general_config.dto.request.ModifyGeneralConfigRequest;
 import live.databo3.sensor.general_config.dto.request.RegisterGeneralConfigRequest;
 import live.databo3.sensor.general_config.dto.response.GeneralConfigResponse;
-import live.databo3.sensor.general_config.entity.GeneralConfig;
 import live.databo3.sensor.general_config.service.GeneralConfigService;
 
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,12 +42,8 @@ public class GeneralConfigController {
         if (!sensorSn.equals("all")) {
             return ResponseEntity.ok(generalConfigService.getGeneralConfig(organizationId, sensorSn, sensorTypeId));
         }
-        List<GeneralConfig> generalConfigList = generalConfigService.findGeneralConfigByOrganizationId(organizationId);
-        List<GeneralConfigResponse> generalConfigResponseList = new ArrayList<>();
-        for (GeneralConfig generalConfig : generalConfigList) {
-            generalConfigResponseList.add(generalConfig.toDto());
-        }
-        return ResponseEntity.ok(generalConfigResponseList);
+        List<GeneralConfigDto> generalConfigDtoList = generalConfigService.findGeneralConfigByOrganizationId(organizationId);
 
+        return ResponseEntity.ok(generalConfigDtoList);
     }
 }

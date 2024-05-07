@@ -1,5 +1,6 @@
 package live.databo3.sensor.general_config.service;
 
+import live.databo3.sensor.general_config.dto.GeneralConfigDto;
 import live.databo3.sensor.general_config.dto.request.ModifyGeneralConfigRequest;
 import live.databo3.sensor.general_config.dto.request.RegisterGeneralConfigRequest;
 import live.databo3.sensor.general_config.dto.response.GeneralConfigResponse;
@@ -15,7 +16,7 @@ public interface GeneralConfigService {
     GeneralConfigResponse getGeneralConfig(Integer organizationId, String sensorSn, Integer sensorTypeId);
 
 
-    List<GeneralConfig> findGeneralConfigByOrganizationId(Integer organizationId);
+    List<GeneralConfigDto> findGeneralConfigByOrganizationId(Integer organizationId);
 
     void deleteGeneralConfig(Integer organizationId, String sensorSn, Integer sensorTypeId);
 }

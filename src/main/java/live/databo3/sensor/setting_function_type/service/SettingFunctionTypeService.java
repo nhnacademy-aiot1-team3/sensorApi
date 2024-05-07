@@ -1,8 +1,8 @@
-package live.databo3.sensor.settingFunctionType.service;
+package live.databo3.sensor.setting_function_type.service;
 
-import live.databo3.sensor.settingFunctionType.dto.request.ModifySettingFunctionTypeRequest;
-import live.databo3.sensor.settingFunctionType.dto.request.RegisterSettingFunctionTypeRequest;
-import live.databo3.sensor.settingFunctionType.entity.SettingFunctionType;
+import live.databo3.sensor.setting_function_type.dto.request.ModifySettingFunctionTypeRequest;
+import live.databo3.sensor.setting_function_type.dto.request.RegisterSettingFunctionTypeRequest;
+import live.databo3.sensor.setting_function_type.entity.SettingFunctionType;
 
 import java.util.List;
 

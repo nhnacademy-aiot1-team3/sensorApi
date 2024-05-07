@@ -2,7 +2,7 @@ package live.databo3.sensor.general_config.entity;
 
 import live.databo3.sensor.general_config.dto.response.GeneralConfigResponse;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
-import live.databo3.sensor.settingFunctionType.entity.SettingFunctionType;
+import live.databo3.sensor.setting_function_type.entity.SettingFunctionType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

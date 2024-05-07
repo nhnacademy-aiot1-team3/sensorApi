@@ -24,6 +24,15 @@ public class ValueConfigController {
         return ResponseEntity.ok(valueConfigService.modifyValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber, request));
     }
 
+    // todo
+    @GetMapping
+    public ResponseEntity<?> getValueConfigs(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
+        if (sensorSn.equals("all")) {
+            return ResponseEntity.ok(valueConfigService.getValueConfigListByOrganizationId(organizationId));
+        }
+        else return null;
+    }
+
     @GetMapping("/{valueConfigNumber}")
     public ResponseEntity<ValueConfigResponse> getValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @PathVariable Long valueConfigNumber) {
         return ResponseEntity.ok(valueConfigService.getValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber));

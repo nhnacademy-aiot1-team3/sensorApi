@@ -1,4 +1,4 @@
-package live.databo3.sensor.settingFunctionType.entity;
+package live.databo3.sensor.setting_function_type.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

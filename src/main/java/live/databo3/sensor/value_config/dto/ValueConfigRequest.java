@@ -1,6 +1,5 @@
 package live.databo3.sensor.value_config.dto;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

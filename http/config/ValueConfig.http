@@ -9,7 +9,7 @@ Content-Type: application/json
 
 
 ### 사용자 설정 수정
-PUT http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/1
+PUT http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/4
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 
 ### 사용자 설정 조회
-GET http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/1
+GET http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/4
 Content-Type: application/json
 
 
@@ -28,5 +28,5 @@ GET http://localhost:8080/api/sensor/org/1/sensor/all/type/2/value
 
 
 ### 사용자 설정 삭제
-DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/1
+DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/4
 

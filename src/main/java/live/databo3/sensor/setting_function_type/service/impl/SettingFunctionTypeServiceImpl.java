@@ -1,11 +1,11 @@
-package live.databo3.sensor.settingFunctionType.service.impl;
+package live.databo3.sensor.setting_function_type.service.impl;
 
 import live.databo3.sensor.exception.not_exist_exception.SettingFunctionTypeNotExistException;
-import live.databo3.sensor.settingFunctionType.dto.request.ModifySettingFunctionTypeRequest;
-import live.databo3.sensor.settingFunctionType.dto.request.RegisterSettingFunctionTypeRequest;
-import live.databo3.sensor.settingFunctionType.entity.SettingFunctionType;
-import live.databo3.sensor.settingFunctionType.repository.SettingFunctionTypeRepository;
-import live.databo3.sensor.settingFunctionType.service.SettingFunctionTypeService;
+import live.databo3.sensor.setting_function_type.dto.request.ModifySettingFunctionTypeRequest;
+import live.databo3.sensor.setting_function_type.dto.request.RegisterSettingFunctionTypeRequest;
+import live.databo3.sensor.setting_function_type.entity.SettingFunctionType;
+import live.databo3.sensor.setting_function_type.repository.SettingFunctionTypeRepository;
+import live.databo3.sensor.setting_function_type.service.SettingFunctionTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

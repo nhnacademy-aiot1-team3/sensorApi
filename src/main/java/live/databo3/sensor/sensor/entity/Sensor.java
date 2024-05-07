@@ -2,7 +2,6 @@ package live.databo3.sensor.sensor.entity;
 
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.sensor.dto.SensorResponse;
-import live.databo3.sensor.sensor_type.entity.SensorType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
