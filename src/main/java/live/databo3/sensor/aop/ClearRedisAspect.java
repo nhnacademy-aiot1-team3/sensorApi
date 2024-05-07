@@ -1,10 +1,7 @@
 package live.databo3.sensor.aop;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import live.databo3.sensor.exception.IllegalRefreshRedisUsageException;
-import live.databo3.sensor.general_config.service.GeneralConfigService;
 import live.databo3.sensor.organization.service.OrganizationService;
-import live.databo3.sensor.value_config.service.ValueConfigService;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,7 +20,7 @@ public class ClearRedisAspect {
     private final RedisTemplate<String, Object> redisTemplate;
     private final OrganizationService organizationService;
 
-    public ClearRedisAspect(RedisTemplate<String, Object> redisTemplate, GeneralConfigService generalConfigService, ValueConfigService valueConfigService, OrganizationService organizationService, ObjectMapper objectMapper) {
+    public ClearRedisAspect(RedisTemplate<String, Object> redisTemplate, OrganizationService organizationService) {
         this.redisTemplate = redisTemplate;
         this.organizationService = organizationService;
     }
