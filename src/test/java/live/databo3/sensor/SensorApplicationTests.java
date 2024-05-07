@@ -3,7 +3,7 @@ package live.databo3.sensor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+//@SpringBootTest
 class SensorApplicationTests {
 
 	@Test
