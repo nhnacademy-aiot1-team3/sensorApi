@@ -2,7 +2,6 @@ package live.databo3.sensor.sensor.entity;
 
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.sensor.dto.SensorResponse;
-import live.databo3.sensor.sensor_type.entity.SensorType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,17 +30,11 @@ public class Sensor {
     @JoinColumn(name = "organization_id")
     private Organization organization;
 
-    @ManyToOne
-    @JoinColumn(name = "sensor_type_id")
-    private SensorType sensorType;
-
     public SensorResponse toDto() {
         return SensorResponse.builder()
                 .sensorSn(sensorSn)
                 .sensorName(sensorName)
                 .sensorPlace(sensorPlace)
-                .organizationId(organization.getOrganizationId())
-                .sensorTypeId(sensorType.getSensorTypeId())
                 .build();
     }
 

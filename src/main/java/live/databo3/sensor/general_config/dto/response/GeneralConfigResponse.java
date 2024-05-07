@@ -12,8 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GeneralConfigResponse {
-    private Long configId;
-    private String sensorSn;
+    private Long recordNumber;
     private Long functionId;
     private LocalDateTime lastUpdateDate;
 }

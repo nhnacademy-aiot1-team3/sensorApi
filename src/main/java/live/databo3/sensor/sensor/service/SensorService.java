@@ -8,9 +8,9 @@ import live.databo3.sensor.sensor.dto.SensorResponse;
 import java.util.List;
 
 public interface SensorService {
-    SensorResponse registerSensor(RegisterSensorRequest request);
-    SensorResponse modifySensor(ModifySensorRequest request);
+    SensorResponse registerSensor(Integer organizationId, RegisterSensorRequest request);
+    SensorResponse modifySensor(Integer organizationId, String sensorSn, ModifySensorRequest request);
     List<SensorDto> getSensors(Integer organizationId);
-    SensorDto getSensor(String sensorSn);
-    void deleteSensor(String sensorSn);
+    SensorDto getSensor(Integer organizationId, String sensorSn);
+    void deleteSensor(Integer organizationId, String sensorSn);
 }

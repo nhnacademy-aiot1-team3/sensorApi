@@ -6,9 +6,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ModifySensorRequest {
-    String sensorSn;
-    Integer sensorTypeId;
-    Integer organizationId;
     String sensorName;
     String sensorPlace;
 }

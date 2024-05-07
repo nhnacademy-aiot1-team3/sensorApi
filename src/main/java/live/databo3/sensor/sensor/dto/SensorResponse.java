@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SensorResponse {
     private String sensorSn;
-    private Integer organizationId;
-    private Integer sensorTypeId;
     private String sensorName;
     private String sensorPlace;
 }
