@@ -1,6 +1,5 @@
 package live.databo3.sensor.listener;
 
-import live.databo3.sensor.annotations.RefreshRedis;
 import live.databo3.sensor.organization.service.OrganizationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationStartedEvent;

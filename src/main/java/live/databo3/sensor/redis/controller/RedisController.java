@@ -1,7 +1,7 @@
 package live.databo3.sensor.redis.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import live.databo3.sensor.redis.service.RedisRefresher;
+import live.databo3.sensor.redis.service.RedisReloader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/org")
 public class RedisController {
 
-    private final RedisRefresher redisRefresher;
+    private final RedisReloader redisRefresher;
 
     @GetMapping("/{organizationName}/config")
-    public void refreshRedis(@PathVariable String organizationName) throws JsonProcessingException {
-        redisRefresher.refreshRedisWithOrganizationName(organizationName);
+    public void reloadRedis(@PathVariable String organizationName) throws JsonProcessingException {
+        redisRefresher.reloadRedisWithOrganizationName(organizationName);
     }
 }

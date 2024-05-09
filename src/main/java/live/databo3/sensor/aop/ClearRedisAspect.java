@@ -2,6 +2,7 @@ package live.databo3.sensor.aop;
 
 import live.databo3.sensor.exception.IllegalRefreshRedisUsageException;
 import live.databo3.sensor.organization.service.OrganizationService;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -14,6 +15,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Objects;
 
+@Slf4j
 @Aspect
 @Component
 public class ClearRedisAspect {
@@ -25,7 +27,7 @@ public class ClearRedisAspect {
         this.organizationService = organizationService;
     }
 
-    @Pointcut("@annotation(live.databo3.sensor.annotations.RefreshRedis)")
+    @Pointcut("@annotation(live.databo3.sensor.annotations.ClearRedis)")
     public void databaseChangeOperation() {}
 
     @Around("databaseChangeOperation()")
@@ -50,6 +52,7 @@ public class ClearRedisAspect {
         String organizationName = organizationService.findNameById(organizationId);
         redisTemplate.delete(organizationName);
 
+        log.debug("redis cleared, key: " + organizationName);
         return retVal;
     }
 }

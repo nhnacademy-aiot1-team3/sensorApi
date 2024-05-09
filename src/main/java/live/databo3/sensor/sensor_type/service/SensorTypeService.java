@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SensorTypeService {
     SensorType registerSensorType(RegisterSensorTypeRequest request);
-    SensorType modifySensorType(ModifySensorTypeRequest request);
+    SensorType modifySensorType(Integer sensorTypeId, ModifySensorTypeRequest request);
     List<SensorType> getSensorTypes();
     void deleteSensorTypes(Integer sensorTypeId);
 }

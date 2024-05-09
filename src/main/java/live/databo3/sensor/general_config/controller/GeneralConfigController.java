@@ -1,5 +1,6 @@
 package live.databo3.sensor.general_config.controller;
 
+import live.databo3.sensor.annotations.CheckPermission;
 import live.databo3.sensor.general_config.dto.GeneralConfigDto;
 import live.databo3.sensor.general_config.dto.request.ModifyGeneralConfigRequest;
 import live.databo3.sensor.general_config.dto.request.RegisterGeneralConfigRequest;
@@ -38,6 +39,7 @@ public class GeneralConfigController {
 
     // todo 센서 타입 별로 조회 기능 추가할 것
     @GetMapping
+    @CheckPermission
     public ResponseEntity<?> getGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         if (!sensorSn.equals("all")) {
             return ResponseEntity.ok(generalConfigService.getGeneralConfig(organizationId, sensorSn, sensorTypeId));

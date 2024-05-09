@@ -37,6 +37,9 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
 
     @Transactional
     public SensorTypeMappingResponse modifySensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId, ModifySensorTypeMappingRequest request) {
+        if (sensorTypeMappingRepository.existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, request.getSensorTypeId())) {
+            throw new SensorTypeMappingAlreadyExistException(sensorSn, sensorTypeId);
+        }
         SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.findBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new SensorTypeMappingNotExistException(sensorSn, sensorTypeId));
         SensorType sensorType = sensorTypeRepository.findById(request.getSensorTypeId()).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeId));
         sensorTypeMappings.setSensorType(sensorType);

@@ -1,5 +1,5 @@
 ### 설정 기능 타입 등록
-POST http://localhost:8080/api/sensor/settingFunction/register
+POST http://localhost:8080/api/sensor/settingFunction
 Content-Type: application/json
 
 {
@@ -8,12 +8,11 @@ Content-Type: application/json
 
 
 ### 설정 기능 타입 수정
-POST http://localhost:8080/api/sensor/settingFunction/modify
+PUT http://localhost:8080/api/sensor/settingFunction/7
 Content-Type: application/json
 
 {
-  "functionId": 4,
-  "functionName": "ai1"
+  "functionName": "ai3"
 }
 
 
@@ -23,4 +22,4 @@ Content-Type: application/json
 
 
 ### 센서 타입 삭제
-DELETE http://localhost:8080/api/sensor/settingFunction/4
+DELETE http://localhost:8080/api/sensor/settingFunction/9

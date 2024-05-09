@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ModifyGeneralConfigRequest {
     Long functionId;
+    String deviceSn;
 }
