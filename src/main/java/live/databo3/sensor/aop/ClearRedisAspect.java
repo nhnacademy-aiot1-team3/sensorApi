@@ -1,6 +1,5 @@
 package live.databo3.sensor.aop;
 
-import live.databo3.sensor.exception.IllegalRefreshRedisUsageException;
 import live.databo3.sensor.organization.service.OrganizationService;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -73,7 +72,7 @@ public class ClearRedisAspect {
         Object retVal = pjp.proceed();
 
         if (!Objects.nonNull(organizationId)) {
-            throw new IllegalRefreshRedisUsageException("no organizationId");
+            throw new NullPointerException("no organizationId");
         }
         String organizationName = organizationService.findNameById(organizationId);
         redisTemplate.delete(organizationName);

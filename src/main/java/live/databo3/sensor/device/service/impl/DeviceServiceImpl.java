@@ -21,6 +21,7 @@ import java.util.List;
 
 /**
  * device entity 관련 service
+ * CRUD 와 더불어 알맞은 조직의 device 를 요청했는지 쿼리를 통해 무결성을 검증하는 역할을 포함한다.
  *
  * @author : 강경훈
  * @version : 1.0.0
