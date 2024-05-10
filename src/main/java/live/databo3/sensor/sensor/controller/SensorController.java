@@ -1,6 +1,5 @@
 package live.databo3.sensor.sensor.controller;
 
-import live.databo3.sensor.annotations.CheckPermission;
 import live.databo3.sensor.sensor.dto.SensorDto;
 import live.databo3.sensor.sensor.dto.request.ModifySensorRequest;
 import live.databo3.sensor.sensor.dto.request.RegisterSensorRequest;
@@ -21,7 +20,6 @@ public class SensorController {
     private final SensorService sensorService;
 
     @PostMapping
-    @CheckPermission
     public ResponseEntity<SensorResponse> createSensor(@PathVariable Integer organizationId, @RequestBody RegisterSensorRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sensorService.registerSensor(organizationId, request));
     }
