@@ -1,11 +1,11 @@
 package live.databo3.sensor.listener;
 
-import live.databo3.sensor.annotations.RefreshRedis;
+import live.databo3.sensor.annotations.ClearRedis;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RedisInitializer {
-    @RefreshRedis
+    @ClearRedis
     public void redisInitialize(Integer organizationId) {
     }
 }

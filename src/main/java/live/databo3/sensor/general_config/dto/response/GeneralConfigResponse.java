@@ -15,4 +15,5 @@ public class GeneralConfigResponse {
     private Long recordNumber;
     private Long functionId;
     private LocalDateTime lastUpdateDate;
+    private String deviceSn;
 }

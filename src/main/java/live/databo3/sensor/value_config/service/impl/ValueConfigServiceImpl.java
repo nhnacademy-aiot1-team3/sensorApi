@@ -1,6 +1,6 @@
 package live.databo3.sensor.value_config.service.impl;
 
-import live.databo3.sensor.annotations.RefreshRedis;
+import live.databo3.sensor.annotations.ClearRedis;
 import live.databo3.sensor.exception.already_exist_exception.ValueConfigAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.GeneralConfigNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeNotExistException;
@@ -26,7 +26,6 @@ public class ValueConfigServiceImpl implements ValueConfigService {
     private final GeneralConfigRepository generalConfigRepository;
     private final ValueConfigRepository valueConfigRepository;
 
-
     public ValueConfigServiceImpl(SensorTypeRepository sensorTypeRepository, GeneralConfigRepository generalConfigRepository, ValueConfigRepository valueConfigRepository) {
         this.sensorTypeRepository = sensorTypeRepository;
         this.generalConfigRepository = generalConfigRepository;
@@ -35,7 +34,7 @@ public class ValueConfigServiceImpl implements ValueConfigService {
 
     private final List<String> manyToOneTypes = List.of("magnetic");
 
-    @RefreshRedis
+    @ClearRedis
     public ValueConfigResponse createValueConfig(Integer organizationId, String sensorSn, Integer sensorTypeId, ValueConfigRequest request) {
         if (!manyToOneTypes.contains(sensorTypeRepository.findById(sensorTypeId).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeId)).getSensorType())
                 && valueConfigRepository.existsByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId)) {
@@ -48,7 +47,7 @@ public class ValueConfigServiceImpl implements ValueConfigService {
     }
 
     @Transactional
-    @RefreshRedis
+    @ClearRedis
     public ValueConfigResponse modifyValueConfig(Integer organizationId, String sensorSn, Integer sensorTypeId, Long valueConfigNumber, ValueConfigRequest request) {
         ValueConfig valueConfig = valueConfigRepository.findByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeIdAndValueConfigNumber(sensorSn, organizationId, sensorTypeId, valueConfigNumber).orElseThrow(() -> new ValueConfigNotExistException(valueConfigNumber));
 
@@ -59,7 +58,7 @@ public class ValueConfigServiceImpl implements ValueConfigService {
     }
 
     @Transactional
-    @RefreshRedis
+    @ClearRedis
     public void deleteValueConfig(Integer organizationId, String sensorSn, Integer sensorTypeId, Long valueConfigNumber) {
         if (!valueConfigRepository.existsByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId) && valueConfigRepository.existsById(valueConfigNumber)) {
             throw new ValueConfigNotExistException(valueConfigNumber);

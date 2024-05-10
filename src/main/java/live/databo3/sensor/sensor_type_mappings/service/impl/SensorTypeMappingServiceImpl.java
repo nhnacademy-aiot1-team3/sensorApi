@@ -1,5 +1,6 @@
 package live.databo3.sensor.sensor_type_mappings.service.impl;
 
+import live.databo3.sensor.annotations.ClearRedis;
 import live.databo3.sensor.exception.already_exist_exception.SensorTypeMappingAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeMappingNotExistException;
@@ -36,7 +37,11 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
     }
 
     @Transactional
+    @ClearRedis
     public SensorTypeMappingResponse modifySensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId, ModifySensorTypeMappingRequest request) {
+        if (sensorTypeMappingRepository.existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, request.getSensorTypeId())) {
+            throw new SensorTypeMappingAlreadyExistException(sensorSn, sensorTypeId);
+        }
         SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.findBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new SensorTypeMappingNotExistException(sensorSn, sensorTypeId));
         SensorType sensorType = sensorTypeRepository.findById(request.getSensorTypeId()).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeId));
         sensorTypeMappings.setSensorType(sensorType);
@@ -49,6 +54,7 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
     }
 
     @Transactional
+    @ClearRedis
     public void deleteSensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId) {
         SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.findBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new SensorTypeMappingNotExistException(sensorSn, sensorTypeId));
         sensorTypeMappingRepository.deleteById(sensorTypeMappings.getRecordNumber());
