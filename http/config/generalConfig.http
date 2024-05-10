@@ -1,6 +1,7 @@
 ### 일반 설정 등록
 POST http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/general
 Content-Type: application/json
+X-USER-ID: owner
 
 {
   "functionId": 1
@@ -10,6 +11,7 @@ Content-Type: application/json
 ### 일반 설정 수정
 PUT http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/general
 Content-Type: application/json
+X-USER-ID: owner
 
 {
   "functionId": 2,
@@ -25,11 +27,13 @@ X-USER-ID: owner
 
 ### 특정 부서의 일반 설정 조회
 GET http://localhost:8080/api/sensor/org/1/sensor/all/type/2/general
-
+Content-Type: application/json
+X-USER-ID: owner
 
 ### 일반 설정 삭제
 DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/general
-
+Content-Type: application/json
+X-USER-ID: owner
 
 
 

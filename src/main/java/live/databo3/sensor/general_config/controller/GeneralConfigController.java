@@ -22,16 +22,19 @@ public class GeneralConfigController {
     private final GeneralConfigService generalConfigService;
 
     @PostMapping
+    @CheckPermission
     public ResponseEntity<GeneralConfigResponse> createGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody RegisterGeneralConfigRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(generalConfigService.registerGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
     @PutMapping
+    @CheckPermission
     public ResponseEntity<GeneralConfigResponse> modifyGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody ModifyGeneralConfigRequest request) {
         return ResponseEntity.ok(generalConfigService.modifyGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
     @DeleteMapping
+    @CheckPermission
     public ResponseEntity<Void> deleteGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         generalConfigService.deleteGeneralConfig(organizationId, sensorSn, sensorTypeId);
         return ResponseEntity.ok(null);

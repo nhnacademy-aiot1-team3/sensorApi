@@ -43,14 +43,13 @@ public class CheckPermissionAspect {
                 break;
             }
         }
-        Object retVal = pjp.proceed();
 
         if (!Objects.nonNull(organizationId)) {
             throw new IllegalRefreshRedisUsageException("no organizationId");
         }
-
         checkPermissionWithOrganizationId(organizationId);
-        return retVal;
+
+        return pjp.proceed();
     }
 
     public void checkPermissionWithOrganizationId(Integer organizationId) {
@@ -60,7 +59,7 @@ public class CheckPermissionAspect {
             String userId = request.getHeader("X-USER-ID");
             log.debug("permission checking: userId: " + userId + ", organizationId: " + organizationId);
             if (userId != null) {
-                if (!memberAdaptor.isAuthorizedAccess(userId, organizationId)) {
+                if (Boolean.FALSE.equals(memberAdaptor.isAuthorizedAccess(userId, organizationId).getBody())) {
                     throw new UnAuthorizedAccessException("허가되지 않은 접근입니다.");
                 }
             } else {

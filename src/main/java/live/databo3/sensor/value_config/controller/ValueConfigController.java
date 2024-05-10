@@ -1,5 +1,6 @@
 package live.databo3.sensor.value_config.controller;
 
+import live.databo3.sensor.annotations.CheckPermission;
 import live.databo3.sensor.value_config.dto.ValueConfigRequest;
 import live.databo3.sensor.value_config.dto.ValueConfigResponse;
 import live.databo3.sensor.value_config.service.ValueConfigService;
@@ -15,17 +16,20 @@ public class ValueConfigController {
     private final ValueConfigService valueConfigService;
 
     @PostMapping
+    @CheckPermission
     public ResponseEntity<ValueConfigResponse> createValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody ValueConfigRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(valueConfigService.createValueConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
     @PutMapping("/{valueConfigNumber}")
+    @CheckPermission
     public ResponseEntity<ValueConfigResponse> modifyValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @PathVariable Long valueConfigNumber, @RequestBody ValueConfigRequest request) {
         return ResponseEntity.ok(valueConfigService.modifyValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber, request));
     }
 
     // todo
     @GetMapping
+    @CheckPermission
     public ResponseEntity<?> getValueConfigs(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         if (sensorSn.equals("all")) {
             return ResponseEntity.ok(valueConfigService.getValueConfigListByOrganizationId(organizationId));
@@ -34,11 +38,13 @@ public class ValueConfigController {
     }
 
     @GetMapping("/{valueConfigNumber}")
+    @CheckPermission
     public ResponseEntity<ValueConfigResponse> getValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @PathVariable Long valueConfigNumber) {
         return ResponseEntity.ok(valueConfigService.getValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber));
     }
 
     @DeleteMapping("/{valueConfigNumber}")
+    @CheckPermission
     public ResponseEntity<Void> deleteValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @PathVariable Long valueConfigNumber) {
         valueConfigService.deleteValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber);
         return ResponseEntity.ok(null);

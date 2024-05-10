@@ -1,6 +1,7 @@
 ### 사용자 설정 등록
 POST http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value
 Content-Type: application/json
+X-USER-ID: owner
 
 {
   "firstEntry": "18",
@@ -19,14 +20,19 @@ Content-Type: application/json
 
 
 ### 사용자 설정 조회
-GET http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/4
+GET http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/7
 Content-Type: application/json
+X-USER-ID: owner
 
 
 ### 특정 부서의 사용자 설정 조회
 GET http://localhost:8080/api/sensor/org/1/sensor/all/type/2/value
+Content-Type: application/json
+X-USER-ID: owner
 
 
 ### 사용자 설정 삭제
-DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/4
+DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02/type/2/value/7
+Content-Type: application/json
+X-USER-ID: owner
 

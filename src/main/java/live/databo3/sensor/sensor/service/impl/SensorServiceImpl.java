@@ -1,5 +1,6 @@
 package live.databo3.sensor.sensor.service.impl;
 
+import live.databo3.sensor.annotations.ClearRedis;
 import live.databo3.sensor.exception.already_exist_exception.SensorAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
@@ -40,6 +41,7 @@ public class SensorServiceImpl implements SensorService {
     }
 
     @Transactional
+    @ClearRedis
     public SensorResponse modifySensor(Integer organizationId, String sensorSn, ModifySensorRequest request) {
         Sensor sensor = sensorRepository.findBySensorSnAndOrganization_OrganizationId(sensorSn, organizationId).orElseThrow(() -> new SensorNotExistException(sensorSn));
 
@@ -58,6 +60,7 @@ public class SensorServiceImpl implements SensorService {
     }
 
     @Transactional
+    @ClearRedis
     public void deleteSensor(Integer organizationId, String sensorSn) {
         if (!sensorRepository.existsBySensorSnAndOrganization_OrganizationId(sensorSn, organizationId)) {
             throw new SensorNotExistException(sensorSn);
