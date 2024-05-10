@@ -19,12 +19,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * sensor entity 관련 service
+ * CRUD 와 더불어 알맞은 조직의 sensor 를 요청했는지 쿼리를 통해 무결성을 검증하는 역할을 포함한다.
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Service
 @RequiredArgsConstructor
 public class SensorServiceImpl implements SensorService {
     private final SensorRepository sensorRepository;
     private final OrganizationRepository organizationRepository;
 
+    /**
+     * 이미 존재하는 sensor 인지 확인 한 후에 없다면 request 의 body 를 통해 생성한다.
+     * @since 1.0.0
+     */
     public SensorResponse registerSensor(Integer organizationId, RegisterSensorRequest request) {
         String sensorSn = request.getSensorSn();
         if (sensorRepository.existsById(sensorSn)) {
@@ -40,6 +51,10 @@ public class SensorServiceImpl implements SensorService {
         return sensor.toDto();
     }
 
+    /**
+     * sensor 를 조회하여 수정한다.
+     * @since 1.0.0
+     */
     @Transactional
     @ClearRedis
     public SensorResponse modifySensor(Integer organizationId, String sensorSn, ModifySensorRequest request) {
@@ -51,14 +66,26 @@ public class SensorServiceImpl implements SensorService {
         return sensor.toDto();
     }
 
+    /**
+     * 특정 조직에 속하는 device 들의 list 를 반환한다.
+     * @since 1.0.0
+     */
     public List<SensorDto> getSensors(Integer organizationId) {
         return sensorRepository.findAllByOrganization_OrganizationId(organizationId);
     }
 
+    /**
+     * sensor 정보 일부를 반환한다.
+     * @since 1.0.0
+     */
     public SensorDto getSensor(Integer organizationId, String sensorSn) {
         return sensorRepository.findOneBySensorSnAndOrganization_OrganizationId(sensorSn, organizationId).orElseThrow(() -> new SensorNotExistException(sensorSn));
     }
 
+    /**
+     * sensor 가 존재하는지 체크한 후 존재한다면 제거한다.
+     * @since 1.0.0
+     */
     @Transactional
     @ClearRedis
     public void deleteSensor(Integer organizationId, String sensorSn) {

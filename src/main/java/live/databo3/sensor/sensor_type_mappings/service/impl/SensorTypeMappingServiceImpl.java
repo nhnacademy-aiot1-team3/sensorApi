@@ -18,6 +18,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * sensorTypeMapping entity 관련 service
+ * CRUD 와 더불어 알맞은 조직의 sensorTypeMapping 을 요청했는지 쿼리를 통해 무결성을 검증하는 역할을 포함한다.
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Service
 @RequiredArgsConstructor
 public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
@@ -25,6 +32,11 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
     private final SensorRepository sensorRepository;
     private final SensorTypeRepository sensorTypeRepository;
 
+    /**
+     * sensorTypeMapping 을 등록한다.
+     * 이미 매핑이 존재하는지 확인 한 후 없다면 등록한다.
+     * @since 1.0.0
+     */
     public SensorTypeMappingResponse registerSensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId) {
         if (sensorTypeMappingRepository.existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId)) {
             throw new SensorTypeMappingAlreadyExistException(sensorSn, sensorTypeId);
@@ -36,6 +48,11 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
         return sensorTypeMappingRepository.save(sensorTypeMappings).toDto();
     }
 
+    /**
+     * sensorTypeMapping 을 수정한다.
+     * 조건에 맞는 sensorType 을 조회하여 수정한다.
+     * @since 1.0.0
+     */
     @Transactional
     @ClearRedis
     public SensorTypeMappingResponse modifySensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId, ModifySensorTypeMappingRequest request) {
@@ -48,11 +65,21 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
         return sensorTypeMappingRepository.save(sensorTypeMappings).toDto();
     }
 
+    /**
+     * sensorTypeMapping 을 조회한다.
+     * 조건에 맞는 sensorTypeMapping 을 조회하여 dto 를 반환한다.
+     * @since 1.0.0
+     */
     public SensorTypeMappingResponse getSensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId) {
         SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.findBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new SensorTypeMappingNotExistException(sensorSn, sensorTypeId));
         return sensorTypeMappings.toDto();
     }
 
+    /**
+     * sensorTypeMapping 을 삭제한다.
+     * 조건에 맞는 sensorTypeMapping 을 조회하여 삭제한다.
+     * @since 1.0.0
+     */
     @Transactional
     @ClearRedis
     public void deleteSensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId) {

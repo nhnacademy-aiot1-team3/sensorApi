@@ -16,6 +16,14 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * 특정 키값의 redis 갱신 요청이 들어왔을 때, redis 에 특정 키 값의 데이터를 넣어줍니다.
+ * 키값은 organizationName 이고,
+ * generalConfig 의 값 일부와 valueConfig 의 값 일부를 redis hash 구조에 담아 넣어줍니다.
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Slf4j
 @Component
 @RequiredArgsConstructor
