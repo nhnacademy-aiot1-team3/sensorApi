@@ -1,5 +1,6 @@
 package live.databo3.sensor.general_config.entity;
 
+import live.databo3.sensor.device.entity.Device;
 import live.databo3.sensor.general_config.dto.response.GeneralConfigResponse;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.setting_function_type.entity.SettingFunctionType;
@@ -31,6 +32,10 @@ public class GeneralConfig {
     @JoinColumn(name = "function_id")
     private SettingFunctionType settingFunctionType;
 
+    @ManyToOne
+    @JoinColumn(name = "device_sn")
+    private Device device;
+
     @Column(name = "last_update_date")
     private LocalDateTime lastUpdateDate;
 
@@ -39,6 +44,7 @@ public class GeneralConfig {
                 .recordNumber(recordNumber)
                 .functionId(settingFunctionType.getFunctionId())
                 .lastUpdateDate(lastUpdateDate)
+                .deviceSn(device == null ? null : device.getDeviceSn())
                 .build();
     }
 }

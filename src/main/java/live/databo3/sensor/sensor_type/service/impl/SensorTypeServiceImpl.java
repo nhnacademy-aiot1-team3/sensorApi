@@ -25,9 +25,7 @@ public class SensorTypeServiceImpl implements SensorTypeService {
     }
 
     @Transactional
-    public SensorType modifySensorType(ModifySensorTypeRequest request) {
-        Integer sensorTypeId = request.getSensorTypeId();
-
+    public SensorType modifySensorType(Integer sensorTypeId, ModifySensorTypeRequest request) {
         SensorType sensorType = sensorTypeRepository.findById(sensorTypeId).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeId));
         sensorType.setSensorType(request.getSensorType());
         return sensorType;

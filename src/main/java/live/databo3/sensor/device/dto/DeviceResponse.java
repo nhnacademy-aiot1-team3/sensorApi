@@ -1,4 +1,4 @@
-package live.databo3.sensor.general_config.dto;
+package live.databo3.sensor.device.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class GeneralConfigDto {
-    String sensorSn;
-    String sensorType;
-    String functionName;
-    String deviceSn;
+public class DeviceResponse {
+    private String deviceSn;
+    private String deviceName;
 }

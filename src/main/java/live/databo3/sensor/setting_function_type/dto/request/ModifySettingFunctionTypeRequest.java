@@ -6,6 +6,5 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class ModifySettingFunctionTypeRequest {
-    Long functionId;
     String functionName;
 }

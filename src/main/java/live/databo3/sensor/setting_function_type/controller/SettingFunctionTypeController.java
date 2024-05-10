@@ -22,14 +22,14 @@ public class SettingFunctionTypeController {
         return ResponseEntity.ok(settingFunctionTypeService.getSettingFunctionTypes());
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<SettingFunctionType> createSettingFunctionType(@RequestBody RegisterSettingFunctionTypeRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(settingFunctionTypeService.registertSettingFunctionType(request));
     }
 
-    @PostMapping("/modify")
-    public ResponseEntity<SettingFunctionType> modifySettingFunctionType(@RequestBody ModifySettingFunctionTypeRequest request) {
-        return ResponseEntity.ok(settingFunctionTypeService.modifySettingFunctionType(request));
+    @PutMapping("/{settingFunctionId}")
+    public ResponseEntity<SettingFunctionType> modifySettingFunctionType(@PathVariable Long settingFunctionId, @RequestBody ModifySettingFunctionTypeRequest request) {
+        return ResponseEntity.ok(settingFunctionTypeService.modifySettingFunctionType(settingFunctionId, request));
     }
 
     @DeleteMapping("/{settingFunctionId}")

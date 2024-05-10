@@ -1,5 +1,5 @@
 ### 센서 타입 등록
-POST http://localhost:8080/api/sensor/sensorType/register
+POST http://localhost:8080/api/sensor/sensorType
 Content-Type: application/json
 
 {
@@ -8,11 +8,10 @@ Content-Type: application/json
 
 
 ### 센서 타입 수정
-POST http://localhost:8080/api/sensor/sensorType/modify
+PUT http://localhost:8080/api/sensor/sensorType/7
 Content-Type: application/json
 
 {
-  "sensorTypeId": 5,
   "sensorType": "magnetic1"
 }
 
@@ -23,4 +22,4 @@ Content-Type: application/json
 
 
 ### 센서 타입 삭제
-DELETE http://localhost:8080/api/sensor/sensorType/6
+DELETE http://localhost:8080/api/sensor/sensorType/7

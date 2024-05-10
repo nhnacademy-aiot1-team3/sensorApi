@@ -22,14 +22,14 @@ public class SensorTypeController {
         return ResponseEntity.ok(sensorTypeService.getSensorTypes());
     }
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<SensorType> createSensorType(@RequestBody RegisterSensorTypeRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sensorTypeService.registerSensorType(request));
     }
 
-    @PostMapping("/modify")
-    public ResponseEntity<SensorType> modifySensorType(@RequestBody ModifySensorTypeRequest request) {
-        return ResponseEntity.ok(sensorTypeService.modifySensorType(request));
+    @PutMapping("/{sensorTypeId}")
+    public ResponseEntity<SensorType> modifySensorType(@PathVariable Integer sensorTypeId, @RequestBody ModifySensorTypeRequest request) {
+        return ResponseEntity.ok(sensorTypeService.modifySensorType(sensorTypeId, request));
     }
 
     @DeleteMapping("/{sensorTypeId}")

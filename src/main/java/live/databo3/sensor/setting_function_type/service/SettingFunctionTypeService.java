@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface SettingFunctionTypeService {
     SettingFunctionType registertSettingFunctionType(RegisterSettingFunctionTypeRequest request);
-    SettingFunctionType modifySettingFunctionType(ModifySettingFunctionTypeRequest request);
+    SettingFunctionType modifySettingFunctionType(Long settingFunctionTypeId, ModifySettingFunctionTypeRequest request);
     List<SettingFunctionType> getSettingFunctionTypes();
     void deleteSettingFunctionTypes(Long settingFunctionId);
 }

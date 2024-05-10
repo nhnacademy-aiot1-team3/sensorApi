@@ -23,9 +23,7 @@ public class SettingFunctionTypeServiceImpl implements SettingFunctionTypeServic
     }
 
     @Transactional
-    public SettingFunctionType modifySettingFunctionType(ModifySettingFunctionTypeRequest request) {
-        Long settingFunctionTypeId = request.getFunctionId();
-
+    public SettingFunctionType modifySettingFunctionType(Long settingFunctionTypeId, ModifySettingFunctionTypeRequest request) {
         SettingFunctionType settingFunctionType = settingFunctionTypeRepository.findById(settingFunctionTypeId).orElseThrow(() -> new SettingFunctionTypeNotExistException(settingFunctionTypeId));
         settingFunctionType.setFunctionName(request.getFunctionName());
         return settingFunctionType;
