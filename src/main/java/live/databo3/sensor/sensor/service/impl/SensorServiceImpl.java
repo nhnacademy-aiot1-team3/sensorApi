@@ -3,9 +3,14 @@ package live.databo3.sensor.sensor.service.impl;
 import live.databo3.sensor.annotations.ClearRedis;
 import live.databo3.sensor.exception.already_exist_exception.SensorAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
+import live.databo3.sensor.exception.not_exist_exception.PlaceNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
+import live.databo3.sensor.member.adaptor.MemberAdaptor;
+import live.databo3.sensor.member.dto.MemberOrganizationDto;
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.organization.repository.OrganizationRepository;
+import live.databo3.sensor.place.entity.Place;
+import live.databo3.sensor.place.repository.PlaceRepository;
 import live.databo3.sensor.sensor.dto.SensorDto;
 import live.databo3.sensor.sensor.dto.request.ModifySensorRequest;
 import live.databo3.sensor.sensor.dto.request.RegisterSensorRequest;
@@ -31,6 +36,8 @@ import java.util.List;
 public class SensorServiceImpl implements SensorService {
     private final SensorRepository sensorRepository;
     private final OrganizationRepository organizationRepository;
+    private final PlaceRepository placeRepository;
+    private final MemberAdaptor memberAdaptor;
 
     /**
      * 이미 존재하는 sensor 인지 확인 한 후에 없다면 request 의 body 를 통해 생성한다.
@@ -44,7 +51,10 @@ public class SensorServiceImpl implements SensorService {
 
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new OrganizationNotExistException(organizationId));
 
-        Sensor sensor = new Sensor(sensorSn, request.getSensorName(), request.getSensorPlace(), organization);
+        Integer placeId = request.getPlaceId();
+        Place place = placeRepository.findById(placeId).orElseThrow(() -> new PlaceNotExistException(placeId));
+
+        Sensor sensor = new Sensor(sensorSn, request.getSensorName(), place, organization);
 
         sensorRepository.save(sensor);
 
@@ -59,9 +69,10 @@ public class SensorServiceImpl implements SensorService {
     @ClearRedis
     public SensorResponse modifySensor(Integer organizationId, String sensorSn, ModifySensorRequest request) {
         Sensor sensor = sensorRepository.findBySensorSnAndOrganization_OrganizationId(sensorSn, organizationId).orElseThrow(() -> new SensorNotExistException(sensorSn));
-
+        Integer placeId = request.getPlaceId();
+        Place place = placeRepository.findByPlaceIdAndOrganization_OrganizationId(placeId, organizationId).orElseThrow(() -> new PlaceNotExistException(placeId));
         sensor.setSensorName(request.getSensorName());
-        sensor.setSensorPlace(request.getSensorPlace());
+        sensor.setPlace(place);
 
         return sensor.toDto();
     }

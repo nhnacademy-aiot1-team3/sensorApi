@@ -1,7 +1,6 @@
 package live.databo3.sensor.aop;
 
 import live.databo3.sensor.exception.UnAuthorizedAccessException;
-import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
 import live.databo3.sensor.member.adaptor.MemberAdaptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
