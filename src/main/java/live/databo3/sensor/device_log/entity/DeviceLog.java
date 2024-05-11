@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 public class DeviceLog {
     @Id
     @Column(name = "log_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long logId;
 
     @ManyToOne

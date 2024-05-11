@@ -1,7 +1,36 @@
 package live.databo3.sensor.device_log.controller;
 
-import org.springframework.web.bind.annotation.RestController;
+import live.databo3.sensor.device_log.dto.DeviceLogCreateRequestDto;
+import live.databo3.sensor.device_log.dto.DeviceLogResponseDto;
+import live.databo3.sensor.device_log.service.DeviceLogService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/api/device/log")
+@RequiredArgsConstructor
 public class DeviceLogController {
+    private final DeviceLogService deviceLogService;
+
+
+    @PostMapping
+    public ResponseEntity<DeviceLogResponseDto> saveDeviceLog(@RequestBody DeviceLogCreateRequestDto deviceLogCreateRequestDto) {
+
+        DeviceLogResponseDto deviceLog = deviceLogService.createDeviceLog(deviceLogCreateRequestDto);
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(deviceLog);
+    }
+
+    @GetMapping("/org/{organizationId}")
+    public ResponseEntity<List<DeviceLogResponseDto>> getDeviceLogByOrganizationId(@PathVariable("organizationId") Integer organizationId) {
+        List<DeviceLogResponseDto> deviceLogs = deviceLogService.getDeviceLogs(organizationId);
+        return ResponseEntity.ok(deviceLogs);
+    }
+
 }

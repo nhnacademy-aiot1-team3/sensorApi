@@ -11,5 +11,5 @@ public interface DeviceRepository extends JpaRepository<Device, String> {
     Optional<Device> findByDeviceSnAndOrganization_OrganizationId(String deviceSn, Integer organizationId);
     List<DeviceDto> findAllByOrganization_OrganizationId(Integer organizationId);
     boolean existsByDeviceSnAndOrganization_OrganizationId(String deviceSn, Integer organizationId);
-
+    Optional<Device> findByDeviceSn(String deviceSn);
 }
