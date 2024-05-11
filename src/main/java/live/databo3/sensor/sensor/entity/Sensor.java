@@ -1,6 +1,7 @@
 package live.databo3.sensor.sensor.entity;
 
 import live.databo3.sensor.organization.entity.Organization;
+import live.databo3.sensor.place.entity.Place;
 import live.databo3.sensor.sensor.dto.SensorResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,8 +24,9 @@ public class Sensor {
     @Column(name = "sensor_name")
     private String sensorName;
 
-    @Column(name = "sensor_place")
-    private String sensorPlace;
+    @ManyToOne
+    @JoinColumn(name = "place_id")
+    private Place place;
 
     @ManyToOne
     @JoinColumn(name = "organization_id")
@@ -34,7 +36,8 @@ public class Sensor {
         return SensorResponse.builder()
                 .sensorSn(sensorSn)
                 .sensorName(sensorName)
-                .sensorPlace(sensorPlace)
+                .placeId(place.getPlaceId())
+                .placeName(place.getPlaceName())
                 .build();
     }
 

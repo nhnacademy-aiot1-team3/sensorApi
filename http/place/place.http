@@ -1,0 +1,23 @@
+### 장소 등록
+POST http://localhost:8080/api/sensor/org/1/place
+Content-Type: application/json
+
+{
+  "placeName": "냉장고"
+}
+
+
+### 장소 수정
+PUT http://localhost:8080/api/sensor/org/1/place/3
+Content-Type: application/json
+
+{
+  "placeName": "lobby"
+}
+
+### 특정 조직의 장소 목록 조회
+GET http://localhost:8080/api/sensor/org/1/place
+
+
+### 장소 삭제
+DELETE http://localhost:8080/api/sensor/org/1/place/2
