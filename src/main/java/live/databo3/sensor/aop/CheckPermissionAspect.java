@@ -1,6 +1,5 @@
 package live.databo3.sensor.aop;
 
-import live.databo3.sensor.exception.IllegalRefreshRedisUsageException;
 import live.databo3.sensor.exception.UnAuthorizedAccessException;
 import live.databo3.sensor.member.adaptor.MemberAdaptor;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +18,36 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Objects;
 
+/**
+ * argument 중 Integer type 의 organizationId 라는 이름을 가진 파라미터를 가져와 메소드 실행 전에
+ * account-api 에 해당 조직에 대한 권한이 있는 사용자인지 체크하는 보안 목적의 aspect
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Slf4j
 @Aspect
 @Component
 @RequiredArgsConstructor
 public class CheckPermissionAspect {
+    /**
+     * account-api 에 FeignClient 요청을 하기위한 어댑터
+     * @since 1.0.0
+     */
     private final MemberAdaptor memberAdaptor;
 
+    /**
+     * 메소드용 어노테이션 CheckPermission 에 해당하는 포인트 컷
+     * @since 1.0.0
+     */
     @Pointcut("@annotation(live.databo3.sensor.annotations.CheckPermission)")
     public void needCheckPermission() {}
 
+    /**
+     * CheckPermission 포인트 컷의 메소드 실행 전에 arg 의 Integer organizationId 를
+     * 추출하여 checkPermissionWithOrganizationId()에 전달한다.
+     * @since 1.0.0
+     */
     @Around("needCheckPermission()")
     public Object checkPermission(ProceedingJoinPoint pjp) throws Throwable {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
@@ -45,13 +64,18 @@ public class CheckPermissionAspect {
         }
 
         if (!Objects.nonNull(organizationId)) {
-            throw new IllegalRefreshRedisUsageException("no organizationId");
+            throw new NullPointerException("no organizationId");
         }
         checkPermissionWithOrganizationId(organizationId);
 
         return pjp.proceed();
     }
 
+    /**
+     * 로그인한 사용자가 적합할 경우 gateway 에서 추가해주는 X-USER-ID 헤더에서 추출한 유저 아이디와 organizationId 를
+     * 이용하여 account-api 에 권한 검사 요청을 한다.
+     * @since 1.0.0
+     */
     public void checkPermissionWithOrganizationId(Integer organizationId) {
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (requestAttributes != null) {
@@ -65,6 +89,7 @@ public class CheckPermissionAspect {
             } else {
                 throw new UnAuthorizedAccessException("로그인이 되지 않았습니다.");
             }
+            log.debug("permission check: ok: userId-" + userId);
         }
     }
 }

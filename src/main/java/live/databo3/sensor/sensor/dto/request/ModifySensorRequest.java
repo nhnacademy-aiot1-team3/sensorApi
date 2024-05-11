@@ -7,5 +7,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ModifySensorRequest {
     String sensorName;
-    String sensorPlace;
+    Integer placeId;
 }

@@ -1,4 +1,4 @@
-package live.databo3.sensor.sensor.dto;
+package live.databo3.sensor.place.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SensorResponse {
-    private String sensorSn;
-    private String sensorName;
+public class PlaceResponse {
     private Integer placeId;
     private String placeName;
 }
-
