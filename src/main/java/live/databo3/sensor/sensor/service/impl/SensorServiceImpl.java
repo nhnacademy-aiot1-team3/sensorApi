@@ -5,8 +5,6 @@ import live.databo3.sensor.exception.already_exist_exception.SensorAlreadyExistE
 import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.PlaceNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
-import live.databo3.sensor.member.adaptor.MemberAdaptor;
-import live.databo3.sensor.member.dto.MemberOrganizationDto;
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.organization.repository.OrganizationRepository;
 import live.databo3.sensor.place.entity.Place;
@@ -37,7 +35,6 @@ public class SensorServiceImpl implements SensorService {
     private final SensorRepository sensorRepository;
     private final OrganizationRepository organizationRepository;
     private final PlaceRepository placeRepository;
-    private final MemberAdaptor memberAdaptor;
 
     /**
      * 이미 존재하는 sensor 인지 확인 한 후에 없다면 request 의 body 를 통해 생성한다.
