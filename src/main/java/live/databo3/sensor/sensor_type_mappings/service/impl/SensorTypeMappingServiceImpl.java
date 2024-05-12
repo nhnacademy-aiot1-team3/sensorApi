@@ -5,18 +5,24 @@ import live.databo3.sensor.exception.already_exist_exception.SensorTypeMappingAl
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeMappingNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeNotExistException;
+import live.databo3.sensor.member.adaptor.MemberAdaptor;
+import live.databo3.sensor.member.dto.MemberOrganizationDto;
+import live.databo3.sensor.place.dto.PlaceDto;
+import live.databo3.sensor.place.repository.PlaceRepository;
 import live.databo3.sensor.sensor.entity.Sensor;
 import live.databo3.sensor.sensor.repository.SensorRepository;
 import live.databo3.sensor.sensor_type.entity.SensorType;
 import live.databo3.sensor.sensor_type.repository.SensorTypeRepository;
-import live.databo3.sensor.sensor_type_mappings.dto.ModifySensorTypeMappingRequest;
-import live.databo3.sensor.sensor_type_mappings.dto.SensorTypeMappingResponse;
+import live.databo3.sensor.sensor_type_mappings.dto.*;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.sensor_type_mappings.repository.SensorTypeMappingRepository;
 import live.databo3.sensor.sensor_type_mappings.service.SensorTypeMappingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * sensorTypeMapping entity 관련 service
@@ -31,6 +37,8 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
     private final SensorTypeMappingRepository sensorTypeMappingRepository;
     private final SensorRepository sensorRepository;
     private final SensorTypeRepository sensorTypeRepository;
+    private final MemberAdaptor memberAdaptor;
+    private final PlaceRepository placeRepository;
 
     /**
      * sensorTypeMapping 을 등록한다.
@@ -85,5 +93,44 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
     public void deleteSensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId) {
         SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.findBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new SensorTypeMappingNotExistException(sensorSn, sensorTypeId));
         sensorTypeMappingRepository.deleteById(sensorTypeMappings.getRecordNumber());
+    }
+
+    public void a(String userId, Integer sensorTypeId) {
+        List<MemberOrganizationDto> dtoList = memberAdaptor.getOrganizationsByMember(userId).getBody();
+        if (dtoList == null) {
+            return;
+        }
+        List<OrganizationPlaceDto> organizationPlaceDtoList = new ArrayList<>();
+        for (MemberOrganizationDto memberOrganizationDto : dtoList) {
+            Integer organizationId = memberOrganizationDto.getOrganizationId();
+            OrganizationPlaceDto organizationPlaceDto = new OrganizationPlaceDto();
+            organizationPlaceDto.setOrganizationId(organizationId);
+            organizationPlaceDto.setOrganizationName(memberOrganizationDto.getOrganizationName());
+
+            List<PlaceDto> placeDtoList = placeRepository.findAllByOrganization_OrganizationId(organizationId);
+            List<SensorTypeMappings> sensorTypeMappingsList = sensorTypeMappingRepository.findAllBySensorType_SensorTypeIdAndSensor_Organization_OrganizationId(sensorTypeId, organizationId);
+            List<PlaceSensorDto> placeSensorDtoList = new ArrayList<>();
+            for (PlaceDto placeDto : placeDtoList) {
+                PlaceSensorDto placeSensorDto = new PlaceSensorDto();
+                Integer placeId = placeDto.getPlaceId();
+                placeSensorDto.setPlaceId(placeId);
+                placeSensorDto.setPlaceName(placeDto.getPlaceName());
+                List<SensorNameIdDto> sensorNameIdDtoList = new ArrayList<>();
+                for (SensorTypeMappings sensorTypeMappings : sensorTypeMappingsList) {
+                    if (sensorTypeMappings.getSensor().getPlace().getPlaceId().equals(placeId)) {
+                        SensorNameIdDto sensorNameIdDto = new SensorNameIdDto();
+                        Sensor sensor = sensorTypeMappings.getSensor();
+                        sensorNameIdDto.setSensorSn(sensor.getSensorSn());
+                        sensorNameIdDto.setSensorName(sensor.getSensorName());
+
+                        sensorNameIdDtoList.add(sensorNameIdDto);
+                    }
+                }
+                placeSensorDto.setSensors(sensorNameIdDtoList);
+                placeSensorDtoList.add(placeSensorDto);
+            }
+            organizationPlaceDto.setPlace(placeSensorDtoList);
+            organizationPlaceDtoList.add(organizationPlaceDto);
+        }
     }
 }

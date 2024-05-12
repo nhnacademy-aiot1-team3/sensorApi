@@ -1,5 +1,6 @@
 package live.databo3.sensor.device_log.controller;
 
+import live.databo3.sensor.annotations.CheckPermission;
 import live.databo3.sensor.device_log.dto.DeviceLogCreateRequestDto;
 import live.databo3.sensor.device_log.dto.DeviceLogResponseDto;
 import live.databo3.sensor.device_log.service.DeviceLogService;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/device/log")
+@RequestMapping("/api/sensor/device/log")
 @RequiredArgsConstructor
 public class DeviceLogController {
     private final DeviceLogService deviceLogService;
@@ -28,6 +29,7 @@ public class DeviceLogController {
     }
 
     @GetMapping("/org/{organizationId}")
+    @CheckPermission
     public ResponseEntity<List<DeviceLogResponseDto>> getDeviceLogByOrganizationId(@PathVariable("organizationId") Integer organizationId) {
         List<DeviceLogResponseDto> deviceLogs = deviceLogService.getDeviceLogs(organizationId);
         return ResponseEntity.ok(deviceLogs);

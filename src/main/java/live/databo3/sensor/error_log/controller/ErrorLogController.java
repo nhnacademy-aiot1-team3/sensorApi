@@ -1,5 +1,6 @@
 package live.databo3.sensor.error_log.controller;
 
+import live.databo3.sensor.annotations.CheckPermission;
 import live.databo3.sensor.error_log.dto.ErrorLogCreateRequestDto;
 import live.databo3.sensor.error_log.dto.ErrorLogResponseDto;
 import live.databo3.sensor.error_log.service.ErrorLogService;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/error/log")
+@RequestMapping("/api/sensor/error/log")
 @RequiredArgsConstructor
 public class ErrorLogController {
     private final ErrorLogService errorLogService;
@@ -31,6 +32,7 @@ public class ErrorLogController {
     }
 
     @GetMapping("/org/{organizationId}")
+    @CheckPermission
     public ResponseEntity<List<ErrorLogResponseDto>> getErrorLogList(@PathVariable Integer organizationId) {
         List<ErrorLogResponseDto> errorLogs = errorLogService.getErrorLogs(organizationId);
         return ResponseEntity.status(HttpStatus.OK).body(errorLogs);
