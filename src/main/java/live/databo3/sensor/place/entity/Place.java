@@ -2,17 +2,15 @@ package live.databo3.sensor.place.entity;
 
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.place.dto.PlaceResponse;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "places")
 public class Place {
