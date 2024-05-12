@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ValueConfigDto {
+    private Long valueConfigNumber;
     private String sensorSn;
     private String sensorType;
     private String firstEntry;

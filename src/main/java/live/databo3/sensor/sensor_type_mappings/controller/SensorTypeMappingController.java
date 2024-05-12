@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/type/{sensorTypeId}")
+@RequestMapping("/api/sensor/org/{organizationId}/sensorTypeMapping")
 public class SensorTypeMappingController {
     private final SensorTypeMappingService sensorTypeMappingService;
 
@@ -28,7 +28,7 @@ public class SensorTypeMappingController {
      * @since 1.0.0
      */
     @PostMapping
-    public ResponseEntity<SensorTypeMappingResponse> registerSensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId) {
+    public ResponseEntity<SensorTypeMappingResponse> registerSensorTypeMapping(@RequestParam String sensorSn, @PathVariable Integer organizationId, @RequestParam Integer sensorTypeId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sensorTypeMappingService.registerSensorTypeMapping(sensorSn, organizationId, sensorTypeId));
     }
 
@@ -37,7 +37,7 @@ public class SensorTypeMappingController {
      * @since 1.0.0
      */
     @PutMapping
-    public ResponseEntity<SensorTypeMappingResponse> modifySensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId, @RequestBody ModifySensorTypeMappingRequest request) {
+    public ResponseEntity<SensorTypeMappingResponse> modifySensorTypeMapping(@RequestParam String sensorSn, @PathVariable Integer organizationId, @RequestParam Integer sensorTypeId, @RequestBody ModifySensorTypeMappingRequest request) {
         return ResponseEntity.ok(sensorTypeMappingService.modifySensorTypeMapping(sensorSn, organizationId, sensorTypeId, request));
     }
 
@@ -46,7 +46,7 @@ public class SensorTypeMappingController {
      * @since 1.0.0
      */
     @GetMapping
-    public ResponseEntity<SensorTypeMappingResponse> getSensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId) {
+    public ResponseEntity<SensorTypeMappingResponse> getSensorTypeMapping(@RequestParam String sensorSn, @PathVariable Integer organizationId, @RequestParam Integer sensorTypeId) {
         return ResponseEntity.ok(sensorTypeMappingService.getSensorTypeMapping(sensorSn, organizationId, sensorTypeId));
     }
 
@@ -55,7 +55,7 @@ public class SensorTypeMappingController {
      * @since 1.0.0
      */
     @DeleteMapping
-    public ResponseEntity<Void> deleteSensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId) {
+    public ResponseEntity<Void> deleteSensorTypeMapping(@RequestParam String sensorSn, @PathVariable Integer organizationId, @RequestParam Integer sensorTypeId) {
         sensorTypeMappingService.deleteSensorTypeMapping(sensorSn, organizationId, sensorTypeId);
         return ResponseEntity.ok(null);
     }

@@ -2,6 +2,7 @@ package live.databo3.sensor.aop;
 
 import live.databo3.sensor.exception.UnAuthorizedAccessException;
 import live.databo3.sensor.member.adaptor.MemberAdaptor;
+import live.databo3.sensor.util.ExtractHeaderUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -10,10 +11,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
 import java.util.Objects;
@@ -35,6 +33,7 @@ public class CheckPermissionAspect {
      * @since 1.0.0
      */
     private final MemberAdaptor memberAdaptor;
+    private final ExtractHeaderUtil extractHeaderUtil;
 
     /**
      * 메소드용 어노테이션 CheckPermission 에 해당하는 포인트 컷
@@ -77,19 +76,15 @@ public class CheckPermissionAspect {
      * @since 1.0.0
      */
     public void checkPermissionWithOrganizationId(Integer organizationId) {
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        if (requestAttributes != null) {
-            HttpServletRequest request = requestAttributes.getRequest();
-            String userId = request.getHeader("X-USER-ID");
-            log.debug("permission checking: userId: " + userId + ", organizationId: " + organizationId);
-            if (userId != null) {
-                if (Boolean.FALSE.equals(memberAdaptor.isAuthorizedAccess(userId, organizationId).getBody())) {
-                    throw new UnAuthorizedAccessException("허가되지 않은 접근입니다.");
-                }
-            } else {
-                throw new UnAuthorizedAccessException("로그인이 되지 않았습니다.");
+        String userId = extractHeaderUtil.extractHeader("X-USER-ID");
+        log.debug("permission checking: userId: " + userId + ", organizationId: " + organizationId);
+        if (userId != null) {
+            if (Boolean.FALSE.equals(memberAdaptor.isAuthorizedAccess(userId, organizationId).getBody())) {
+                throw new UnAuthorizedAccessException("허가되지 않은 접근입니다.");
             }
-            log.debug("permission check: ok: userId-" + userId);
+        } else {
+            throw new UnAuthorizedAccessException("로그인이 되지 않았습니다.");
         }
+        log.debug("permission check: ok: userId-" + userId);
     }
 }
