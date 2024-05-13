@@ -1,17 +1,15 @@
 package live.databo3.sensor.organization.entity;
 
 import live.databo3.sensor.organization.dto.RegisterOrganizationResponse;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "organizations")
 public class Organization {

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @AllArgsConstructor
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "error_logs")
 public class ErrorLog {
