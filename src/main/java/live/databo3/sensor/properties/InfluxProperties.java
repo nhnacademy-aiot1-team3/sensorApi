@@ -14,5 +14,10 @@ public class InfluxProperties {
     private String url;
     private String org;
     private String token;
+    private String sensorBucket;
+    private String hourlyMeanBucket;
+    private String dailyMeanBucket;
+    private String weeklyMeanBucket;
+    private String weeklyMinMaxBucket;
 
 }
