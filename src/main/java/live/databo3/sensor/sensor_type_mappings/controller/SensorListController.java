@@ -14,7 +14,7 @@ import java.util.List;
 public class SensorListController {
     private final SensorListService sensorListService;
     @GetMapping
-    public ResponseEntity<List<OrganizationPlaceDto>> geta(@RequestParam Integer sensorTypeId) {
+    public ResponseEntity<List<OrganizationPlaceDto>> getSensorList(@RequestParam Integer sensorTypeId) {
         return ResponseEntity.ok(sensorListService.getSensorListBySensorType(sensorTypeId));
     }
 }

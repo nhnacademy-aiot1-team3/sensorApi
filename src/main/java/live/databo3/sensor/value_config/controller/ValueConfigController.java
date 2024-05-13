@@ -14,38 +14,38 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sensor/org/{organizationId}/value")
+@RequestMapping("/api/sensor/org/{organizationId}")
 
 public class ValueConfigController {
     private final ValueConfigService valueConfigService;
 
-    @PostMapping
+    @PostMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/value")
     @CheckPermission
-    public ResponseEntity<ValueConfigResponse> createValueConfig(@PathVariable Integer organizationId, @RequestParam String sensorSn, @RequestParam Integer sensorTypeId, @RequestBody ValueConfigRequest request) {
+    public ResponseEntity<ValueConfigResponse> createValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody ValueConfigRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(valueConfigService.createValueConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
-    @PutMapping("/{valueConfigNumber}")
+    @PutMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/value/{valueConfigNumber}")
     @CheckPermission
-    public ResponseEntity<ValueConfigResponse> modifyValueConfig(@PathVariable Integer organizationId, @RequestParam String sensorSn, @RequestParam Integer sensorTypeId, @PathVariable Long valueConfigNumber, @RequestBody ValueConfigRequest request) {
+    public ResponseEntity<ValueConfigResponse> modifyValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @PathVariable Long valueConfigNumber, @RequestBody ValueConfigRequest request) {
         return ResponseEntity.ok(valueConfigService.modifyValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber, request));
     }
 
-    @GetMapping
+    @GetMapping("/value")
     @CheckPermission
     public ResponseEntity<List<ValueConfigDto>> getValueConfigs(@PathVariable Integer organizationId) {
         return ResponseEntity.ok(valueConfigService.getValueConfigListByOrganizationId(organizationId));
     }
 
-    @GetMapping("/{valueConfigNumber}")
+    @GetMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/value/{valueConfigNumber}")
     @CheckPermission
-    public ResponseEntity<ValueConfigResponse> getValueConfig(@PathVariable Integer organizationId, @RequestParam String sensorSn, @RequestParam Integer sensorTypeId, @PathVariable Long valueConfigNumber) {
+    public ResponseEntity<ValueConfigResponse> getValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @PathVariable Long valueConfigNumber) {
         return ResponseEntity.ok(valueConfigService.getValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber));
     }
 
-    @DeleteMapping("/{valueConfigNumber}")
+    @DeleteMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/value/{valueConfigNumber}")
     @CheckPermission
-    public ResponseEntity<Void> deleteValueConfig(@PathVariable Integer organizationId, @RequestParam String sensorSn, @RequestParam Integer sensorTypeId, @PathVariable Long valueConfigNumber) {
+    public ResponseEntity<Void> deleteValueConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @PathVariable Long valueConfigNumber) {
         valueConfigService.deleteValueConfig(organizationId, sensorSn, sensorTypeId, valueConfigNumber);
         return ResponseEntity.ok(null);
     }

@@ -1,5 +1,5 @@
 ### 사용자 설정 등록
-POST http://localhost:8080/api/sensor/org/1/value?sensorSn=hum02&sensorTypeId=2
+POST http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorType/2/value
 Content-Type: application/json
 X-USER-ID: owner
 
@@ -10,7 +10,7 @@ X-USER-ID: owner
 
 
 ### 사용자 설정 수정
-PUT http://localhost:8080/api/sensor/org/1/value/8?sensorSn=hum03&sensorTypeId=2
+PUT http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorType/2/value/1
 Content-Type: application/json
 X-USER-ID: owner
 
@@ -21,7 +21,7 @@ X-USER-ID: owner
 
 
 ### 사용자 설정 조회
-GET http://localhost:8080/api/sensor/org/1/value/8?sensorSn=hum03&sensorTypeId=2
+GET http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorType/2/value/1
 Content-Type: application/json
 X-USER-ID: owner
 
@@ -33,7 +33,7 @@ X-USER-ID: owner
 
 
 ### 사용자 설정 삭제
-DELETE http://localhost:8080/api/sensor/org/1/value/9?sensorSn=hum02&sensorTypeId=2
+DELETE http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorType/2/value/8
 Content-Type: application/json
 X-USER-ID: owner
 

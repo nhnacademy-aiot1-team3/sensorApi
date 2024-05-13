@@ -38,7 +38,7 @@ public class SensorController {
      * GET 요청을 받아 특정 조직의 센서리스트를 조회합니다.
      * @since 1.0.0
      */
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<SensorDto>> getSensorList(@PathVariable Integer organizationId) {
         return ResponseEntity.ok(sensorService.getSensors(organizationId));
     }
