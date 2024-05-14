@@ -38,7 +38,7 @@ public class DeviceController {
      * GET 요청을 받아 특정 조직의 device 리스트를 조회한다.
      * @since 1.0.0
      */
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<DeviceDto>> getDeviceList(@PathVariable Integer organizationId) {
         return ResponseEntity.ok(deviceService.getDevices(organizationId));
     }
