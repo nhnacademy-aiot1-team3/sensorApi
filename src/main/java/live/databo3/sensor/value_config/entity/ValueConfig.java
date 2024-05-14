@@ -33,6 +33,7 @@ public class ValueConfig {
 
     public ValueConfigResponse toDto() {
         return ValueConfigResponse.builder()
+                .recordNumber(generalConfig.getRecordNumber())
                 .valueConfigNumber(valueConfigNumber)
                 .firstEntry(firstEntry)
                 .secondEntry(secondEntry)

@@ -7,6 +7,12 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * settingFunction entity
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Entity
 @Getter
 @Setter
@@ -19,6 +25,11 @@ public class SettingFunctionType {
     @Column(name = "function_id")
     private Long functionId;
 
+    /**
+     * settingFunction read_only/ai/custom 등의 설정을 관리하기 위한 column.
+     *
+     * @since 1.0.0
+     */
     @Column(name = "function_name")
     private String functionName;
 }

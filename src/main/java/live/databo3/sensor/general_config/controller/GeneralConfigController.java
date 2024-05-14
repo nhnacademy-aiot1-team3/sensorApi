@@ -15,40 +15,40 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/type/{sensorTypeId}/general")
+@RequestMapping("/api/sensor/org/{organizationId}")
 @RequiredArgsConstructor
 public class GeneralConfigController {
 
     private final GeneralConfigService generalConfigService;
 
-    @PostMapping
+    @PostMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> createGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody RegisterGeneralConfigRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(generalConfigService.registerGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
-    @PutMapping
+    @PutMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> modifyGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody ModifyGeneralConfigRequest request) {
         return ResponseEntity.ok(generalConfigService.modifyGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
-    @DeleteMapping
+    @DeleteMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<Void> deleteGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         generalConfigService.deleteGeneralConfig(organizationId, sensorSn, sensorTypeId);
         return ResponseEntity.ok(null);
     }
 
-    // todo 센서 타입 별로 조회 기능 추가할 것
-    @GetMapping
+    @GetMapping("/general")
     @CheckPermission
-    public ResponseEntity<?> getGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
-        if (!sensorSn.equals("all")) {
-            return ResponseEntity.ok(generalConfigService.getGeneralConfig(organizationId, sensorSn, sensorTypeId));
-        }
-        List<GeneralConfigDto> generalConfigDtoList = generalConfigService.findGeneralConfigByOrganizationId(organizationId);
+    public ResponseEntity<List<GeneralConfigDto>> getAllGeneralConfig(@PathVariable Integer organizationId) {
+        return ResponseEntity.ok(generalConfigService.findGeneralConfigByOrganizationId(organizationId));
+    }
 
-        return ResponseEntity.ok(generalConfigDtoList);
+    @GetMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    @CheckPermission
+    public ResponseEntity<GeneralConfigResponse> getGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
+        return ResponseEntity.ok(generalConfigService.getGeneralConfig(organizationId, sensorSn, sensorTypeId));
     }
 }

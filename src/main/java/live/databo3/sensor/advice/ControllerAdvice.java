@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
  * restController 에서 발생한 에러를 처리해 주는 advice
+ *
  * @author : 강경훈
  * @version : 1.0.0
  */
@@ -18,9 +19,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @RestControllerAdvice
 public class ControllerAdvice {
     /**
-     *
-     * @param
-     * @param
+     * 유일성을 보장해야하는 리소스에 대한 생성 요청을 보내면 400을 보냅니다.
      * @since 1.0.0
      */
     @ExceptionHandler({AlreadyExistException.class})
@@ -32,7 +31,10 @@ public class ControllerAdvice {
 
         return ResponseEntity.badRequest().body(errorResponse);
     }
-
+    /**
+     * 존재하지 않는 리소스에 대한 조회/수정/삭제 요청을 보내면 400을 보냅니다.
+     * @since 1.0.0
+     */
     @ExceptionHandler({NotExistException.class})
     private ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> notExistExceptionHandler(Exception e) {
         log.error(e.getMessage());
@@ -42,7 +44,10 @@ public class ControllerAdvice {
 
         return ResponseEntity.badRequest().body(errorResponse);
     }
-
+    /**
+     * account-api 에 요청하여 받은 결과가 허가 되지 않은 접근이라면 401을 보냅니다.
+     * @since 1.0.0
+     */
     @ExceptionHandler({UnAuthorizedAccessException.class})
     private ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> unAuthorizedAccessExceptionHandler(Exception e) {
         log.error(e.getMessage());

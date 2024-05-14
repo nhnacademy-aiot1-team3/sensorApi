@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class SensorResponse {
     private String sensorSn;
     private String sensorName;
-    private String sensorPlace;
+    private Integer placeId;
+    private String placeName;
 }
 

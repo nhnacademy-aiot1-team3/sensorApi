@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 public class RegisterSensorRequest {
     private String sensorSn;
     private String sensorName;
-    private String sensorPlace;
+    private Integer placeId;
 }

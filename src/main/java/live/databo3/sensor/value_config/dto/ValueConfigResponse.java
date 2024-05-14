@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ValueConfigResponse {
+    private Long recordNumber;
     private Long valueConfigNumber;
     private String firstEntry;
     private String secondEntry;

@@ -3,9 +3,9 @@ POST http://localhost:8080/api/sensor/org/1/sensor
 Content-Type: application/json
 
 {
-  "sensorSn": "hum02",
+  "sensorSn": "hum04",
   "sensorName": "온도1",
-  "sensorPlace": "강의실A"
+  "placeId": 1
 }
 
 
@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
   "sensorName": "습도2",
-  "sensorPlace": "강의실A"
+  "placeId": 2
 }
 
 
@@ -24,7 +24,7 @@ GET http://localhost:8080/api/sensor/org/1/sensor/hum02
 
 
 ### 특정 조직의 센서 목록 조회
-GET http://localhost:8080/api/sensor/org/1/sensor/all
+GET http://localhost:8080/api/sensor/org/1/sensor
 
 
 ### 센서 삭제

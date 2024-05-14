@@ -76,7 +76,8 @@ public class ValueConfigServiceImpl implements ValueConfigService {
         List<ValueConfigDto> valueConfigDtoList = new ArrayList<>();
         for (ValueConfig valueConfig : valueConfigList) {
             valueConfigDtoList.add(
-                    new ValueConfigDto(valueConfig.getGeneralConfig().getSensorTypeMappings().getSensor().getSensorSn(),
+                    new ValueConfigDto(valueConfig.getValueConfigNumber(),
+                    valueConfig.getGeneralConfig().getSensorTypeMappings().getSensor().getSensorSn(),
                     valueConfig.getGeneralConfig().getSensorTypeMappings().getSensorType().getSensorType(),
                     valueConfig.getFirstEntry(),
                     valueConfig.getSecondEntry()));

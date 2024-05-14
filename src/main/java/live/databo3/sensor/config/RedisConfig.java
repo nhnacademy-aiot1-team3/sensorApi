@@ -5,7 +5,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-
+/**
+ * redis 를 사용하기 위한 config
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Configuration
 public class RedisConfig {
 
