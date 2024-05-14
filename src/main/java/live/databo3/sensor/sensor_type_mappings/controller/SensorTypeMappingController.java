@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/type/{sensorTypeId}")
+@RequestMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/sensorTypeMapping")
 public class SensorTypeMappingController {
     private final SensorTypeMappingService sensorTypeMappingService;
 

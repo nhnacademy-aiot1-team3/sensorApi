@@ -2,17 +2,15 @@ package live.databo3.sensor.device.entity;
 
 import live.databo3.sensor.device.dto.DeviceResponse;
 import live.databo3.sensor.organization.entity.Organization;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Builder
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "devices")
 public class Device {
