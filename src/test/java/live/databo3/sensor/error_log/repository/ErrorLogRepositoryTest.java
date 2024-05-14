@@ -9,14 +9,9 @@ import live.databo3.sensor.sensor_type.entity.SensorType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,8 +33,6 @@ class ErrorLogRepositoryTest {
     SensorType sensorType;
     Organization organization;
     Place place;
-    @Autowired
-    private TestEntityManager testEntityManager;
 
     @BeforeEach
     void setUp() {
@@ -99,7 +92,7 @@ class ErrorLogRepositoryTest {
     @DisplayName("에러 로그 전체조회 테스트")
     void findErrorLogsTest() {
         ErrorLog persist = entityManager.persist(errorLog);
-        Optional<List<ErrorLogResponseDto>> result = errorLogRepository.getErrorLogs(2);
+        Optional<List<ErrorLogResponseDto>> result = errorLogRepository.getErrorLogs(organization.getOrganizationId());
         List<ErrorLogResponseDto> content = result.get();
 
         assertThat(result).isPresent();
