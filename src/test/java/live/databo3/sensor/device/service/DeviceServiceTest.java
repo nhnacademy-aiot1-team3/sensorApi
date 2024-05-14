@@ -66,7 +66,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 생성 성공 테스트")
     void deviceCreateSuccessTest() {
         when(deviceRepository.existsById(anyString())).thenReturn(false);
         when(organizationRepository.findById(anyInt())).thenReturn(Optional.of(organization));
@@ -82,7 +81,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 생성 실패 테스트")
     void deviceCreateFailTest() {
         when(deviceRepository.existsById(anyString())).thenReturn(true);
 
@@ -92,7 +90,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 수정 성공 테스트")
     void deviceModifySuccessTest() {
         when(deviceRepository.findByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt())).thenReturn(Optional.of(device));
 
@@ -104,7 +101,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 수정 실패 테스트")
     void deviceModifyFailTest() {
         when(deviceRepository.findByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt())).thenReturn(Optional.empty());
 
@@ -114,7 +110,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 조회 성공 테스트")
     void deviceGetSuccessTest() {
         when(deviceRepository.findByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt())).thenReturn(Optional.of(device));
 
@@ -126,7 +121,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 조회 실패 테스트")
     void deviceGetFailTest() {
         when(deviceRepository.findByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt())).thenReturn(Optional.empty());
 
@@ -136,7 +130,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 삭제 성공 테스트")
     void deviceDeleteSuccessTest() {
         when(deviceRepository.existsByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt())).thenReturn(true);
 
@@ -147,7 +140,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 삭제 실패 테스트")
     void deviceDeleteFailTest() {
         when(deviceRepository.existsByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt())).thenReturn(false);
 
@@ -157,7 +149,6 @@ class DeviceServiceTest {
     }
 
     @Test
-    @DisplayName("장치 리스트 조회 테스트")
     void devicesGetTest() {
         deviceService.getDevices(1);
 
