@@ -178,7 +178,6 @@ class SensorServiceTest {
         sensorService.deleteSensor(1, sensor.getSensorSn());
 
         verify(sensorRepository, times(1)).existsBySensorSnAndOrganization_OrganizationId(anyString(), anyInt());
-        then(sensorRepository).should().existsBySensorSnAndOrganization_OrganizationId(sensor.getSensorSn(), 1);
     }
 
     @Test

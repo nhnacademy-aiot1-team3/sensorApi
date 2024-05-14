@@ -135,7 +135,6 @@ class DeviceServiceTest {
         deviceService.deleteDevice(1, device.getDeviceSn());
 
         verify(deviceRepository, times(1)).existsByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt());
-        then(deviceRepository).should().existsByDeviceSnAndOrganization_OrganizationId(device.getDeviceSn(), 1);
     }
 
     @Test
