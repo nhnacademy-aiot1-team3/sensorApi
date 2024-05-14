@@ -11,7 +11,6 @@ import live.databo3.sensor.exception.not_exist_exception.DeviceNotExistException
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.organization.repository.OrganizationRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
