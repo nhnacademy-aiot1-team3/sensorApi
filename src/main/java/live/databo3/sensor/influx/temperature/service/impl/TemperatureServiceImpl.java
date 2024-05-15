@@ -8,11 +8,11 @@ import live.databo3.sensor.influx.temperature.measurement.TemperatureMeanData;
 import live.databo3.sensor.influx.temperature.measurement.TemperatureMinData;
 import live.databo3.sensor.influx.influxdb_repository.InfluxDBRepository;
 import live.databo3.sensor.influx.temperature.service.TemperatureService;
-import live.databo3.sensor.util.TimeRangeUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 
 @Slf4j
@@ -20,12 +20,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TemperatureServiceImpl implements TemperatureService {
 
-    private final InfluxDBRepository temperatureRepository;
+    private final InfluxDBRepository influxDBRepository;
 
     @Override
-    public ResponseSingleData<TemperatureLastData> retrieveLastData(String field, String branch, String place, String endpoint, String sensor) {
+    public ResponseSingleData<TemperatureLastData> retrieveTemperatureLastData(
+            String field, String branch, String place, String endpoint, String sensor) {
 
-        TemperatureLastData lastData = temperatureRepository.findLastTemperatureData(field, branch, place, endpoint, sensor, TemperatureLastData.class).orElse(null);
+        TemperatureLastData lastData = influxDBRepository.findLastData(field, branch, place, endpoint, sensor, TemperatureLastData.class).orElse(null);
         log.info("service last data : {}", lastData);
 
         ResponseSingleData<TemperatureLastData> responseSingleData = new ResponseSingleData<>();
@@ -35,9 +36,10 @@ public class TemperatureServiceImpl implements TemperatureService {
     }
 
     @Override
-    public ResponseListData<TemperatureMeanData> retrieveHourlyMeanData(String field, String branch, String place, String endpoint, String sensor) {
+    public ResponseListData<TemperatureMeanData> retrieveTemperatureHourlyMeanData(
+            String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
-        List<TemperatureMeanData> dataList = temperatureRepository.findFiveMinutesMeanDataForOneHour(TimeRangeUtil.pastOneHour(), TimeRangeUtil.now(), field, branch, place, endpoint, sensor, TemperatureMeanData.class);
+        List<TemperatureMeanData> dataList = influxDBRepository.findFiveMinutesMeanDataForOneHour(begin, end, field, branch, place, endpoint, sensor, TemperatureMeanData.class);
         log.info("service hour data : {}", dataList);
 
         ResponseListData<TemperatureMeanData> responseListData = new ResponseListData<>();
@@ -47,9 +49,10 @@ public class TemperatureServiceImpl implements TemperatureService {
     }
 
     @Override
-    public ResponseListData<TemperatureMeanData> retrieveDailyMeanData(String field, String branch, String place, String endpoint, String sensor) {
+    public ResponseListData<TemperatureMeanData> retrieveTemperatureDailyMeanData(
+            String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
-        List<TemperatureMeanData> dataList = temperatureRepository.findOneHourMeanDataForOneDay(TimeRangeUtil.pastTwoDays(), TimeRangeUtil.pastOneDay(), field, branch, place, endpoint, sensor, TemperatureMeanData.class);
+        List<TemperatureMeanData> dataList = influxDBRepository.findOneHourMeanDataForOneDay(begin, end, field, branch, place, endpoint, sensor, TemperatureMeanData.class);
         log.info("service daily data : {}", dataList);
 
         ResponseListData<TemperatureMeanData> singleListData = new ResponseListData<>();
@@ -59,9 +62,10 @@ public class TemperatureServiceImpl implements TemperatureService {
     }
 
     @Override
-    public ResponseListData<TemperatureMinData> retrieveWeeklyMinData(String field, String branch, String place, String endpoint, String sensor) {
+    public ResponseListData<TemperatureMinData> retrieveTemperatureWeeklyMinData(
+            String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
-        List<TemperatureMinData> dataList = temperatureRepository.findOneDayMinMaxDataForOneWeek(TimeRangeUtil.pastOneWeek(), TimeRangeUtil.now(), field, branch, place, endpoint, sensor, TemperatureMinData.class);
+        List<TemperatureMinData> dataList = influxDBRepository.findOneDayMinMaxDataForOneWeek(begin, end, field, branch, place, endpoint, sensor, TemperatureMinData.class);
         log.info("service min max data : {}", dataList);
 
         ResponseListData<TemperatureMinData> minListData = new ResponseListData<>();
@@ -71,8 +75,9 @@ public class TemperatureServiceImpl implements TemperatureService {
     }
 
     @Override
-    public ResponseListData<TemperatureMaxData> retrieveWeeklyMaxData(String field, String branch, String place, String endpoint, String sensor) {
-        List<TemperatureMaxData> dataList = temperatureRepository.findOneDayMinMaxDataForOneWeek(TimeRangeUtil.pastOneWeek(), TimeRangeUtil.now(), field, branch, place, endpoint, sensor, TemperatureMaxData.class);
+    public ResponseListData<TemperatureMaxData> retrieveTemperatureWeeklyMaxData(
+            String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
+        List<TemperatureMaxData> dataList = influxDBRepository.findOneDayMinMaxDataForOneWeek(begin, end, field, branch, place, endpoint, sensor, TemperatureMaxData.class);
         log.info("service min max data : {}", dataList);
 
         ResponseListData<TemperatureMaxData> maxListData = new ResponseListData<>();

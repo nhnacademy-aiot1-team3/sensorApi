@@ -7,15 +7,17 @@ import live.databo3.sensor.influx.temperature.measurement.TemperatureMaxData;
 import live.databo3.sensor.influx.temperature.measurement.TemperatureMeanData;
 import live.databo3.sensor.influx.temperature.measurement.TemperatureMinData;
 
+import java.time.Instant;
+
 public interface TemperatureService {
 
-    ResponseSingleData<TemperatureLastData> retrieveLastData(String field, String branch, String place, String endpoint, String sensor);
+    ResponseSingleData<TemperatureLastData> retrieveTemperatureLastData(String field, String branch, String place, String endpoint, String sensor);
 
-    ResponseListData<TemperatureMeanData> retrieveHourlyMeanData(String field, String branch, String place, String endpoint, String sensor);
+    ResponseListData<TemperatureMeanData> retrieveTemperatureHourlyMeanData(String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end);
 
-    ResponseListData<TemperatureMeanData> retrieveDailyMeanData(String field, String branch, String place, String endpoint, String sensor);
+    ResponseListData<TemperatureMeanData> retrieveTemperatureDailyMeanData(String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end);
 
-    ResponseListData<TemperatureMinData> retrieveWeeklyMinData(String field, String branch, String place, String endpoint, String sensor);
+    ResponseListData<TemperatureMinData> retrieveTemperatureWeeklyMinData(String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end);
 
-    ResponseListData<TemperatureMaxData> retrieveWeeklyMaxData(String field, String branch, String place, String endpoint, String sensor);
+    ResponseListData<TemperatureMaxData> retrieveTemperatureWeeklyMaxData(String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end);
 }

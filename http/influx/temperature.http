@@ -14,7 +14,7 @@ GET http://localhost:8080/api/data/temperature
     /places/class_a
     /sensors/24e124126d152969
     /hour
-    /mean
+    /mean?begin=2024-05-14T06:44:57Z&end=2024-05-14T07:44:28Z
 Content-Type: application/json
 
 ### 1h 요청 ㅇ
@@ -24,7 +24,7 @@ GET http://localhost:8080/api/data/temperature
     /places/class_a
     /sensors/24e124126d152969
     /day
-    /mean
+    /mean?begin=2024-05-13T07:14:57Z&end=2024-05-14T07:44:28Z
 Content-Type: application/json
 
 ### week min 요청 ㅇ
@@ -34,7 +34,7 @@ GET http://localhost:8080/api/data/temperature
     /places/class_a
     /sensors/24e124126d152969
     /week
-    /min
+    /min?begin=2024-05-07T07:14:57Z&end=2024-05-14T07:44:28Z
 Content-Type: application/json
 
 ### week max 요청 ㅇ
@@ -44,6 +44,6 @@ GET http://localhost:8080/api/data/temperature
     /places/class_a
     /sensors/24e124126d152969
     /week
-    /max
+    /max?begin=2024-05-07T07:14:57Z&end=2024-05-14T07:44:28Z
 Content-Type: application/json
 

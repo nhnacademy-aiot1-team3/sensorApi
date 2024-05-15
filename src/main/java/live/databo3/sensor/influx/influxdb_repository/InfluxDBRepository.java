@@ -21,7 +21,7 @@ public class InfluxDBRepository {
     private final InfluxProperties influxProperties;
 
     //last
-    public <T> Optional<T> findLastTemperatureData(String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
+    public <T> Optional<T> findLastData(String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
         Flux query = FluxQueryUtil.lastDataQuery(
                 influxProperties.getSensorBucket(),
                 field,
@@ -40,10 +40,10 @@ public class InfluxDBRepository {
     }
 
     //hourly
-    public <T> List<T> findFiveMinutesMeanDataForOneHour(Instant start, Instant stop, String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
+    public <T> List<T> findFiveMinutesMeanDataForOneHour(Instant begin, Instant end, String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
         Flux query = FluxQueryUtil.aggregationDataListQuery(
-                start,
-                stop,
+                begin,
+                end,
                 influxProperties.getHourlyMeanBucket(),
                 field,
                 branch,
@@ -57,10 +57,10 @@ public class InfluxDBRepository {
     }
 
     //daily 현 시간 기준 오늘 최근 24시간, 현 시간 기준 어제 최근 24시간
-    public <T> List<T> findOneHourMeanDataForOneDay(Instant start, Instant stop, String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
+    public <T> List<T> findOneHourMeanDataForOneDay(Instant begin, Instant end, String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
         Flux query = FluxQueryUtil.aggregationDataListQuery(
-                start,
-                stop,
+                begin,
+                end,
                 influxProperties.getDailyMeanBucket(),
                 field,
                 branch,
@@ -74,10 +74,10 @@ public class InfluxDBRepository {
     }
 
     //weekly min max
-    public <T> List<T> findOneDayMinMaxDataForOneWeek(Instant start, Instant stop, String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
+    public <T> List<T> findOneDayMinMaxDataForOneWeek(Instant begin, Instant end, String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
         Flux query = FluxQueryUtil.aggregationDataListQuery(
-                start,
-                stop,
+                begin,
+                end,
                 influxProperties.getWeeklyMinMaxBucket(),
                 field,
                 branch,

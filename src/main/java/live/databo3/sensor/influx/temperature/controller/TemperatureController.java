@@ -11,12 +11,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-// endpoint도 pathVariable로 바꿔서 할 수 있나? 고민좀
+import java.time.Instant;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/data/temperature/fields/{fieldType}/branches/{branchName}/places/{placeName}/sensors/{sensorNumber}")
@@ -29,37 +27,39 @@ public class TemperatureController {
     @GetMapping({"/last"})
     public ResponseEntity<ResponseSingleData<TemperatureLastData>> getLastTemperatureData(
             @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber) {
-        log.info("field : {}, branch : {}, place : {}, sensor : {}", fieldType, branchName, placeName, sensorNumber);
 
-        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveLastData(fieldType, branchName,placeName, ENDPOINT, sensorNumber));
+        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveTemperatureLastData(fieldType, branchName,placeName, ENDPOINT, sensorNumber));
     }
 
     @GetMapping({"/hour/mean"})
-
     public ResponseEntity<ResponseListData<TemperatureMeanData>> getHourlyMeanTemperatureData(
-            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber) {
-        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveHourlyMeanData(fieldType, branchName, placeName, ENDPOINT, sensorNumber));
+            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber, @RequestParam Instant begin, @RequestParam Instant end) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveTemperatureHourlyMeanData(fieldType, branchName, placeName, ENDPOINT, sensorNumber, begin, end));
     }
 
     // /day/mean
     @GetMapping({"/day/mean"})
     public ResponseEntity<ResponseListData<TemperatureMeanData>> getDailyMeanTemperatureData(
-            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber) {
-        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveDailyMeanData(fieldType, branchName, placeName, ENDPOINT, sensorNumber));
+            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber, @RequestParam Instant begin, @RequestParam Instant end) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveTemperatureDailyMeanData(fieldType, branchName, placeName, ENDPOINT, sensorNumber, begin, end));
     }
 
     // /week/min
     @GetMapping({"/week/min"})
     public ResponseEntity<ResponseListData<TemperatureMinData>> getWeeklyMinTemperatureData(
-            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber) {
-        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveWeeklyMinData(fieldType, branchName, placeName, ENDPOINT, sensorNumber));
+            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber, @RequestParam Instant begin, @RequestParam Instant end) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveTemperatureWeeklyMinData(fieldType, branchName, placeName, ENDPOINT, sensorNumber, begin, end));
     }
 
     // /week/max
     @GetMapping({"/week/max"})
     public ResponseEntity<ResponseListData<TemperatureMaxData>> getWeeklyMaxTemperatureData(
-            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber) {
-        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveWeeklyMaxData(fieldType, branchName, placeName, ENDPOINT, sensorNumber));
+            @PathVariable String fieldType, @PathVariable String branchName, @PathVariable String placeName, @PathVariable String sensorNumber, @RequestParam Instant begin, @RequestParam Instant end) {
+
+        return ResponseEntity.status(HttpStatus.OK).body(temperatureService.retrieveTemperatureWeeklyMaxData(fieldType, branchName, placeName, ENDPOINT, sensorNumber, begin, end));
     }
 
 }
