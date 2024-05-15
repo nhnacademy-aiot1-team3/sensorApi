@@ -11,4 +11,6 @@ public interface SensorTypeMappingRepository extends JpaRepository<SensorTypeMap
     boolean existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(String sensorSn, Integer organizationId, Integer sensorTypeId);
 
     List<SensorTypeMappings> findAllBySensorType_SensorTypeIdAndSensor_Organization_OrganizationId(Integer sensorTypeId, Integer organizationId);
+
+    List<SensorTypeMappings> findAllBySensor_Organization_OrganizationName(String organizationName);
 }

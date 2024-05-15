@@ -1,0 +1,10 @@
+### 센서 등록
+POST http://localhost:8080/api/sensor/sensor
+Content-Type: application/json
+
+{
+  "branch": "nhnacademy1",
+  "place": "testPlace",
+  "device": "testDevice",
+  "endpoint": "temperature"
+}

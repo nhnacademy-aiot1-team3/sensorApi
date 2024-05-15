@@ -6,6 +6,8 @@ import live.databo3.sensor.general_config.dto.GeneralConfigDto;
 import live.databo3.sensor.general_config.dto.GeneralConfigForRedis;
 import live.databo3.sensor.general_config.service.GeneralConfigService;
 import live.databo3.sensor.organization.service.OrganizationService;
+import live.databo3.sensor.sensor_type_mappings.dto.SensorListForRedisDto;
+import live.databo3.sensor.sensor_type_mappings.service.impl.SensorListService;
 import live.databo3.sensor.value_config.dto.ValueConfigDto;
 import live.databo3.sensor.value_config.dto.ValueConfigForRedisDto;
 import live.databo3.sensor.value_config.service.ValueConfigService;
@@ -32,6 +34,7 @@ public class RedisReloader {
     private final GeneralConfigService generalConfigService;
     private final ValueConfigService valueConfigService;
     private final OrganizationService organizationService;
+    private final SensorListService sensorListService;
     private final ObjectMapper objectMapper;
 
     public void reloadRedisWithOrganizationName(String organizationName) throws JsonProcessingException {
@@ -39,12 +42,17 @@ public class RedisReloader {
 
         List<GeneralConfigDto> generalConfigDtoList = generalConfigService.findGeneralConfigByOrganizationId(organizationId);
         List<ValueConfigDto> valueConfigDtoList = valueConfigService.getValueConfigListByOrganizationId(organizationId);
+        List<SensorListForRedisDto> sensorList = sensorListService.getSensorListByOrganizationName(organizationName);
+
+        for (SensorListForRedisDto dto : sensorList) {
+            redisTemplate.opsForHash().put(organizationName, "sensorList:" + dto.getSensorSn(), objectMapper.writeValueAsString(dto.getSensorTypes()));
+        }
 
         for (GeneralConfigDto dto : generalConfigDtoList) {
-            redisTemplate.opsForHash().put(organizationName, "sn/" + dto.getSensorSn() + "/type/" + dto.getSensorType() + "/dev/" + dto.getSensorSn() + "/general" , objectMapper.writeValueAsString(new GeneralConfigForRedis(dto.getFunctionName())));
+            redisTemplate.opsForHash().put(organizationName, "general:" + dto.getSensorSn() + "/" + dto.getSensorType() + "/" + dto.getDeviceSn() , objectMapper.writeValueAsString(new GeneralConfigForRedis(dto.getFunctionName())));
         }
         for (ValueConfigDto dto : valueConfigDtoList) {
-            redisTemplate.opsForHash().put(organizationName,"sn/" + dto.getSensorSn() + "/type/" + dto.getSensorType() + "/value", objectMapper.writeValueAsString(new ValueConfigForRedisDto(dto.getFirstEntry(), dto.getSecondEntry())));
+            redisTemplate.opsForHash().put(organizationName, "value:" + dto.getSensorSn() + "/" + dto.getSensorType() , objectMapper.writeValueAsString(new ValueConfigForRedisDto(dto.getFirstEntry(), dto.getSecondEntry())));
         }
         log.debug("redis reloaded, key: " + organizationName);
     }
