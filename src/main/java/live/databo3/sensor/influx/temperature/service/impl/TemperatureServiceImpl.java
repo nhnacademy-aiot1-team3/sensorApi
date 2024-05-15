@@ -29,10 +29,10 @@ public class TemperatureServiceImpl implements TemperatureService {
         TemperatureLastData lastData = influxDBRepository.findLastData(field, branch, place, endpoint, sensor, TemperatureLastData.class).orElse(null);
         log.info("service last data : {}", lastData);
 
-        ResponseSingleData<TemperatureLastData> responseSingleData = new ResponseSingleData<>();
-        responseSingleData.setData(lastData);
+        ResponseSingleData<TemperatureLastData> singleData = new ResponseSingleData<>();
+        singleData.setData(lastData);
 
-        return responseSingleData;
+        return singleData;
     }
 
     @Override
@@ -55,10 +55,10 @@ public class TemperatureServiceImpl implements TemperatureService {
         List<TemperatureMeanData> dataList = influxDBRepository.findOneHourMeanDataForOneDay(begin, end, field, branch, place, endpoint, sensor, TemperatureMeanData.class);
         log.info("service daily data : {}", dataList);
 
-        ResponseListData<TemperatureMeanData> singleListData = new ResponseListData<>();
-        singleListData.setData(dataList);
+        ResponseListData<TemperatureMeanData> responseListData = new ResponseListData<>();
+        responseListData.setData(dataList);
 
-        return singleListData;
+        return responseListData;
     }
 
     @Override

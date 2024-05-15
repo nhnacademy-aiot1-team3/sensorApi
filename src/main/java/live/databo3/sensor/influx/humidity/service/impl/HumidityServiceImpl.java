@@ -29,10 +29,10 @@ public class HumidityServiceImpl implements HumidityService {
         HumidityLastData lastData = influxDBRepository.findLastData(field, branch, place, endpoint, sensor, HumidityLastData.class).orElse(null);
         log.info("service last data : {}", lastData);
 
-        ResponseSingleData<HumidityLastData> responseSingleData = new ResponseSingleData<>();
-        responseSingleData.setData(lastData);
+        ResponseSingleData<HumidityLastData> singleData = new ResponseSingleData<>();
+        singleData.setData(lastData);
 
-        return responseSingleData;
+        return singleData;
     }
 
     @Override
@@ -55,10 +55,10 @@ public class HumidityServiceImpl implements HumidityService {
         List<HumidityMeanData> dataList = influxDBRepository.findOneHourMeanDataForOneDay(begin, end, field, branch, place, endpoint, sensor, HumidityMeanData.class);
         log.info("service daily data : {}", dataList);
 
-        ResponseListData<HumidityMeanData> singleListData = new ResponseListData<>();
-        singleListData.setData(dataList);
+        ResponseListData<HumidityMeanData> responseListData = new ResponseListData<>();
+        responseListData.setData(dataList);
 
-        return singleListData;
+        return responseListData;
     }
 
     @Override

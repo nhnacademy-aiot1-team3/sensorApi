@@ -22,6 +22,7 @@ import java.time.Instant;
 public class TemperatureController {
 
     private final TemperatureService temperatureService;
+
     private static final String ENDPOINT = "temperature";
 
     @GetMapping({"/last"})

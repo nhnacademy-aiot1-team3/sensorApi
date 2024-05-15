@@ -30,7 +30,7 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("last temperature query : {}", query);
+        log.info("last query : {}", query);
 
         return influxDBClient
                 .getQueryApi()
@@ -51,7 +51,7 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("5m mean temperature query : {}", query);
+        log.info("5m mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -68,7 +68,7 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("1h mean temperature query : {}", query);
+        log.info("1h mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -85,7 +85,23 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("week min max temperature query : {}", query);
+        log.info("week min max query : {}", query);
+
+        return influxDBClient.getQueryApi().query(query.toString(), clazz);
+    }
+
+    public <T> List<T> findOneDayMeanDataForOneWeek(Instant begin, Instant end, String field, String branch, String place, String endpoint, String sensor, Class<T> clazz) {
+        Flux query = FluxQueryUtil.aggregationDataListQuery(
+                begin,
+                end,
+                influxProperties.getWeeklyMeanBucket(),
+                field,
+                branch,
+                place,
+                endpoint,
+                sensor
+        );
+        log.info("week mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }

@@ -3,7 +3,7 @@ GET http://localhost:8080/api/data/temperature
     /fields/value
     /branches/gyeongnam
     /places/class_a
-    /sensors/24e124126d152969
+    /sensors/24e124128c067999
     /last
 Content-Type: application/json
 
@@ -12,9 +12,9 @@ GET http://localhost:8080/api/data/temperature
     /fields/temperature_mean
     /branches/gyeongnam
     /places/class_a
-    /sensors/24e124126d152969
+    /sensors/24e124128c067999
     /hour
-    /mean?begin=2024-05-14T06:44:57Z&end=2024-05-14T07:44:28Z
+    /mean?begin=2024-05-15T05:30:00Z&end=2024-05-15T06:30:00Z
 Content-Type: application/json
 
 ### 1h 요청 ㅇ
@@ -22,9 +22,9 @@ GET http://localhost:8080/api/data/temperature
     /fields/temperature_mean
     /branches/gyeongnam
     /places/class_a
-    /sensors/24e124126d152969
+    /sensors/24e124128c067999
     /day
-    /mean?begin=2024-05-13T07:14:57Z&end=2024-05-14T07:44:28Z
+    /mean?begin=2024-05-14T06:30:00Z&end=2024-05-15T06:30:00Z
 Content-Type: application/json
 
 ### week min 요청 ㅇ
@@ -32,9 +32,9 @@ GET http://localhost:8080/api/data/temperature
     /fields/temperature_min
     /branches/gyeongnam
     /places/class_a
-    /sensors/24e124126d152969
+    /sensors/24e124128c067999
     /week
-    /min?begin=2024-05-07T07:14:57Z&end=2024-05-14T07:44:28Z
+    /min?begin=2024-05-08T06:30:00Z&end=2024-05-15T06:30:00Z
 Content-Type: application/json
 
 ### week max 요청 ㅇ
@@ -42,8 +42,8 @@ GET http://localhost:8080/api/data/temperature
     /fields/temperature_max
     /branches/gyeongnam
     /places/class_a
-    /sensors/24e124126d152969
+    /sensors/24e124128c067999
     /week
-    /max?begin=2024-05-07T07:14:57Z&end=2024-05-14T07:44:28Z
+    /max?begin=2024-05-08T06:30:00Z&end=2024-05-15T06:30:00Z
 Content-Type: application/json
 
