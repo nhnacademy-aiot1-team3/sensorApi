@@ -1,6 +1,7 @@
 package live.databo3.sensor.rule_engine.service;
 
 import live.databo3.sensor.annotations.ClearRedis;
+import live.databo3.sensor.exception.already_exist_exception.SensorTypeMappingAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeNotExistException;
 import live.databo3.sensor.organization.entity.Organization;
@@ -37,6 +38,9 @@ public class RuleEngineService {
         Sensor sensor = sensorRepository.save(new Sensor(sensorSn, null, place, organization));
         SensorType sensorType = sensorTypeRepository.findBySensorType(sensorTypeName).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeName));
 
+        if (sensorTypeMappingRepository.existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organization.getOrganizationId(), sensorType.getSensorTypeId())){
+            throw new SensorTypeMappingAlreadyExistException(sensorSn, sensorType.getSensorTypeId());
+        }
         sensorTypeMappingRepository.save(new SensorTypeMappings(null, sensor, sensorType));
         clearRedis(organization.getOrganizationId());
     }
