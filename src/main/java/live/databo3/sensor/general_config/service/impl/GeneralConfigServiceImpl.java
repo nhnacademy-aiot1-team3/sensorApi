@@ -85,7 +85,7 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
             generalConfigDtoList.add(
                     new GeneralConfigDto(generalConfig.getSensorTypeMappings().getSensor().getSensorSn(),
                             generalConfig.getSensorTypeMappings().getSensorType().getSensorType(),
-                            generalConfig.getSettingFunctionType().getFunctionName(),
+                            generalConfig.getSettingFunctionType().getFunctionName().name(),
                             Objects.isNull(generalConfig.getDevice()) ? null : generalConfig.getDevice().getDeviceSn()
                             ));
         }
