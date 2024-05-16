@@ -1,5 +1,5 @@
 ### 센서 등록
-POST http://localhost:8080/api/sensor/sensor
+POST http://localhost:8080/sensor
 Content-Type: application/json
 
 {

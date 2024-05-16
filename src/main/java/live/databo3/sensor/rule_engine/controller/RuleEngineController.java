@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sensor/")
+@RequestMapping
 public class RuleEngineController {
     private final RuleEngineService ruleEngineService;
 
