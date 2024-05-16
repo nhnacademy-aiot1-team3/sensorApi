@@ -15,7 +15,7 @@ import java.time.Instant;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/data/co2/fields/{fieldType}/branches/{branchName}/places/{placeName}/sensors/{sensorNumber}")
+@RequestMapping("/api/sensor/co2/fields/{fieldType}/branches/{branchName}/places/{placeName}/sensors/{sensorNumber}")
 @RequiredArgsConstructor
 public class Co2Controller {
 

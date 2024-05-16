@@ -17,7 +17,7 @@ import java.time.Instant;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/data/humidity/fields/{fieldType}/branches/{branchName}/places/{placeName}/sensors/{sensorNumber}")
+@RequestMapping("/api/sensor/humidity/fields/{fieldType}/branches/{branchName}/places/{placeName}/sensors/{sensorNumber}")
 @RequiredArgsConstructor
 public class HumidityController {
 
