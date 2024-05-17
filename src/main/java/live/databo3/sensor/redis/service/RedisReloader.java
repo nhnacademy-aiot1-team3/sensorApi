@@ -6,6 +6,8 @@ import live.databo3.sensor.general_config.dto.GeneralConfigDto;
 import live.databo3.sensor.general_config.dto.GeneralConfigForRedis;
 import live.databo3.sensor.general_config.service.GeneralConfigService;
 import live.databo3.sensor.organization.service.OrganizationService;
+import live.databo3.sensor.sensor_type.entity.SensorType;
+import live.databo3.sensor.sensor_type.service.SensorTypeService;
 import live.databo3.sensor.sensor_type_mappings.dto.SensorListForRedisDto;
 import live.databo3.sensor.sensor_type_mappings.service.impl.SensorListService;
 import live.databo3.sensor.value_config.dto.ValueConfigDto;
@@ -16,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +38,7 @@ public class RedisReloader {
     private final ValueConfigService valueConfigService;
     private final OrganizationService organizationService;
     private final SensorListService sensorListService;
+    private final SensorTypeService sensorTypeService;
     private final ObjectMapper objectMapper;
 
     public void reloadRedisWithOrganizationName(String organizationName) throws JsonProcessingException {
@@ -55,5 +59,12 @@ public class RedisReloader {
             redisTemplate.opsForHash().put(organizationName, "value:" + dto.getSensorSn() + "/" + dto.getSensorType() , objectMapper.writeValueAsString(new ValueConfigForRedisDto(dto.getFirstEntry(), dto.getSecondEntry())));
         }
         log.debug("redis reloaded, key: " + organizationName);
+    }
+
+    public void reloadSensorTypes() {
+        List<SensorType> sensorTypelist = sensorTypeService.getSensorTypes();
+        for (SensorType sensorType : sensorTypelist) {
+            redisTemplate.opsForList().rightPush("sensorList", sensorType.getSensorType());
+        }
     }
 }

@@ -15,11 +15,13 @@ import live.databo3.sensor.sensor_type.repository.SensorTypeRepository;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.sensor_type_mappings.repository.SensorTypeMappingRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class RuleEngineService {
@@ -31,21 +33,33 @@ public class RuleEngineService {
 
 
     @Transactional
+    @ClearRedis
     public void registerSensor(String organizationName, String placeName, String sensorSn, String sensorTypeName) {
-        Optional<Place> placeOptional = placeRepository.findByPlaceNameAndOrganization_OrganizationName(placeName, organizationName);
         Organization organization = organizationRepository.findByOrganizationName(organizationName).orElseThrow(() -> new OrganizationNotExistException(organizationName));
-        Place place = placeOptional.orElseGet(() -> placeRepository.save(new Place(null, placeName, organization)));
-        Sensor sensor = sensorRepository.save(new Sensor(sensorSn, null, place, organization));
+
+        Optional<Place> placeOptional = placeRepository.findByPlaceNameAndOrganization_OrganizationName(placeName, organizationName);
+        Place place;
+        if (placeOptional.isPresent()) {
+            place = placeOptional.get();
+        } else {
+            place = placeRepository.saveAndFlush(new Place(null, placeName, organization));
+            log.debug("place registered: " + place.getPlaceName() + "-" + organizationName);
+        }
+
+        Optional<Sensor> sensorOptional = sensorRepository.findBySensorSnAndOrganization_OrganizationId(sensorSn, organization.getOrganizationId());
+        Sensor sensor;
+        if (sensorOptional.isPresent()) {
+            sensor = sensorOptional.get();
+        } else {
+            sensor = sensorRepository.saveAndFlush(new Sensor(sensorSn, null, place, organization));
+            log.debug("sensor registered: " + sensorSn + "-" + placeName);
+        }
+
         SensorType sensorType = sensorTypeRepository.findBySensorType(sensorTypeName).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeName));
 
         if (sensorTypeMappingRepository.existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organization.getOrganizationId(), sensorType.getSensorTypeId())){
             throw new SensorTypeMappingAlreadyExistException(sensorSn, sensorType.getSensorTypeId());
         }
-        sensorTypeMappingRepository.save(new SensorTypeMappings(null, sensor, sensorType));
-        clearRedis(organization.getOrganizationId());
-    }
-
-    @ClearRedis
-    public void clearRedis(Integer organizationId) {
+        sensorTypeMappingRepository.saveAndFlush(new SensorTypeMappings(null, sensor, sensorType));
     }
 }

@@ -1,5 +1,6 @@
 package live.databo3.sensor.listener;
 
+import live.databo3.sensor.redis.service.RedisReloader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
@@ -19,11 +20,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ApplicationStartListener implements ApplicationListener<ApplicationStartedEvent> {
     private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisReloader redisReloader;
 
 
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
         Objects.requireNonNull(redisTemplate.getConnectionFactory()).getConnection().serverCommands().flushAll();
+        redisReloader.reloadSensorTypes();
     }
-
 }
