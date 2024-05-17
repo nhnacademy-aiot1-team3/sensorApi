@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * sensorTypeMapping entity 관련 service
  * CRUD 와 더불어 알맞은 조직의 sensorTypeMapping 을 요청했는지 쿼리를 통해 무결성을 검증하는 역할을 포함한다.
@@ -84,5 +86,9 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
     public void deleteSensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId) {
         SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.findBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new SensorTypeMappingNotExistException(sensorSn, sensorTypeId));
         sensorTypeMappingRepository.deleteById(sensorTypeMappings.getRecordNumber());
+    }
+
+    public List<SensorTypeMappingListDto> getSensorTypeMappingList(Integer organizationId) {
+        return sensorTypeMappingRepository.findAllBySensor_Organization_OrganizationId(organizationId);
     }
 }
