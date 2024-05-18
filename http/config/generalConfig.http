@@ -1,15 +1,16 @@
 ### 일반 설정 등록
-POST http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorTypeId/2/general
+POST http://localhost:8080/api/sensor/org/29/sensor/24e124126c457594/sensorType/1/general
 Content-Type: application/json
 X-USER-ID: owner
 
 {
-  "functionId": 1
+  "functionId": 1,
+  "deviceSn": "air1"
 }
 
 
 ### 일반 설정 수정
-PUT http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorTypeId/2/general
+PUT http://localhost:8080/api/sensor/org/29/sensor/24e124126c457594/sensorType/1/general
 Content-Type: application/json
 X-USER-ID: owner
 
@@ -20,7 +21,7 @@ X-USER-ID: owner
 
 
 ### 일반 설정 조회
-GET http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorTypeId/2/general
+GET http://localhost:8080/api/sensor/org/29/sensor/24e124126c457594/sensorType/1/general
 Content-Type: application/json
 X-USER-ID: owner
 
@@ -32,7 +33,7 @@ X-USER-ID: owner
 
 
 ### 일반 설정 삭제
-DELETE http://localhost:8080/api/sensor/org/1/sensor/hum03/sensorTypeId/2/general
+DELETE http://localhost:8080/api/sensor/org/29/sensor/24e124126c457594/sensorType/1/general
 Content-Type: application/json
 X-USER-ID: owner
 

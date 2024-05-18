@@ -60,7 +60,7 @@ public class ValueConfigServiceImpl implements ValueConfigService {
     @Transactional
     @ClearRedis
     public void deleteValueConfig(Integer organizationId, String sensorSn, Integer sensorTypeId, Long valueConfigNumber) {
-        if (!valueConfigRepository.existsByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId) && valueConfigRepository.existsById(valueConfigNumber)) {
+        if (!valueConfigRepository.existsByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId) || !valueConfigRepository.existsById(valueConfigNumber)) {
             throw new ValueConfigNotExistException(valueConfigNumber);
         }
 
