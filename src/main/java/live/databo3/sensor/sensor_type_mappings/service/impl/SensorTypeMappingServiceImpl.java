@@ -5,6 +5,9 @@ import live.databo3.sensor.exception.already_exist_exception.SensorTypeMappingAl
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeMappingNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeNotExistException;
+import live.databo3.sensor.exception.not_exist_exception.SettingFunctionTypeNotExistException;
+import live.databo3.sensor.general_config.entity.GeneralConfig;
+import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
 import live.databo3.sensor.sensor.entity.Sensor;
 import live.databo3.sensor.sensor.repository.SensorRepository;
 import live.databo3.sensor.sensor_type.entity.SensorType;
@@ -13,10 +16,13 @@ import live.databo3.sensor.sensor_type_mappings.dto.*;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.sensor_type_mappings.repository.SensorTypeMappingRepository;
 import live.databo3.sensor.sensor_type_mappings.service.SensorTypeMappingService;
+import live.databo3.sensor.setting_function_type.entity.SettingFunctionType;
+import live.databo3.sensor.setting_function_type.repository.SettingFunctionTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -32,12 +38,15 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
     private final SensorTypeMappingRepository sensorTypeMappingRepository;
     private final SensorRepository sensorRepository;
     private final SensorTypeRepository sensorTypeRepository;
+    private final GeneralConfigRepository generalConfigRepository;
+    private final SettingFunctionTypeRepository settingFunctionTypeRepository;
 
     /**
      * sensorTypeMapping 을 등록한다.
      * 이미 매핑이 존재하는지 확인 한 후 없다면 등록한다.
      * @since 1.0.0
      */
+    @Transactional
     public SensorTypeMappingResponse registerSensorTypeMapping(String sensorSn, Integer organizationId, Integer sensorTypeId) {
         if (sensorTypeMappingRepository.existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId)) {
             throw new SensorTypeMappingAlreadyExistException(sensorSn, sensorTypeId);
@@ -45,8 +54,12 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
         Sensor sensor = sensorRepository.findBySensorSnAndOrganization_OrganizationId(sensorSn, organizationId).orElseThrow(() -> new SensorNotExistException(sensorSn));
         SensorType sensorType = sensorTypeRepository.findById(sensorTypeId).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeId));
 
-        SensorTypeMappings sensorTypeMappings = new SensorTypeMappings(null, sensor, sensorType);
-        return sensorTypeMappingRepository.save(sensorTypeMappings).toDto();
+        SensorTypeMappings newSensorTypeMappings = new SensorTypeMappings(null, sensor, sensorType);
+        SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.save(newSensorTypeMappings);
+
+        SettingFunctionType settingFunctionType = settingFunctionTypeRepository.findById(1L).orElseThrow(() -> new SettingFunctionTypeNotExistException(1L));
+        generalConfigRepository.save(new GeneralConfig(null, sensorTypeMappings, settingFunctionType, null, LocalDateTime.now()));
+        return sensorTypeMappings.toDto();
     }
 
     /**

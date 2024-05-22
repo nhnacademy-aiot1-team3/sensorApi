@@ -1,4 +1,4 @@
-GET http://localhost:8080/org/nhnacademy1/config
+GET http://localhost:8080/org/nhnacademy/config
 Accept: application/json
 
 ###

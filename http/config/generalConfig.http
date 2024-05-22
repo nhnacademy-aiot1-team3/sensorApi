@@ -9,7 +9,7 @@ X-USER-ID: owner
 
 
 ### 일반 설정 수정
-PUT http://localhost:8080/api/sensor/org/29/sensor/24e124126c457594/sensorType/1/general
+PUT http://localhost:8080/api/sensor/org/1/sensor/hum04/sensorType/2/general
 Content-Type: application/json
 X-USER-ID: owner
 

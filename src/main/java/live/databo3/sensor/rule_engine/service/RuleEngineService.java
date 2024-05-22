@@ -4,6 +4,9 @@ import live.databo3.sensor.annotations.ClearRedis;
 import live.databo3.sensor.exception.already_exist_exception.SensorTypeMappingAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeNotExistException;
+import live.databo3.sensor.exception.not_exist_exception.SettingFunctionTypeNotExistException;
+import live.databo3.sensor.general_config.entity.GeneralConfig;
+import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.organization.repository.OrganizationRepository;
 import live.databo3.sensor.place.entity.Place;
@@ -14,11 +17,14 @@ import live.databo3.sensor.sensor_type.entity.SensorType;
 import live.databo3.sensor.sensor_type.repository.SensorTypeRepository;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.sensor_type_mappings.repository.SensorTypeMappingRepository;
+import live.databo3.sensor.setting_function_type.entity.SettingFunctionType;
+import live.databo3.sensor.setting_function_type.repository.SettingFunctionTypeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Slf4j
@@ -30,6 +36,8 @@ public class RuleEngineService {
     private final SensorRepository sensorRepository;
     private final SensorTypeRepository sensorTypeRepository;
     private final SensorTypeMappingRepository sensorTypeMappingRepository;
+    private final GeneralConfigRepository generalConfigRepository;
+    private final SettingFunctionTypeRepository settingFunctionTypeRepository;
 
 
     @Transactional
@@ -60,6 +68,9 @@ public class RuleEngineService {
         if (sensorTypeMappingRepository.existsBySensor_SensorSnAndSensor_Organization_OrganizationIdAndSensorType_SensorTypeId(sensorSn, organization.getOrganizationId(), sensorType.getSensorTypeId())){
             throw new SensorTypeMappingAlreadyExistException(sensorSn, sensorType.getSensorTypeId());
         }
-        sensorTypeMappingRepository.saveAndFlush(new SensorTypeMappings(null, sensor, sensorType));
+        SensorTypeMappings sensorTypeMappings = sensorTypeMappingRepository.saveAndFlush(new SensorTypeMappings(null, sensor, sensorType));
+        SettingFunctionType settingFunctionType = settingFunctionTypeRepository.findById(1L).orElseThrow(() -> new SettingFunctionTypeNotExistException(1L));
+
+        generalConfigRepository.save(new GeneralConfig(null, sensorTypeMappings, settingFunctionType, null, LocalDateTime.now()));
     }
 }
