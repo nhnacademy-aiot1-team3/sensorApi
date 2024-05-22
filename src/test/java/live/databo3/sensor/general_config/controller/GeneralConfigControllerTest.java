@@ -1,6 +1,5 @@
 package live.databo3.sensor.general_config.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import live.databo3.sensor.general_config.dto.GeneralConfigDto;
 import live.databo3.sensor.general_config.dto.request.ModifyGeneralConfigRequest;

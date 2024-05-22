@@ -1,6 +1,5 @@
 package live.databo3.sensor.sensorTypeMappings.service;
 
-import live.databo3.sensor.exception.already_exist_exception.DeviceAlreadyExistException;
 import live.databo3.sensor.exception.already_exist_exception.SensorTypeMappingAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeMappingNotExistException;
