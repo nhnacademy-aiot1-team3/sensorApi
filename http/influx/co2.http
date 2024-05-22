@@ -1,0 +1,41 @@
+### last 요청 ㅇ
+GET http://localhost:8080/api/data/co2
+    /fields/value
+    /branches/gyeongnam
+    /places/class_a
+    /sensors/24e124128c067999
+    /last
+Content-Type: application/json
+
+### 5m 요청 ㅇ
+GET http://localhost:8080/api/data/co2
+    /fields/co2_mean
+    /branches/gyeongnam
+    /places/class_a
+    /sensors/24e124128c067999
+    /hour
+    /mean?begin=2024-05-15T05:30:00Z&end=2024-05-15T06:30:00Z
+Content-Type: application/json
+
+### 1h 요청 ㅇ
+GET http://localhost:8080/api/data/co2
+    /fields/co2_mean
+    /branches/gyeongnam
+    /places/class_a
+    /sensors/24e124128c067999
+    /day
+    /mean?begin=2024-05-14T06:30:00Z&end=2024-05-15T06:30:00Z
+Content-Type: application/json
+
+### week min 요청 ㅇ
+GET http://localhost:8080/api/data/co2
+    /fields/co2_mean
+    /branches/gyeongnam
+    /places/class_a
+    /sensors/24e124128c067999
+    /week
+    /mean?begin=2024-05-08T06:30:00Z&end=2024-05-15T06:30:00Z
+Content-Type: application/json
+
+
+
