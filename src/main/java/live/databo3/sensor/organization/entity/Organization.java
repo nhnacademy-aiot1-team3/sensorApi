@@ -1,6 +1,5 @@
 package live.databo3.sensor.organization.entity;
 
-import live.databo3.sensor.organization.dto.RegisterOrganizationResponse;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,11 +26,4 @@ public class Organization {
 
     @Column(name = "controller_sn")
     private String controllerSn;
-
-    public RegisterOrganizationResponse toRegisterResponse() {
-        return RegisterOrganizationResponse.builder()
-                .organizationId(organizationId)
-                .organizationName(organizationName)
-                .build();
-    }
 }

@@ -23,7 +23,7 @@ public class ControllerAdvice {
      * @since 1.0.0
      */
     @ExceptionHandler({AlreadyExistException.class})
-    private ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> alReadyExistExceptionHandler(Exception e) {
+    protected ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> alReadyExistExceptionHandler(Exception e) {
         log.error(e.getMessage());
         ErrorHeader errorHeader = new ErrorHeader(101, "이미 존재합니다.");
 
@@ -36,7 +36,7 @@ public class ControllerAdvice {
      * @since 1.0.0
      */
     @ExceptionHandler({NotExistException.class})
-    private ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> notExistExceptionHandler(Exception e) {
+    protected ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> notExistExceptionHandler(Exception e) {
         log.error(e.getMessage());
         ErrorHeader errorHeader = new ErrorHeader(102, "존재하지 않습니다.");
 
@@ -49,7 +49,7 @@ public class ControllerAdvice {
      * @since 1.0.0
      */
     @ExceptionHandler({UnAuthorizedAccessException.class})
-    private ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> unAuthorizedAccessExceptionHandler(Exception e) {
+    protected ResponseEntity<ErrorResponse<ErrorHeader, ErrorBody>> unAuthorizedAccessExceptionHandler(Exception e) {
         log.error(e.getMessage());
         ErrorHeader errorHeader = new ErrorHeader(103, "허가되지 않은 접근입니다.");
 

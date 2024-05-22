@@ -21,19 +21,19 @@ public class GeneralConfigController {
 
     private final GeneralConfigService generalConfigService;
 
-    @PostMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    @PostMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> createGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody RegisterGeneralConfigRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(generalConfigService.registerGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
-    @PutMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    @PutMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> modifyGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody ModifyGeneralConfigRequest request) {
         return ResponseEntity.ok(generalConfigService.modifyGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
-    @DeleteMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    @DeleteMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<Void> deleteGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         generalConfigService.deleteGeneralConfig(organizationId, sensorSn, sensorTypeId);
@@ -46,7 +46,7 @@ public class GeneralConfigController {
         return ResponseEntity.ok(generalConfigService.findGeneralConfigByOrganizationId(organizationId));
     }
 
-    @GetMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    @GetMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> getGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         return ResponseEntity.ok(generalConfigService.getGeneralConfig(organizationId, sensorSn, sensorTypeId));

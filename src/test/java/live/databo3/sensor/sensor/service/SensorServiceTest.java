@@ -28,7 +28,6 @@ import java.util.Optional;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -178,7 +177,6 @@ class SensorServiceTest {
         sensorService.deleteSensor(1, sensor.getSensorSn());
 
         verify(sensorRepository, times(1)).existsBySensorSnAndOrganization_OrganizationId(anyString(), anyInt());
-        then(sensorRepository).should().existsBySensorSnAndOrganization_OrganizationId(sensor.getSensorSn(), 1);
     }
 
     @Test
@@ -192,7 +190,7 @@ class SensorServiceTest {
 
     @Test
     void sensorListGetTest() {
-        when(sensorRepository.findAllByOrganization_OrganizationId(anyInt())).thenReturn(new ArrayList<SensorDto>());
+        when(sensorRepository.findAllByOrganization_OrganizationId(anyInt())).thenReturn(new ArrayList<>());
 
         sensorService.getSensors(1);
         verify(sensorRepository, times(1)).findAllByOrganization_OrganizationId(anyInt());

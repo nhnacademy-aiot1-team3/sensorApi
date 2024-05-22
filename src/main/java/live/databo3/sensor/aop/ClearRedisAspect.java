@@ -67,6 +67,9 @@ public class ClearRedisAspect {
             if (parameters[i].getName().equals("organizationId") && paramValues[i] instanceof Integer) {
                 organizationId = (Integer) paramValues[i];
                 break;
+            } else if (parameters[i].getName().equals("organizationName") && paramValues[i] instanceof String) {
+                organizationId = organizationService.findIdByName((String) paramValues[i]);
+                break;
             }
         }
         Object retVal = pjp.proceed();

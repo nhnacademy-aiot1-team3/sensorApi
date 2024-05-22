@@ -16,13 +16,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/org")
+@RequestMapping
 public class RedisController {
 
     private final RedisReloader redisReloader;
 
-    @GetMapping("/{organizationName}/config")
+    @GetMapping("/org/{organizationName}/config")
     public void reloadRedis(@PathVariable String organizationName) throws JsonProcessingException {
         redisReloader.reloadRedisWithOrganizationName(organizationName);
+    }
+
+    @GetMapping("/sensorTypes")
+    public void reloadSensorTypes() {
+        redisReloader.reloadSensorTypes();
     }
 }

@@ -1,12 +1,15 @@
 package live.databo3.sensor.sensor_type_mappings.controller;
 
 import live.databo3.sensor.sensor_type_mappings.dto.ModifySensorTypeMappingRequest;
+import live.databo3.sensor.sensor_type_mappings.dto.SensorTypeMappingListDto;
 import live.databo3.sensor.sensor_type_mappings.dto.SensorTypeMappingResponse;
 import live.databo3.sensor.sensor_type_mappings.service.SensorTypeMappingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * sensorTypeMapping entity 관련 controller
@@ -19,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/sensorTypeMapping")
+@RequestMapping
 public class SensorTypeMappingController {
     private final SensorTypeMappingService sensorTypeMappingService;
 
@@ -27,7 +30,7 @@ public class SensorTypeMappingController {
      * POST 요청을 받아 sensorTypeMapping 을 등록한다.
      * @since 1.0.0
      */
-    @PostMapping
+    @PostMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/sensorTypeMapping")
     public ResponseEntity<SensorTypeMappingResponse> registerSensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId) {
         return ResponseEntity.status(HttpStatus.CREATED).body(sensorTypeMappingService.registerSensorTypeMapping(sensorSn, organizationId, sensorTypeId));
     }
@@ -36,7 +39,7 @@ public class SensorTypeMappingController {
      * PUT 요청을 받아 sensorTypeMapping 을 수정한다.
      * @since 1.0.0
      */
-    @PutMapping
+    @PutMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/sensorTypeMapping")
     public ResponseEntity<SensorTypeMappingResponse> modifySensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId, @RequestBody ModifySensorTypeMappingRequest request) {
         return ResponseEntity.ok(sensorTypeMappingService.modifySensorTypeMapping(sensorSn, organizationId, sensorTypeId, request));
     }
@@ -45,7 +48,7 @@ public class SensorTypeMappingController {
      * GET 요청을 받아 sensorTypeMapping 을 조회한다.
      * @since 1.0.0
      */
-    @GetMapping
+    @GetMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/sensorTypeMapping")
     public ResponseEntity<SensorTypeMappingResponse> getSensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId) {
         return ResponseEntity.ok(sensorTypeMappingService.getSensorTypeMapping(sensorSn, organizationId, sensorTypeId));
     }
@@ -54,9 +57,14 @@ public class SensorTypeMappingController {
      * DELETE 요청을 받아 sensorTypeMapping 을 삭제한다.
      * @since 1.0.0
      */
-    @DeleteMapping
+    @DeleteMapping("/api/sensor/org/{organizationId}/sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/sensorTypeMapping")
     public ResponseEntity<Void> deleteSensorTypeMapping(@PathVariable String sensorSn, @PathVariable Integer organizationId, @PathVariable Integer sensorTypeId) {
         sensorTypeMappingService.deleteSensorTypeMapping(sensorSn, organizationId, sensorTypeId);
         return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/api/sensor/org/{organizationId}/sensorTypeMapping")
+    public ResponseEntity<List<SensorTypeMappingListDto>> getSensorTypeMappingList(@PathVariable Integer organizationId) {
+        return ResponseEntity.ok(sensorTypeMappingService.getSensorTypeMappingList(organizationId));
     }
 }

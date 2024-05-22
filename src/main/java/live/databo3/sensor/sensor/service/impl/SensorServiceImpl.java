@@ -40,6 +40,7 @@ public class SensorServiceImpl implements SensorService {
      * 이미 존재하는 sensor 인지 확인 한 후에 없다면 request 의 body 를 통해 생성한다.
      * @since 1.0.0
      */
+    @ClearRedis
     public SensorResponse registerSensor(Integer organizationId, RegisterSensorRequest request) {
         String sensorSn = request.getSensorSn();
         if (sensorRepository.existsById(sensorSn)) {

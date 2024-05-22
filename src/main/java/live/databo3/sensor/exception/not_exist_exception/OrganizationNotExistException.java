@@ -10,4 +10,8 @@ public class OrganizationNotExistException extends NotExistException {
     public OrganizationNotExistException(Integer organizationId) {
         super("organization", "organizationId-" + organizationId);
     }
+
+    public OrganizationNotExistException(String organizationName) {
+        super("organization", "organizationName-" + organizationName);
+    }
 }

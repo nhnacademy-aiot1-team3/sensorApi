@@ -1,5 +1,6 @@
 package live.databo3.sensor.place.service.impl;
 
+import live.databo3.sensor.exception.already_exist_exception.PlaceAlreadyExistException;
 import live.databo3.sensor.exception.not_exist_exception.OrganizationNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.PlaceNotExistException;
 import live.databo3.sensor.organization.entity.Organization;
@@ -26,6 +27,9 @@ public class PlaceServiceImpl implements PlaceService {
         String placeName = request.getPlaceName();
 
         Organization organization = organizationRepository.findById(organizationId).orElseThrow(() -> new OrganizationNotExistException(organizationId));
+        if (placeRepository.existsByPlaceNameAndOrganization_OrganizationId(request.getPlaceName(), organizationId)) {
+            throw new PlaceAlreadyExistException(request.getPlaceName());
+        }
 
         Place place = new Place(null, placeName, organization);
 
@@ -35,6 +39,9 @@ public class PlaceServiceImpl implements PlaceService {
     @Transactional
     public PlaceResponse modifyPlace(Integer organizationId, Integer placeId, PlaceRequest request) {
         String placeName = request.getPlaceName();
+        if (placeRepository.existsByPlaceNameAndOrganization_OrganizationId(request.getPlaceName(), organizationId)) {
+            throw new PlaceAlreadyExistException(request.getPlaceName());
+        }
 
         Place place = placeRepository.findByPlaceIdAndOrganization_OrganizationId(placeId, organizationId).orElseThrow(() -> new PlaceNotExistException(placeId));
 

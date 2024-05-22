@@ -1,0 +1,34 @@
+### 센서 등록
+POST http://localhost:8080/sensor
+Content-Type: application/json
+
+{
+  "branch": "nhnacademy1",
+  "place": "testPlace",
+  "device": "testDevice",
+  "endpoint": "temperature"
+}
+
+
+### 센서 등록
+POST http://localhost:8080/sensor
+Content-Type: application/json
+
+{
+  "branch": "nhnacademy1",
+  "place": "testPlace",
+  "device": "testDevice",
+  "endpoint": "co2"
+}
+
+
+### 센서 등록
+POST http://localhost:8080/sensor
+Content-Type: application/json
+
+{
+  "branch": "nhnacademy",
+  "place": "class_b",
+  "device": "24e124128c140101",
+  "endpoint": "co2"
+}

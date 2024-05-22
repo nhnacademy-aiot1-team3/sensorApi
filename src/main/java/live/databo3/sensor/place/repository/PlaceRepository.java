@@ -11,4 +11,8 @@ public interface PlaceRepository extends JpaRepository<Place, Integer> {
     Optional<Place> findByPlaceIdAndOrganization_OrganizationId(Integer placeId, Integer organizationId);
     List<PlaceDto> findAllByOrganization_OrganizationId(Integer organizationId);
     boolean existsByPlaceIdAndOrganization_OrganizationId(Integer placeId, Integer organizationId);
+
+    boolean existsByPlaceNameAndOrganization_OrganizationId(String placeName, Integer organizationId);
+
+    Optional<Place> findByPlaceNameAndOrganization_OrganizationName(String placeName, String organizationName);
 }

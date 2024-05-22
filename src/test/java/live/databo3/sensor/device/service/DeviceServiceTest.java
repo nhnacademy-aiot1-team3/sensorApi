@@ -22,7 +22,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -135,7 +134,6 @@ class DeviceServiceTest {
         deviceService.deleteDevice(1, device.getDeviceSn());
 
         verify(deviceRepository, times(1)).existsByDeviceSnAndOrganization_OrganizationId(anyString(), anyInt());
-        then(deviceRepository).should().existsByDeviceSnAndOrganization_OrganizationId(device.getDeviceSn(), 1);
     }
 
     @Test

@@ -15,4 +15,6 @@ public interface ValueConfigRepository extends JpaRepository<ValueConfig, Long> 
     void deleteByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeIdAndValueConfigNumber(String sensorSn, Integer organizationId, Integer sensorType, Long valueConfigNumber);
 
     List<ValueConfig> findAllByGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationId(Integer organizationId);
+
+    List<ValueConfig> findAllByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(String sensorSn, Integer organizationId, Integer sensorType);
 }

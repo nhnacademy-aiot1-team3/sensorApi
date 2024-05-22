@@ -8,9 +8,7 @@ import live.databo3.sensor.exception.not_exist_exception.ValueConfigNotExistExce
 import live.databo3.sensor.general_config.entity.GeneralConfig;
 import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
 import live.databo3.sensor.sensor_type.repository.SensorTypeRepository;
-import live.databo3.sensor.value_config.dto.ValueConfigDto;
-import live.databo3.sensor.value_config.dto.ValueConfigRequest;
-import live.databo3.sensor.value_config.dto.ValueConfigResponse;
+import live.databo3.sensor.value_config.dto.*;
 import live.databo3.sensor.value_config.entity.ValueConfig;
 import live.databo3.sensor.value_config.repository.ValueConfigRepository;
 import live.databo3.sensor.value_config.service.ValueConfigService;
@@ -60,7 +58,7 @@ public class ValueConfigServiceImpl implements ValueConfigService {
     @Transactional
     @ClearRedis
     public void deleteValueConfig(Integer organizationId, String sensorSn, Integer sensorTypeId, Long valueConfigNumber) {
-        if (!valueConfigRepository.existsByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId) && valueConfigRepository.existsById(valueConfigNumber)) {
+        if (!valueConfigRepository.existsByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId) || !valueConfigRepository.existsById(valueConfigNumber)) {
             throw new ValueConfigNotExistException(valueConfigNumber);
         }
 
@@ -83,5 +81,25 @@ public class ValueConfigServiceImpl implements ValueConfigService {
                     valueConfig.getSecondEntry()));
         }
         return valueConfigDtoList;
+    }
+
+    public ConfigsDto getConfig(Integer organizationId, String sensorSn, Integer sensorTypeId) {
+        GeneralConfig generalConfig = generalConfigRepository.findBySensorTypeMappings_Sensor_SensorSnAndSensorTypeMappings_Sensor_Organization_organizationIdAndSensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new GeneralConfigNotExistException(sensorSn, sensorTypeId));
+        List<ValueConfig> valueConfigList = valueConfigRepository.findAllByGeneralConfig_SensorTypeMappings_Sensor_SensorSnAndGeneralConfig_SensorTypeMappings_Sensor_Organization_OrganizationIdAndGeneralConfig_SensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId);
+
+        List<ValueEntryDto> valueEntryDtoList = new ArrayList<>();
+        for (ValueConfig valueConfig : valueConfigList) {
+            valueEntryDtoList.add(ValueEntryDto.builder()
+                    .valueConfigNumber(valueConfig.getValueConfigNumber())
+                    .firstEntry(valueConfig.getFirstEntry())
+                    .secondEntry(valueConfig.getSecondEntry())
+                    .build());
+        }
+        return ConfigsDto.builder()
+                .functionId(generalConfig.getSettingFunctionType().getFunctionId())
+                .functionName(generalConfig.getSettingFunctionType().getFunctionName().name())
+                .deviceSn(generalConfig.getDevice() != null ? generalConfig.getDevice().getDeviceSn() : null)
+                .value(valueEntryDtoList)
+                .build();
     }
 }
