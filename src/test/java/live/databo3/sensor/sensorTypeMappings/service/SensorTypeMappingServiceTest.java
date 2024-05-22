@@ -5,6 +5,8 @@ import live.databo3.sensor.exception.already_exist_exception.SensorTypeMappingAl
 import live.databo3.sensor.exception.not_exist_exception.SensorNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeMappingNotExistException;
 import live.databo3.sensor.exception.not_exist_exception.SensorTypeNotExistException;
+import live.databo3.sensor.general_config.entity.GeneralConfig;
+import live.databo3.sensor.general_config.repository.GeneralConfigRepository;
 import live.databo3.sensor.organization.entity.Organization;
 import live.databo3.sensor.place.entity.Place;
 import live.databo3.sensor.sensor.entity.Sensor;
@@ -16,6 +18,8 @@ import live.databo3.sensor.sensor_type_mappings.dto.SensorTypeMappingResponse;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.sensor_type_mappings.repository.SensorTypeMappingRepository;
 import live.databo3.sensor.sensor_type_mappings.service.impl.SensorTypeMappingServiceImpl;
+import live.databo3.sensor.setting_function_type.entity.SettingFunctionType;
+import live.databo3.sensor.setting_function_type.repository.SettingFunctionTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +28,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -39,6 +44,11 @@ class SensorTypeMappingServiceTest {
     private SensorRepository sensorRepository;
     @Mock
     private SensorTypeRepository sensorTypeRepository;
+    @Mock
+    private GeneralConfigRepository generalConfigRepository;
+    @Mock
+    private SettingFunctionTypeRepository settingFunctionTypeRepository;
+
     @InjectMocks
     private SensorTypeMappingServiceImpl sensorTypeMappingService;
 
@@ -89,6 +99,10 @@ class SensorTypeMappingServiceTest {
         when(sensorRepository.findBySensorSnAndOrganization_OrganizationId(anyString(), anyInt())).thenReturn(Optional.of(sensor));
         when(sensorTypeRepository.findById(anyInt())).thenReturn(Optional.of(sensorType));
         when(sensorTypeMappingRepository.save(any(SensorTypeMappings.class))).thenReturn(sensorTypeMappings);
+        SettingFunctionType settingFunctionType = new SettingFunctionType(1L, SettingFunctionType.SETTINGFUNCTIONTYPE.READ_ONLY);
+        when(settingFunctionTypeRepository.findById(anyLong())).thenReturn(Optional.of(settingFunctionType));
+        when(generalConfigRepository.save(any(GeneralConfig.class))).thenReturn(new GeneralConfig(null, sensorTypeMappings, settingFunctionType, null, LocalDateTime.now()));
+
 
         SensorTypeMappingResponse response = sensorTypeMappingService.registerSensorTypeMapping("testSensorSn", 1, 1);
 
