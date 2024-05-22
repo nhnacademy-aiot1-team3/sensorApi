@@ -1,5 +1,5 @@
 ### 센서 타입 매핑 등록
-POST http://localhost:8080/api/sensor/org/1/sensor/hum02/sensorTypeId/2/sensorTypeMapping
+POST http://localhost:8080/api/sensor/org/1/sensor/hum04/sensorTypeId/2/sensorTypeMapping
 Content-Type: application/json
 
 

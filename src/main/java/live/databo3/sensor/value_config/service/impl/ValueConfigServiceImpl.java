@@ -98,7 +98,7 @@ public class ValueConfigServiceImpl implements ValueConfigService {
         return ConfigsDto.builder()
                 .functionId(generalConfig.getSettingFunctionType().getFunctionId())
                 .functionName(generalConfig.getSettingFunctionType().getFunctionName().name())
-                .deviceSn(generalConfig.getDevice().getDeviceSn())
+                .deviceSn(generalConfig.getDevice() != null ? generalConfig.getDevice().getDeviceSn() : null)
                 .value(valueEntryDtoList)
                 .build();
     }
