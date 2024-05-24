@@ -6,5 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class GeneralConfigForRedis {
+    private String deviceName;
     private String functionName;
 }

@@ -27,6 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+/**
+ * ruleEngine 에서 보낸 동적으로 센서 추가하는 요청을 받는 api 입니다.
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -39,7 +45,12 @@ public class RuleEngineService {
     private final GeneralConfigRepository generalConfigRepository;
     private final SettingFunctionTypeRepository settingFunctionTypeRepository;
 
-
+    /**
+     * 센서의 정보를 받아 장소가 이미 존재하지 않는다면 장소를 새로 만들고, 센서가 존재하지 않는다면 센서를 새로 만들고,
+     * 센서에 해당 센서 타입이 존재하지 않는다면 센서에 해당 센서타입을 매핑 시킵니다.
+     * 센서가 성공적으로 생성되었다면, 기본으로 설정값이 READ_ONLY 이고 연결된 device 가 null 인 일반 설정을 생성합니다.
+     * @since 1.0.0
+     */
     @Transactional
     @ClearRedis
     public void registerSensor(String organizationName, String placeName, String sensorSn, String sensorTypeName) {

@@ -29,6 +29,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * generalConfig entity 관련 service
+ * CRUD 와 더불어 알맞은 조직의 generalConfig 를 요청했는지 쿼리를 통해 무결성을 검증하는 역할을 포함한다.
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Service
 @RequiredArgsConstructor
 public class GeneralConfigServiceImpl implements GeneralConfigService {
@@ -37,6 +44,10 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
     private final SettingFunctionTypeRepository settingFunctionTypeRepository;
     private final DeviceRepository deviceRepository;
 
+    /**
+     * 설정을 등록하고자 하는 센서가 존재하는지 확인 후 존재한다면 request 의 body 를 통해 생성한다.
+     * @since 1.0.0
+     */
     @ClearRedis
     public GeneralConfigResponse registerGeneralConfig(Integer organizationId, String sensorSn, Integer sensorTypeId, RegisterGeneralConfigRequest request) {
         if (generalConfigRepository.existsBySensorTypeMappings_Sensor_SensorSnAndSensorTypeMappings_Sensor_Organization_OrganizationIdAndSensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId)) {
@@ -59,6 +70,10 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         return (generalConfigRepository.save(generalConfig)).toDto();
     }
 
+    /**
+     * 설정이 존재하는지 확인 후 존재한다면 request 의 body 를 통해 수정한다.
+     * @since 1.0.0
+     */
     @Transactional
     @ClearRedis
     public GeneralConfigResponse modifyGeneralConfig(Integer organizationId, String sensorSn, Integer sensorTypeId, ModifyGeneralConfigRequest request) {
@@ -78,6 +93,10 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         return generalConfig.toDto();
     }
 
+    /**
+     * 특정 조직에 해당하는 설정을 모두 조회한다.
+     * @since 1.0.0
+     */
     public List<GeneralConfigDto> findGeneralConfigByOrganizationId(Integer organizationId) {
         List<GeneralConfig> genralConfigList = generalConfigRepository.findAllBySensorTypeMappings_Sensor_Organization_OrganizationId(organizationId);
         List<GeneralConfigDto> generalConfigDtoList = new ArrayList<>();
@@ -92,10 +111,18 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
         return generalConfigDtoList;
     }
 
+    /**
+     * 특정 설정을 조회한다.
+     * @since 1.0.0
+     */
     public GeneralConfigResponse getGeneralConfig(Integer organizationId, String sensorSn, Integer sensorTypeId) {
         return generalConfigRepository.findBySensorTypeMappings_Sensor_SensorSnAndSensorTypeMappings_Sensor_Organization_organizationIdAndSensorTypeMappings_SensorType_SensorTypeId(sensorSn, organizationId, sensorTypeId).orElseThrow(() -> new GeneralConfigNotExistException(sensorSn, sensorTypeId)).toDto();
     }
 
+    /**
+     * 특정 설정이 존재하는지 확인 후 존재한다면 삭제한다.
+     * @since 1.0.0
+     */
     @ClearRedis
     @Transactional
     public void deleteGeneralConfig(Integer organizationId, String sensorSn, Integer sensorTypeId) {
