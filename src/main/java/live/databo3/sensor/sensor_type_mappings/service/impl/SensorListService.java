@@ -18,6 +18,12 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * 센서리스트들을 반환하기 위한 서비스
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Service
 @RequiredArgsConstructor
 public class SensorListService {

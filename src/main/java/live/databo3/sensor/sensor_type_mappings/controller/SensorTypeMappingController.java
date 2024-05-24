@@ -63,6 +63,10 @@ public class SensorTypeMappingController {
         return ResponseEntity.ok(null);
     }
 
+    /**
+     * GET 요청을 받아 특정 조직의 sensorTypeMapping 을 조회한다.
+     * @since 1.0.0
+     */
     @GetMapping("/api/sensor/org/{organizationId}/sensorTypeMapping")
     public ResponseEntity<List<SensorTypeMappingListDto>> getSensorTypeMappingList(@PathVariable Integer organizationId) {
         return ResponseEntity.ok(sensorTypeMappingService.getSensorTypeMappingList(organizationId));

@@ -101,6 +101,10 @@ public class SensorTypeMappingServiceImpl implements SensorTypeMappingService {
         sensorTypeMappingRepository.deleteById(sensorTypeMappings.getRecordNumber());
     }
 
+    /**
+     * 특정 조직의 sensorTypeMapping 을 조회한다.
+     * @since 1.0.0
+     */
     public List<SensorTypeMappingListDto> getSensorTypeMappingList(Integer organizationId) {
         return sensorTypeMappingRepository.findAllBySensor_Organization_OrganizationId(organizationId);
     }

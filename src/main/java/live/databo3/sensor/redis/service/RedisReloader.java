@@ -41,6 +41,12 @@ public class RedisReloader {
     private final SensorTypeService sensorTypeService;
     private final ObjectMapper objectMapper;
 
+
+    /**
+     * 특정 키값의 redis 갱신 요청이 들어왔을 때, redis 에 특정 키 값의 데이터를 넣어줍니다.
+     * 센서리스트, 일반 설정, 값 설정 을 등록합니다.
+     * @since 1.0.0
+     */
     public void reloadRedisWithOrganizationName(String organizationName) throws JsonProcessingException {
         Integer organizationId = organizationService.findIdByName(organizationName);
 
@@ -61,6 +67,11 @@ public class RedisReloader {
         log.debug("redis reloaded, key: " + organizationName);
     }
 
+
+    /**
+     * 센서 타입의 목록을 레디스에 로드합니다.
+     * @since 1.0.0
+     */
     public void reloadSensorTypes() {
         List<SensorType> sensorTypelist = sensorTypeService.getSensorTypes();
         for (SensorType sensorType : sensorTypelist) {
