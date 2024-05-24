@@ -59,7 +59,7 @@ public class RedisReloader {
         }
 
         for (GeneralConfigDto dto : generalConfigDtoList) {
-            redisTemplate.opsForHash().put(organizationName, "general:" + dto.getSensorSn() + "/" + dto.getSensorType() + "/" + dto.getDeviceSn() , objectMapper.writeValueAsString(new GeneralConfigForRedis(dto.getFunctionName())));
+            redisTemplate.opsForHash().put(organizationName, "general:" + dto.getSensorSn() + "/" + dto.getSensorType() , objectMapper.writeValueAsString(new GeneralConfigForRedis(dto.getDeviceSn(), dto.getFunctionName())));
         }
         for (ValueConfigDto dto : valueConfigDtoList) {
             redisTemplate.opsForHash().put(organizationName, "value:" + dto.getSensorSn() + "/" + dto.getSensorType() , objectMapper.writeValueAsString(new ValueConfigForRedisDto(dto.getFirstEntry(), dto.getSecondEntry())));
