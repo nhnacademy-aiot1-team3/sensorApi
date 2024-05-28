@@ -15,5 +15,6 @@ public class ConfigsDto {
     private Long functionId;
     private String functionName;
     private String deviceSn;
+    private String deviceName;
     private List<ValueEntryDto> value;
 }
