@@ -1,14 +1,12 @@
 package live.databo3.sensor.sensor_type_mappings.service.impl;
 
+import live.databo3.sensor.exception.not_exist_exception.SensorTypeMappingNotExistException;
 import live.databo3.sensor.member.adaptor.MemberAdaptor;
 import live.databo3.sensor.member.dto.MemberOrganizationDto;
 import live.databo3.sensor.place.dto.PlaceDto;
 import live.databo3.sensor.place.repository.PlaceRepository;
 import live.databo3.sensor.sensor.entity.Sensor;
-import live.databo3.sensor.sensor_type_mappings.dto.OrganizationPlaceDto;
-import live.databo3.sensor.sensor_type_mappings.dto.PlaceSensorDto;
-import live.databo3.sensor.sensor_type_mappings.dto.SensorListForRedisDto;
-import live.databo3.sensor.sensor_type_mappings.dto.SensorNameIdDto;
+import live.databo3.sensor.sensor_type_mappings.dto.*;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.sensor_type_mappings.repository.SensorTypeMappingRepository;
 import live.databo3.sensor.util.ExtractHeaderUtil;
@@ -31,6 +29,21 @@ public class SensorListService {
     private final PlaceRepository placeRepository;
     private final MemberAdaptor memberAdaptor;
     private final ExtractHeaderUtil extractHeaderUtil;
+
+    public Map<Long, GetSensorInfoResponse> getSensorInfo(List<Long> idList) {
+        Map<Long, GetSensorInfoResponse> sensorInfoMap = new HashMap<>();
+        for (Long recordNumber : idList) {
+            SensorInfoDto sensorInfoDto = sensorTypeMappingRepository.findByRecordNumber(recordNumber).orElseThrow(() -> new SensorTypeMappingNotExistException(recordNumber));
+
+            sensorInfoMap.put(recordNumber, GetSensorInfoResponse.builder()
+                    .organization(sensorInfoDto.getSensor().getOrganization().getOrganizationName())
+                    .place(sensorInfoDto.getSensor().getPlace().getPlaceName())
+                    .sensorType(sensorInfoDto.getSensorType().getSensorType())
+                    .sensorSn(sensorInfoDto.getSensor().getSensorSn())
+                    .build());
+        }
+        return sensorInfoMap;
+    }
 
     public List<SensorListForRedisDto> getSensorListByOrganizationName(String organizationName) {
         List<SensorTypeMappings> mappings = sensorTypeMappingRepository.findAllBySensor_Organization_OrganizationName(organizationName);

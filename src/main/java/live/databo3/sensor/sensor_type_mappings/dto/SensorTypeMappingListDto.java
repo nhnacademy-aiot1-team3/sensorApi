@@ -1,6 +1,7 @@
 package live.databo3.sensor.sensor_type_mappings.dto;
 
 public interface SensorTypeMappingListDto {
+    Long getRecordNumber();
     SensorDto getSensor();
     interface SensorDto{
         String getSensorSn();
