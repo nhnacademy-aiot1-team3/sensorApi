@@ -23,5 +23,5 @@ DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02/sensorTypeId/2/sensor
 
 
 ### 센서 매핑 리스트 조회
-GET http://localhost:8080/api/sensor/org/29/sensorTypeMapping
+GET http://localhost:8080/api/sensor/org/30/sensorTypeMapping
 Content-Type: application/json
