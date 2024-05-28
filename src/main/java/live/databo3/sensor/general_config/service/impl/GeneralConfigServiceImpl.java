@@ -86,6 +86,8 @@ public class GeneralConfigServiceImpl implements GeneralConfigService {
             String deviceSn = request.getDeviceSn();
             Device device = deviceRepository.findByDeviceSnAndOrganization_OrganizationId(deviceSn, organizationId).orElseThrow(() -> new DeviceNotExistException(deviceSn));
             generalConfig.setDevice(device);
+        } else {
+            generalConfig.setDevice(null);
         }
 
         generalConfig.setSettingFunctionType(settingFunctionType);
