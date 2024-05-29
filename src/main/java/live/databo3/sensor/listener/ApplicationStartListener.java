@@ -1,12 +1,13 @@
 package live.databo3.sensor.listener;
 
-import live.databo3.sensor.organization.service.OrganizationService;
+import live.databo3.sensor.redis.service.RedisReloader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationStartedEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Objects;
 
 /**
  * application 의 시작을 감지하는 listener
@@ -18,15 +19,13 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class ApplicationStartListener implements ApplicationListener<ApplicationStartedEvent> {
-    private final OrganizationService organizationService;
-    private final RedisInitializer redisInitializer;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final RedisReloader redisReloader;
+
 
     @Override
     public void onApplicationEvent(ApplicationStartedEvent event) {
-        List<Integer> organizationIdList = organizationService.findIdList();
-        for (Integer organizationId : organizationIdList) {
-            redisInitializer.redisInitialize(organizationId);
-        }
+        Objects.requireNonNull(redisTemplate.getConnectionFactory()).getConnection().serverCommands().flushDb();
+        redisReloader.reloadSensorTypes();
     }
-
 }

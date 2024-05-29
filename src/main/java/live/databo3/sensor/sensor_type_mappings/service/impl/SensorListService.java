@@ -1,24 +1,27 @@
 package live.databo3.sensor.sensor_type_mappings.service.impl;
 
+import live.databo3.sensor.exception.not_exist_exception.SensorTypeMappingNotExistException;
 import live.databo3.sensor.member.adaptor.MemberAdaptor;
 import live.databo3.sensor.member.dto.MemberOrganizationDto;
 import live.databo3.sensor.place.dto.PlaceDto;
 import live.databo3.sensor.place.repository.PlaceRepository;
 import live.databo3.sensor.sensor.entity.Sensor;
-import live.databo3.sensor.sensor_type_mappings.dto.OrganizationPlaceDto;
-import live.databo3.sensor.sensor_type_mappings.dto.PlaceSensorDto;
-import live.databo3.sensor.sensor_type_mappings.dto.SensorNameIdDto;
+import live.databo3.sensor.sensor_type_mappings.dto.*;
 import live.databo3.sensor.sensor_type_mappings.entity.SensorTypeMappings;
 import live.databo3.sensor.sensor_type_mappings.repository.SensorTypeMappingRepository;
 import live.databo3.sensor.util.ExtractHeaderUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * 센서리스트들을 반환하기 위한 서비스
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @Service
 @RequiredArgsConstructor
 public class SensorListService {
@@ -26,6 +29,44 @@ public class SensorListService {
     private final PlaceRepository placeRepository;
     private final MemberAdaptor memberAdaptor;
     private final ExtractHeaderUtil extractHeaderUtil;
+
+    public Map<Long, GetSensorInfoResponse> getSensorInfo(List<Long> idList) {
+        Map<Long, GetSensorInfoResponse> sensorInfoMap = new HashMap<>();
+        for (Long recordNumber : idList) {
+            SensorInfoDto sensorInfoDto = sensorTypeMappingRepository.findByRecordNumber(recordNumber).orElseThrow(() -> new SensorTypeMappingNotExistException(recordNumber));
+
+            sensorInfoMap.put(recordNumber, GetSensorInfoResponse.builder()
+                    .organization(sensorInfoDto.getSensor().getOrganization().getOrganizationName())
+                    .place(sensorInfoDto.getSensor().getPlace().getPlaceName())
+                    .sensorType(sensorInfoDto.getSensorType().getSensorType())
+                    .sensorSn(sensorInfoDto.getSensor().getSensorSn())
+                    .build());
+        }
+        return sensorInfoMap;
+    }
+
+    public List<SensorListForRedisDto> getSensorListByOrganizationName(String organizationName) {
+        List<SensorTypeMappings> mappings = sensorTypeMappingRepository.findAllBySensor_Organization_OrganizationName(organizationName);
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (SensorTypeMappings mapping : mappings) {
+            String sensorSn = mapping.getSensor().getSensorSn();
+            String sensorType = mapping.getSensorType().getSensorType();
+            if (!map.containsKey(sensorSn)) {
+                List<String> list = new ArrayList<>();
+                list.add(sensorType);
+                map.put(sensorSn, list);
+            } else {
+                map.get(sensorSn).add(sensorType);
+            }
+        }
+        List<SensorListForRedisDto> sensorList = new ArrayList<>();
+        Set<Map.Entry<String, List<String>>> entrySet = map.entrySet();
+
+        for (Map.Entry<String, List<String>> entry : entrySet) {
+            sensorList.add(new SensorListForRedisDto(entry.getKey(), entry.getValue()));
+        }
+        return sensorList;
+    }
 
     public List<OrganizationPlaceDto> getSensorListBySensorType (Integer sensorTypeId) {
         String userId = extractHeaderUtil.extractHeader("X-USER-ID");
@@ -39,6 +80,7 @@ public class SensorListService {
         }
 
         return dtoList.stream()
+                .filter(memberOrganizationDto -> memberOrganizationDto.getState() == 2)
                 .map(memberOrganizationDto -> buildOrganizationPlaceDto(memberOrganizationDto, sensorTypeId))
                 .collect(Collectors.toList());
     }

@@ -16,4 +16,5 @@ public class GeneralConfigResponse {
     private Long functionId;
     private LocalDateTime lastUpdateDate;
     private String deviceSn;
+    private String deviceName;
 }

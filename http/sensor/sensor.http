@@ -1,11 +1,11 @@
 ### 센서 등록
-POST http://localhost:8080/api/sensor/org/1/sensor
+POST http://localhost:8080/api/sensor/org/29/sensor
 Content-Type: application/json
 
 {
-  "sensorSn": "hum04",
+  "sensorSn": "hum06",
   "sensorName": "온도1",
-  "placeId": 1
+  "placeId": 12
 }
 
 

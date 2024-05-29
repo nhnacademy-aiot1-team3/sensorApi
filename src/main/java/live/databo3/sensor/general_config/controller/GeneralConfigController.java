@@ -14,6 +14,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * generalConfig entity 관련 controller
+ * uri 중 organizationId는 조직의 Integer 타입의 id에 해당한다.
+ *
+ * @author : 강경훈
+ * @version : 1.0.0
+ */
 @RestController
 @RequestMapping("/api/sensor/org/{organizationId}")
 @RequiredArgsConstructor
@@ -21,32 +28,52 @@ public class GeneralConfigController {
 
     private final GeneralConfigService generalConfigService;
 
-    @PostMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    /**
+     * POST 요청을 받아 generalConfig 를 등록한다.
+     * @since 1.0.0
+     */
+    @PostMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> createGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody RegisterGeneralConfigRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(generalConfigService.registerGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
-    @PutMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    /**
+     * PUT 요청을 받아 generalConfig 를 등록한다.
+     * @since 1.0.0
+     */
+    @PutMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> modifyGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId, @RequestBody ModifyGeneralConfigRequest request) {
         return ResponseEntity.ok(generalConfigService.modifyGeneralConfig(organizationId, sensorSn, sensorTypeId, request));
     }
 
-    @DeleteMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    /**
+     * Delete 요청을 받아 generalConfig 를 삭제한다.
+     * @since 1.0.0
+     */
+    @DeleteMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<Void> deleteGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         generalConfigService.deleteGeneralConfig(organizationId, sensorSn, sensorTypeId);
         return ResponseEntity.ok(null);
     }
 
+    /**
+     * Get 요청을 받아 특정 조직에 해당하는 generalConfig 를 조회한다.
+     * @since 1.0.0
+     */
     @GetMapping("/general")
     @CheckPermission
     public ResponseEntity<List<GeneralConfigDto>> getAllGeneralConfig(@PathVariable Integer organizationId) {
         return ResponseEntity.ok(generalConfigService.findGeneralConfigByOrganizationId(organizationId));
     }
 
-    @GetMapping("sensor/{sensorSn}/sensorTypeId/{sensorTypeId}/general")
+    /**
+     * Get 요청을 받아 generalConfig 를 조회한다.
+     * @since 1.0.0
+     */
+    @GetMapping("sensor/{sensorSn}/sensorType/{sensorTypeId}/general")
     @CheckPermission
     public ResponseEntity<GeneralConfigResponse> getGeneralConfig(@PathVariable Integer organizationId, @PathVariable String sensorSn, @PathVariable Integer sensorTypeId) {
         return ResponseEntity.ok(generalConfigService.getGeneralConfig(organizationId, sensorSn, sensorTypeId));

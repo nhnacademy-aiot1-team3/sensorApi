@@ -1,14 +1,14 @@
 ### 센서 타입 매핑 등록
-POST http://localhost:8080/api/sensor/org/1/sensor/hum02/sensorTypeId/2/sensorTypeMapping
+POST http://localhost:8080/api/sensor/org/1/sensor/hum04/sensorTypeId/1/sensorTypeMapping
 Content-Type: application/json
 
 
 ### 센서 타입 매핑 수정
-PUT http://localhost:8080/api/sensor/org/1/sensor/hum02/sensorTypeId/2/sensorTypeMapping
+PUT http://localhost:8080/api/sensor/org/1/sensor/hum04/sensorTypeId/2/sensorTypeMapping
 Content-Type: application/json
 
 {
-  "sensorTypeId": 2
+  "sensorTypeId": 3
 }
 
 
@@ -19,3 +19,9 @@ Content-Type: application/json
 
 ### 센서 타입 매핑 삭제
 DELETE http://localhost:8080/api/sensor/org/1/sensor/hum02/sensorTypeId/2/sensorTypeMapping
+
+
+
+### 센서 매핑 리스트 조회
+GET http://localhost:8080/api/sensor/org/30/sensorTypeMapping
+Content-Type: application/json

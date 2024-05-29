@@ -31,5 +31,12 @@ public class SettingFunctionType {
      * @since 1.0.0
      */
     @Column(name = "function_name")
-    private String functionName;
+    @Enumerated(EnumType.STRING)
+    private SETTINGFUNCTIONTYPE functionName;
+
+    public enum SETTINGFUNCTIONTYPE {
+        READ_ONLY,
+        CUSTOM,
+        AI
+    }
 }

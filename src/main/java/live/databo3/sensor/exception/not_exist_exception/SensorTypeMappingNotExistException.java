@@ -10,4 +10,8 @@ public class SensorTypeMappingNotExistException extends NotExistException {
     public SensorTypeMappingNotExistException(String sensorSn, Integer sensorTypeId) {
         super("sensorTypeMapping", "sensorSn-" + sensorSn + ", sensorTypeId-" + sensorTypeId);
     }
+
+    public SensorTypeMappingNotExistException(Long configId) {
+        super("sensorTypeMapping", "configId-" + configId);
+    }
 }

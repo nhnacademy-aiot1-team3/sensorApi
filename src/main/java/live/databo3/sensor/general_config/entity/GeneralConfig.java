@@ -45,6 +45,7 @@ public class GeneralConfig {
                 .functionId(settingFunctionType.getFunctionId())
                 .lastUpdateDate(lastUpdateDate)
                 .deviceSn(device == null ? null : device.getDeviceSn())
+                .deviceName(device == null ? null : device.getDeviceName())
                 .build();
     }
 }
