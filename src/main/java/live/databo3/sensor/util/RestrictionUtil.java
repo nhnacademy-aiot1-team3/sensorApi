@@ -31,4 +31,26 @@ public class RestrictionUtil {
         return restrictions;
     }
 
+    /**
+     * 모든 장소에 대한 값을 가져오는 influxdb의 쿼리 조건문을 만들기 위한 메소드
+     * @param field influxdb의 field 이름
+     * @param branch influxdb의 branch 이름
+     * @param endPoint influxdb의 endPoint 이름
+     * @return influxdb의 쿼리 조건문을 반환
+     * @since 1.0.1
+     */
+    public static  Restrictions getRestrictionForEveryPlace(String field, String branch, String endPoint) {
+        Restrictions restrictions = Restrictions
+                .and(
+                        Restrictions.measurement().equal(MEASUREMENT),
+                        Restrictions.field().equal(field),
+                        Restrictions.tag(BRANCH).equal(branch),
+                        Restrictions.tag(ENDPOINT).equal(endPoint)
+                );
+
+        log.info("res : {}", restrictions);
+
+        return restrictions;
+    }
+
 }
