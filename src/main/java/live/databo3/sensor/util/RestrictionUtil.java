@@ -8,7 +8,7 @@ public class RestrictionUtil {
 
     private RestrictionUtil() {}
 
-    private static final String MEASUREMENT = "mqtt_consumer";  //sensor 로 변경하면 됨
+    private static final String MEASUREMENT = "sensor";
     private static final String BRANCH = "branch";
     private static final String PLACE = "place";
     private static final String DEVICE = "device";
