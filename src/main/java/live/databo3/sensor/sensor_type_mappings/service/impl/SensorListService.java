@@ -80,6 +80,7 @@ public class SensorListService {
         }
 
         return dtoList.stream()
+                .filter(memberOrganizationDto -> memberOrganizationDto.getState() == 2)
                 .map(memberOrganizationDto -> buildOrganizationPlaceDto(memberOrganizationDto, sensorTypeId))
                 .collect(Collectors.toList());
     }
