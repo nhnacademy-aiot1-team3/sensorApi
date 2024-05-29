@@ -36,7 +36,7 @@ class GeneralConfigControllerTest {
 
     @Test
     void createGeneralConfigTest() throws Exception {
-        GeneralConfigResponse generalConfigResponse = new GeneralConfigResponse(null, 1L, null, "testDeviceSn");
+        GeneralConfigResponse generalConfigResponse = new GeneralConfigResponse(null, 1L, null, "testDeviceSn", "testDeviceName");
         given(generalConfigService.registerGeneralConfig(anyInt(), anyString(), anyInt(), any(RegisterGeneralConfigRequest.class))).willReturn(generalConfigResponse);
 
         mockMvc.perform(post("/api/sensor/org/1/sensor/testSensorSn/sensorType/1/general")
@@ -48,7 +48,7 @@ class GeneralConfigControllerTest {
 
     @Test
     void modifyGeneralConfigTest() throws Exception {
-        GeneralConfigResponse generalConfigResponse = new GeneralConfigResponse(null, 1L, null, "testDeviceSn");
+        GeneralConfigResponse generalConfigResponse = new GeneralConfigResponse(null, 1L, null, "testDeviceSn", "testDeviceName");
         given(generalConfigService.modifyGeneralConfig(anyInt(), anyString(), anyInt(), any(ModifyGeneralConfigRequest.class))).willReturn(generalConfigResponse);
 
         mockMvc.perform(put("/api/sensor/org/1/sensor/testSensorSn/sensorType/1/general")
@@ -60,7 +60,7 @@ class GeneralConfigControllerTest {
 
     @Test
     void getGeneralConfigTest() throws Exception {
-        GeneralConfigResponse generalConfigResponse = new GeneralConfigResponse(null, 1L, null, "testDeviceSn");
+        GeneralConfigResponse generalConfigResponse = new GeneralConfigResponse(null, 1L, null, "testDeviceSn", "testDeviceName");
         given(generalConfigService.getGeneralConfig(anyInt(), anyString(), anyInt())).willReturn(generalConfigResponse);
 
         mockMvc.perform(get("/api/sensor/org/1/sensor/testSensorSn/sensorType/1/general")
