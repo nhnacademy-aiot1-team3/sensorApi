@@ -38,4 +38,3 @@ GET http://localhost:8099/api/sensor/co2
 Content-Type: application/json
 
 
-

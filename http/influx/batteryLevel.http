@@ -1,0 +1,6 @@
+### battery level 요청
+GET http://localhost:8099/api/sensor/battery-levels
+    /fields/value
+    /branches/nhnacademy
+    /endpoint/battery_level
+Content-Type: application/json

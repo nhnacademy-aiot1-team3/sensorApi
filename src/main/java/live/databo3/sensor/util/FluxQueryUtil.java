@@ -45,4 +45,28 @@ public class FluxQueryUtil {
                 .timeShift(+9L, ChronoUnit.HOURS);
     }
 
+    /**
+     * 모든 장소에 대한 값을 들고오는 query 작성
+     * @param bucket influxdb bucket
+     * @param field influxdb의 field 이름
+     * @param branch influxdb의 branch 이름
+     * @param endpoint influxdb의 endpoint 이름
+     * @return query문 반환
+     * @since 1.0.1
+     */
+    public static Flux lastDataForEveryWhereQuery(String bucket, String field, String branch, String endpoint) {
+
+        Restrictions restrictions = RestrictionUtil.getRestrictionForEveryPlace(field, branch, endpoint);
+
+        return Flux.from(bucket)
+                .range(TimeRangeUtil.pastOneHour())
+                .filter(restrictions)
+                .last()
+                .pivot()
+                .withRowKey(new String[]{ROW_KEY})
+                .withColumnKey(new String[]{COLUMN_KEY})
+                .withValueColumn(COLUMN_VALUE)
+                .timeShift(+9L, ChronoUnit.HOURS);
+    }
+
 }
