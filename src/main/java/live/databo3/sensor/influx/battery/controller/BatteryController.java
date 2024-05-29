@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0.0
  */
 @RestController
-@RequestMapping("/api/sensor/battery-levels/fields/{fieldType}/branches/{branchName}/endpoint/{endpoint}")
+@RequestMapping("/api/sensor/battery-levels/fields/{fieldType}/branches/{branchName}/endpoint/battery_level")
 @RequiredArgsConstructor
 public class BatteryController {
 
@@ -27,12 +27,11 @@ public class BatteryController {
      * 주어진 조건에 따른 sensor들의 battery level을 알려주는 메소드
      * @param fieldType influxdb의 field 이름
      * @param branchName influxdb의 branch 이름
-     * @param endpoint influxdb의 endpoint 이름
      * @return BatteryLevelData(time, place, device, topic, value)의 리스트
      * @since 1.0.0
      */
     @GetMapping
-    public ResponseEntity<ResponseListData<BatteryLevelData>> getBattertLevels(@PathVariable String fieldType, @PathVariable String branchName, @PathVariable String endpoint) {
-        return ResponseEntity.status(HttpStatus.OK).body(batteryService.getBatteryLevels(fieldType, branchName, endpoint));
+    public ResponseEntity<ResponseListData<BatteryLevelData>> getBattertLevels(@PathVariable String fieldType, @PathVariable String branchName) {
+        return ResponseEntity.status(HttpStatus.OK).body(batteryService.getBatteryLevels(fieldType, branchName));
     }
 }

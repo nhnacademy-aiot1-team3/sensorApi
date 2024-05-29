@@ -23,13 +23,12 @@ public class BatteryServiceImpl implements BatteryService {
      * 주어진 조건으로 query문을 날려 BatteryLevelData 리스트를 가져온다
      * @param field influxdb의 field 이름
      * @param branch influxdb의 branch 이름
-     * @param endpoint influxdb의 endpoint 이름
      * @return BatteryLevelData(time, place, device, topic, value)의 리스트
      * @since 1.0.0
      */
     @Override
-    public ResponseListData<BatteryLevelData> getBatteryLevels(String field, String branch, String endpoint) {
-        List<BatteryLevelData> data = influxDBRepository.findLastDataForEveryWhere(field, branch, endpoint, BatteryLevelData.class);
+    public ResponseListData<BatteryLevelData> getBatteryLevels(String field, String branch) {
+        List<BatteryLevelData> data = influxDBRepository.findLastDataForEveryWhere(field, branch, "battery_level", BatteryLevelData.class);
         ResponseListData<BatteryLevelData> responseListData = new ResponseListData<>();
         responseListData.setData(data);
 
