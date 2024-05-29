@@ -36,3 +36,5 @@ GET http://localhost:8099/api/sensor/co2
     /week
     /mean?begin=2024-05-08T06:30:00Z&end=2024-05-15T06:30:00Z
 Content-Type: application/json
+
+
