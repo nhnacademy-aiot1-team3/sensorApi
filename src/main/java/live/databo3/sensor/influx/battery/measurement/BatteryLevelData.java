@@ -17,6 +17,9 @@ public class BatteryLevelData {
     @Column(name = "device")
     private String device;
 
+    @Column(name = "branch")
+    private String branch;
+
     @Column(name = "topic")
     private String topic;
 
