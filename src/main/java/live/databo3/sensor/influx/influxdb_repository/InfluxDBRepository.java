@@ -30,7 +30,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("last query : {}", query);
 
         return influxDBClient
                 .getQueryApi()
@@ -51,7 +50,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("5m mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -68,7 +66,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("1h mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -85,7 +82,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("week min max query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -101,7 +97,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("week mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }

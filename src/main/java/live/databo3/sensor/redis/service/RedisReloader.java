@@ -64,7 +64,6 @@ public class RedisReloader {
         for (ValueConfigDto dto : valueConfigDtoList) {
             redisTemplate.opsForHash().put(organizationName, "value:" + dto.getSensorSn() + "/" + dto.getSensorType() , objectMapper.writeValueAsString(new ValueConfigForRedisDto(dto.getFirstEntry(), dto.getSecondEntry())));
         }
-        log.debug("redis reloaded, key: " + organizationName);
     }
 
 

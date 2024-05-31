@@ -77,7 +77,6 @@ public class CheckPermissionAspect {
      */
     public void checkPermissionWithOrganizationId(Integer organizationId) {
         String userId = extractHeaderUtil.extractHeader("X-USER-ID");
-        log.debug("permission checking: userId: " + userId + ", organizationId: " + organizationId);
         if (userId != null) {
             if (Boolean.FALSE.equals(memberAdaptor.isAuthorizedAccess(userId, organizationId).getBody())) {
                 throw new UnAuthorizedAccessException("허가되지 않은 접근입니다.");
@@ -85,6 +84,5 @@ public class CheckPermissionAspect {
         } else {
             throw new UnAuthorizedAccessException("로그인이 되지 않았습니다.");
         }
-        log.debug("permission check: ok: userId-" + userId);
     }
 }
