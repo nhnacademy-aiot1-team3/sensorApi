@@ -27,7 +27,6 @@ public class HumidityServiceImpl implements HumidityService {
             String field, String branch, String place, String endpoint, String sensor) {
 
         HumidityLastData lastData = influxDBRepository.findLastData(field, branch, place, endpoint, sensor, HumidityLastData.class).orElse(null);
-        log.info("service last data : {}", lastData);
 
         ResponseSingleData<HumidityLastData> singleData = new ResponseSingleData<>();
         singleData.setData(lastData);
@@ -40,7 +39,6 @@ public class HumidityServiceImpl implements HumidityService {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<HumidityMeanData> dataList = influxDBRepository.findFiveMinutesMeanDataForOneHour(begin, end, field, branch, place, endpoint, sensor, HumidityMeanData.class);
-        log.info("service hour data : {}", dataList);
 
         ResponseListData<HumidityMeanData> responseListData = new ResponseListData<>();
         responseListData.setData(dataList);
@@ -53,7 +51,6 @@ public class HumidityServiceImpl implements HumidityService {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<HumidityMeanData> dataList = influxDBRepository.findOneHourMeanDataForOneDay(begin, end, field, branch, place, endpoint, sensor, HumidityMeanData.class);
-        log.info("service daily data : {}", dataList);
 
         ResponseListData<HumidityMeanData> responseListData = new ResponseListData<>();
         responseListData.setData(dataList);
@@ -66,7 +63,6 @@ public class HumidityServiceImpl implements HumidityService {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<HumidityMinData> dataList = influxDBRepository.findOneDayMinMaxDataForOneWeek(begin, end, field, branch, place, endpoint, sensor, HumidityMinData.class);
-        log.info("service min max data : {}", dataList);
 
         ResponseListData<HumidityMinData> minListData = new ResponseListData<>();
         minListData.setData(dataList);
@@ -79,7 +75,6 @@ public class HumidityServiceImpl implements HumidityService {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<HumidityMaxData> dataList = influxDBRepository.findOneDayMinMaxDataForOneWeek(begin, end, field, branch, place, endpoint, sensor, HumidityMaxData.class);
-        log.info("service min max data : {}", dataList);
 
         ResponseListData<HumidityMaxData> maxListData = new ResponseListData<>();
         maxListData.setData(dataList);

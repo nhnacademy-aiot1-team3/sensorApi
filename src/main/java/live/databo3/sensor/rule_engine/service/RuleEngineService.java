@@ -62,7 +62,6 @@ public class RuleEngineService {
             place = placeOptional.get();
         } else {
             place = placeRepository.saveAndFlush(new Place(null, placeName, organization));
-            log.debug("place registered: " + place.getPlaceName() + "-" + organizationName);
         }
 
         Optional<Sensor> sensorOptional = sensorRepository.findBySensorSnAndOrganization_OrganizationId(sensorSn, organization.getOrganizationId());
@@ -71,7 +70,6 @@ public class RuleEngineService {
             sensor = sensorOptional.get();
         } else {
             sensor = sensorRepository.saveAndFlush(new Sensor(sensorSn, null, place, organization));
-            log.debug("sensor registered: " + sensorSn + "-" + placeName);
         }
 
         SensorType sensorType = sensorTypeRepository.findBySensorType(sensorTypeName).orElseThrow(() -> new SensorTypeNotExistException(sensorTypeName));

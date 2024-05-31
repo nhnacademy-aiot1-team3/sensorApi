@@ -30,7 +30,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("last query : {}", query);
 
         return influxDBClient
                 .getQueryApi()
@@ -51,7 +50,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("5m mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -68,7 +66,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("1h mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -85,7 +82,6 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("week min max query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
@@ -101,9 +97,31 @@ public class InfluxDBRepository {
                 endpoint,
                 sensor
         );
-        log.info("week mean query : {}", query);
 
         return influxDBClient.getQueryApi().query(query.toString(), clazz);
     }
 
+    /**
+     * 주어진 값(field, branch, endpoint, clazz)에 따른 조건문에 대한 결과물을 받는 메소드
+     * @param field influxdb의 field 이름
+     * @param branch influxdb의 branch 이름
+     * @param endpoint influxdb의 endpoint 이름
+     * @param clazz influxdb에서 반환하는 클래스 형태
+     * @return 입력한 clazz의 list를 반환
+     * @param <T> clazz의 클래스와 동일한 형태
+     */
+    public <T> List<T> findLastDataForEveryWhere(String field, String branch, String endpoint, Class<T> clazz){
+        Flux query = FluxQueryUtil.lastDataForEveryWhereQuery(
+                influxProperties.getSensorBucket(),
+                field,
+                branch,
+                endpoint
+        );
+        log.info("last query : {}", query);
+
+        return influxDBClient
+                .getQueryApi()
+                .query(query.toString(), clazz);
+
+    }
 }
