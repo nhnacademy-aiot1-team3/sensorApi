@@ -26,7 +26,6 @@ public class Co2ServiceImpl implements Co2Service {
             String field, String branch, String place, String endpoint, String sensor) {
 
         Co2LastData lastData = influxDBRepository.findLastData(field, branch, place, endpoint, sensor, Co2LastData.class).orElse(null);
-        log.info("service last data : {}", lastData);
 
         ResponseSingleData<Co2LastData> singleData = new ResponseSingleData<>();
         singleData.setData(lastData);
@@ -39,7 +38,6 @@ public class Co2ServiceImpl implements Co2Service {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<Co2MeanData> dataList = influxDBRepository.findFiveMinutesMeanDataForOneHour(begin, end, field, branch, place, endpoint, sensor, Co2MeanData.class);
-        log.info("service hour data : {}", dataList);
 
         ResponseListData<Co2MeanData> responseListData = new ResponseListData<>();
         responseListData.setData(dataList);
@@ -52,7 +50,6 @@ public class Co2ServiceImpl implements Co2Service {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<Co2MeanData> dataList = influxDBRepository.findOneHourMeanDataForOneDay(begin, end, field, branch, place, endpoint, sensor, Co2MeanData.class);
-        log.info("service daily data : {}", dataList);
 
         ResponseListData<Co2MeanData> responseListData = new ResponseListData<>();
         responseListData.setData(dataList);

@@ -80,7 +80,6 @@ public class ClearRedisAspect {
         String organizationName = organizationService.findNameById(organizationId);
         redisTemplate.delete(organizationName);
 
-        log.debug("redis cleared, key: " + organizationName);
         return retVal;
     }
 }

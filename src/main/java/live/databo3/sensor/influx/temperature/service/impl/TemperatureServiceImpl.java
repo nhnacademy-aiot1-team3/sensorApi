@@ -27,7 +27,6 @@ public class TemperatureServiceImpl implements TemperatureService {
             String field, String branch, String place, String endpoint, String sensor) {
 
         TemperatureLastData lastData = influxDBRepository.findLastData(field, branch, place, endpoint, sensor, TemperatureLastData.class).orElse(null);
-        log.info("service last data : {}", lastData);
 
         ResponseSingleData<TemperatureLastData> singleData = new ResponseSingleData<>();
         singleData.setData(lastData);
@@ -40,7 +39,6 @@ public class TemperatureServiceImpl implements TemperatureService {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<TemperatureMeanData> dataList = influxDBRepository.findFiveMinutesMeanDataForOneHour(begin, end, field, branch, place, endpoint, sensor, TemperatureMeanData.class);
-        log.info("service hour data : {}", dataList);
 
         ResponseListData<TemperatureMeanData> responseListData = new ResponseListData<>();
         responseListData.setData(dataList);
@@ -53,7 +51,6 @@ public class TemperatureServiceImpl implements TemperatureService {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<TemperatureMeanData> dataList = influxDBRepository.findOneHourMeanDataForOneDay(begin, end, field, branch, place, endpoint, sensor, TemperatureMeanData.class);
-        log.info("service daily data : {}", dataList);
 
         ResponseListData<TemperatureMeanData> responseListData = new ResponseListData<>();
         responseListData.setData(dataList);
@@ -66,7 +63,6 @@ public class TemperatureServiceImpl implements TemperatureService {
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
 
         List<TemperatureMinData> dataList = influxDBRepository.findOneDayMinMaxDataForOneWeek(begin, end, field, branch, place, endpoint, sensor, TemperatureMinData.class);
-        log.info("service min max data : {}", dataList);
 
         ResponseListData<TemperatureMinData> minListData = new ResponseListData<>();
         minListData.setData(dataList);
@@ -78,7 +74,6 @@ public class TemperatureServiceImpl implements TemperatureService {
     public ResponseListData<TemperatureMaxData> retrieveTemperatureWeeklyMaxData(
             String field, String branch, String place, String endpoint, String sensor, Instant begin, Instant end) {
         List<TemperatureMaxData> dataList = influxDBRepository.findOneDayMinMaxDataForOneWeek(begin, end, field, branch, place, endpoint, sensor, TemperatureMaxData.class);
-        log.info("service min max data : {}", dataList);
 
         ResponseListData<TemperatureMaxData> maxListData = new ResponseListData<>();
         maxListData.setData(dataList);

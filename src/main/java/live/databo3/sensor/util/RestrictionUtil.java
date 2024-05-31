@@ -26,7 +26,6 @@ public class RestrictionUtil {
                         Restrictions.tag(ENDPOINT).equal(endPoint)
                 );
 
-        log.info("res : {}", restrictions);
 
         return restrictions;
     }
